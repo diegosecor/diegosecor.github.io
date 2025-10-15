@@ -1,4 +1,2 @@
 # DCSC ·  Architect
-info 
-index
 
