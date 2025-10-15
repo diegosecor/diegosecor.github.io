@@ -9,17 +9,17 @@ body {
   flex-direction: column;
 }
 
-/* Top bar adjustments */
+/* Top bar adjustments: más pegado arriba, menos alto */
 .top-bar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px 40px 0 40px; /* Padding superior reducido */
-  font-size: 15.3px; /* 10% smaller than 17px */
-  height: 60px;
+  align-items: flex-start; /* alineación arriba */
+  padding: 5px 40px 0 40px; /* menos espacio arriba */
+  font-size: 15px;
+  height: 40px; /* menos alto */
 }
 
-/* Diatype Regular font for top bar */
+/* Diatype Regular font para la barra superior */
 .brand,
 .top-bar a {
   font-family: 'Diatype', 'Arial', sans-serif;
@@ -27,16 +27,16 @@ body {
   letter-spacing: 1px;
 }
 
-/* Right menu */
+/* Menú derecho */
 .right a {
   color: #6b7072;
   text-decoration: none;
-  margin-left: 40px;
+  margin-left: 35px; /* menos separación */
   vertical-align: middle;
   transition: color 0.2s;
   display: inline-flex;
   align-items: center;
-  font-size: 13.5px; /* 10% smaller than 15px */
+  font-size: 13px;
 }
 
 .right a:hover {
@@ -50,19 +50,19 @@ main {
   justify-content: center;
 }
 
-/* Space Grotesk Medium for main title */
+/* Space Grotesk Medium para el título principal */
 .centered {
   font-family: 'Space Grotesk', 'Arial', sans-serif;
   font-weight: 500;
-  font-size: 2.25rem; /* 10% smaller than 2.5rem */
+  font-size: 2.2rem; /* ligeramente más pequeño */
   letter-spacing: 2px;
   color: #6b7072;
   text-align: center;
 }
 
 footer {
-  padding: 24px 40px;
-  font-size: 14.4px; /* 10% smaller than 16px */
+  padding: 12px 40px;
+  font-size: 14px;
 }
 
 .email {
@@ -70,20 +70,20 @@ footer {
   opacity: 0.7;
 }
 
-/* Responsive */
+/* Responsive (móvil) */
 @media (max-width: 700px) {
   .top-bar, footer {
-    padding: 16px 10px 0 10px;
-    font-size: 13.5px;
+    padding: 8px 10px 0 10px;
+    font-size: 13px;
   }
   .right a {
     margin-left: 16px;
-    font-size: 12.6px;
+    font-size: 12px;
   }
   .centered {
-    font-size: 1.26rem;
+    font-size: 1.2rem;
   }
   footer {
-    font-size: 11.7px;
+    font-size: 11px;
   }
 }
