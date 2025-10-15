@@ -14,7 +14,7 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   padding: 15px;
-  font-size: 15px;
+  font-size: 10px;
   height: 40px;
 }
 
@@ -22,7 +22,7 @@ body {
 .brand,
 .top-bar a {
   font-family: 'Diatype', 'Arial', sans-serif;
-  font-size: 15px;
+  font-size: 10px;
   color: #6b7072;
   letter-spacing: 1px;
 }
