@@ -13,27 +13,27 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 5px; /* igual separación arriba y a los costados */
+  padding: 20px;
   font-size: 15px;
   height: 40px;
 }
 
+/* MISMA fuente y tamaño para izquierda y derecha */
 .brand,
 .top-bar a {
   font-family: 'Diatype', 'Arial', sans-serif;
+  font-size: 15px;
   color: #6b7072;
   letter-spacing: 1px;
 }
 
 .right a {
-  color: #6b7072;
   text-decoration: none;
   margin-left: 35px;
   vertical-align: middle;
   transition: color 0.2s;
   display: inline-flex;
   align-items: center;
-  font-size: 13px;
 }
 
 .right a:hover {
@@ -71,9 +71,12 @@ footer {
     padding: 8px 10px 0 10px;
     font-size: 13px;
   }
+  .brand,
+  .top-bar a {
+    font-size: 13px;
+  }
   .right a {
     margin-left: 16px;
-    font-size: 12px;
   }
   .centered {
     font-size: 1.2rem;
