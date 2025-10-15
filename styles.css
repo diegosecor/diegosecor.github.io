@@ -13,27 +13,35 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 15px;
-  font-size: 10px;
+  padding: 20px;
+  font-size: 13px; /* tamaño pequeño para todo */
   height: 40px;
 }
 
-/* MISMA fuente y tamaño para izquierda y derecha */
-.brand,
-.top-bar a {
+.brand {
   font-family: 'Diatype', 'Arial', sans-serif;
-  font-size: 10px;
   color: #6b7072;
   letter-spacing: 1px;
 }
 
+.brand strong {
+  font-weight: bold;
+}
+
+.brand,
+.top-bar a {
+  font-family: 'Diatype', 'Arial', sans-serif;
+}
+
 .right a {
+  color: #6b7072;
   text-decoration: none;
   margin-left: 35px;
   vertical-align: middle;
   transition: color 0.2s;
   display: inline-flex;
   align-items: center;
+  font-size: 13px; /* mismo tamaño pequeño */
 }
 
 .right a:hover {
@@ -69,11 +77,11 @@ footer {
 @media (max-width: 700px) {
   .top-bar, footer {
     padding: 8px 10px 0 10px;
-    font-size: 13px;
+    font-size: 11px;
   }
   .brand,
   .top-bar a {
-    font-size: 13px;
+    font-size: 11px;
   }
   .right a {
     margin-left: 16px;
