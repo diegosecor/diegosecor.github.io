@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 40px 0 40px;
+  padding: 10px 40px 0 40px; /* Padding superior reducido */
   font-size: 15.3px; /* 10% smaller than 17px */
   height: 60px;
 }
