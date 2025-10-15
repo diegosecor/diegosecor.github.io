@@ -13,7 +13,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 10px; /* igual separación arriba y a los costados */
+  padding: 5px; /* igual separación arriba y a los costados */
   font-size: 15px;
   height: 40px;
 }
