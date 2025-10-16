@@ -14,7 +14,7 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   padding: 20px;
-  font-size: 13px; /* tamaño pequeño para todo */
+  font-size: 13px;
   height: 40px;
 }
 
@@ -22,26 +22,30 @@ body {
   font-family: 'Diatype', 'Arial', sans-serif;
   color: #6b7072;
   letter-spacing: 1px;
+  font-size: 13px;
 }
 
+/* Solo el DS en Space Grotesk Medium */
 .brand strong {
-  font-weight: bold;
+  font-family: 'Space Grotesk', 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
 }
 
-.brand,
 .top-bar a {
   font-family: 'Diatype', 'Arial', sans-serif;
+  font-size: 13px;
+  color: #6b7072;
+  letter-spacing: 1px;
 }
 
 .right a {
-  color: #6b7072;
   text-decoration: none;
   margin-left: 35px;
   vertical-align: middle;
   transition: color 0.2s;
   display: inline-flex;
   align-items: center;
-  font-size: 13px; /* mismo tamaño pequeño */
 }
 
 .right a:hover {
@@ -55,6 +59,7 @@ main {
   justify-content: center;
 }
 
+/* Space Grotesk Medium para el título principal */
 .centered {
   font-family: 'Space Grotesk', 'Arial', sans-serif;
   font-weight: 500;
@@ -81,6 +86,9 @@ footer {
   }
   .brand,
   .top-bar a {
+    font-size: 11px;
+  }
+  .brand strong {
     font-size: 11px;
   }
   .right a {
