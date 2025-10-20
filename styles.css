@@ -1,5 +1,4 @@
-/* --- TU CSS ORIGINAL --- */
-body {
+/* pega tu styles.css completo */body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', 'Arial', sans-serif;
@@ -101,71 +100,4 @@ footer {
   footer {
     font-size: 11px;
   }
-}
-
-/* --- ESTILOS SCOPEADOS PARA LA PÁGINA INFO --- */
-/* Estos estilos sólo aplican si el <body> tiene la clase .info-page */
-.info-page {
-  --base-font-size: 12px;
-  --scale-ratio: 1.083;
-  --line-rhythm: 1.45;
-  --muted: #666666;
-  --accent: #0a84ff;
-  --text: #1a1a1a;
-  --container-width: 1100px;
-  --gutter: 16px;
-
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: var(--base-font-size);
-  line-height: var(--line-rhythm);
-  color: var(--text);
-  background: #ffffff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.info-page .container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-.info-page h1 { margin: 0 0 0.35rem 0; font-size: calc(1rem * var(--scale-ratio)); font-weight: 700; }
-.info-page h2 { margin: 0.9rem 0 0.45rem 0; font-size: calc(0.95rem * var(--scale-ratio)); font-weight: 700; border-bottom: 1px dashed #ddd; padding-bottom: 0.45rem; }
-.info-page h3 { margin: 0.45rem 0 0.35rem 0; font-size: 1rem; font-weight: 700; }
-.info-page h4 { margin: 0.35rem 0; font-size: 0.95rem; font-weight: 700; }
-
-.info-page p { margin: 0.5rem 0; }
-.info-page .meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 0.6rem; }
-
-.info-page .section { margin-bottom: 1rem; }
-
-.info-page .two-col { display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-start; }
-.info-page .col-left { flex: 1 1 62%; min-width: 220px; }
-.info-page .col-right { width: 220px; flex: 0 0 220px; color: var(--muted); font-size: 0.92rem; }
-
-.info-page .item-title { font-weight: 700; }
-.info-page .item-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.35rem; }
-
-.info-page .dates { color: var(--muted); font-size: 0.92rem; text-align: right; min-width: 70px; }
-.info-page .note { color: var(--muted); font-size: 0.92rem; margin-top: 0.45rem; }
-
-.info-page ul { margin: 0.45rem 0 0.6rem 1.2rem; padding: 0; }
-.info-page li { margin: 0.3rem 0; }
-
-.info-page a { color: var(--accent); text-decoration: none; }
-.info-page a:hover { text-decoration: underline; }
-
-/* Mobile: reduce base font-size to 10px and tighten rhythm */
-@media (max-width: 820px) {
-  .info-page {
-    --base-font-size: 10px;
-    --line-rhythm: 1.35;
-    font-size: var(--base-font-size);
-  }
-  .info-page .col-right { width: 100%; order: 2; text-align: left; }
-  .info-page .two-col { flex-direction: column; }
-  .info-page .dates { text-align: left; margin-top: 0.35rem; }
-  header, footer { text-align: center; }
 }
