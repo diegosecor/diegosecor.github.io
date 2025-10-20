@@ -43,6 +43,25 @@
       text-align: left;
     }
 
+    /* Make the CV title look like a button (underlined) */
+    #cv-title-button {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-decoration: underline; /* palabra CV subrayada */
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      display: inline-block;
+    }
+    #cv-title-button:focus {
+      outline: 2px solid rgba(0,0,0,0.12);
+      outline-offset: 3px;
+    }
+
     /* Skills grid: dt + dd on same line */
     .skills {
       display: grid;
@@ -102,6 +121,19 @@
     .contact-links { display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
     .contact-links a { color: inherit; text-decoration: none; font-size:11.5px; }
     .contact-links a:hover { text-decoration: underline; }
+
+    /* Hidden state for collapse */
+    .collapsed { display: none; }
+
+    /* Simple transition when toggling (using max-height technique) */
+    .collapsible {
+      overflow: hidden;
+      transition: max-height 260ms ease;
+      max-height: 2000px; /* large enough for expanded state */
+    }
+    .collapsible.collapsed {
+      max-height: 0;
+    }
   </style>
 </head>
 <body>
@@ -153,285 +185,300 @@
 
       <hr class="sep">
 
-      <!-- CV -->
-      <h2 id="cv-title">CV</h2>
+      <!-- CV title (underlined) and toggle control -->
+      <h2 id="cv-heading-2">
+        <button id="cv-title-button"
+                aria-controls="cv-content"
+                aria-expanded="true"
+                title="Mostrar u ocultar secciones del CV">
+          CV
+        </button>
+      </h2>
 
-      <!-- EDUCATION -->
-      <section aria-labelledby="education-title">
-        <h3 id="education-title">EDUCATION</h3>
+      <!-- Collapsible content: desde EDUCATION hasta LANGUAGES (inclusive).
+           Default: expanded (aria-expanded="true"). -->
+      <div id="cv-content" class="collapsible" role="region" aria-labelledby="cv-heading-2">
 
-        <div class="row" style="align-items:flex-start;">
-          <div class="col-right muted">
-            Universidad del Valle<br>
-            Cali, Colombia
-          </div>
-          <div class="col-left">
-            <div class="job">
-              <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-                <div class="title">Bachelor of Architectural Studies (B.Arch)</div>
-                <div class="dates">2017 — 2022<br><span class="muted">5 years</span></div>
-              </div>
-              <div class="muted" style="margin-top:0.25rem;">
-                • Highly regarded public university in Colombia.<br>
-                • School of Architecture focused on studio-based design, urbanism, and building.<br>
-                • A five-year pre-professional architecture degree.<br>
-                • Thesis: "Shade Structures System For Public Space: An Approach to Parametric Design Processes and Tools".
+        <!-- EDUCATION -->
+        <section aria-labelledby="education-title">
+          <h3 id="education-title">EDUCATION</h3>
+
+          <div class="row" style="align-items:flex-start;">
+            <div class="col-right muted">
+              Universidad del Valle<br>
+              Cali, Colombia
+            </div>
+            <div class="col-left">
+              <div class="job">
+                <div style="display:flex; justify-content:space-between; gap:0.5rem;">
+                  <div class="title">Bachelor of Architectural Studies (B.Arch)</div>
+                  <div class="dates">2017 — 2022<br><span class="muted">5 years</span></div>
+                </div>
+                <div class="muted" style="margin-top:0.25rem;">
+                  • Highly regarded public university in Colombia.<br>
+                  • School of Architecture focused on studio-based design, urbanism, and building.<br>
+                  • A five-year pre-professional architecture degree.<br>
+                  • Thesis: "Shade Structures System For Public Space: An Approach to Parametric Design Processes and Tools".
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="row" style="align-items:flex-start; margin-top:0.45rem;">
-          <div class="col-right muted">
-            Servicio Nacional de<br>Aprendizaje SENA<br>
-            Armenia, Colombia
-          </div>
-          <div class="col-left">
-            <div class="job">
-              <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-                <div class="title">Architectural Design Technician</div>
-                <div class="dates">2014 — 2015<br><span class="muted">2 years</span></div>
-              </div>
-              <div class="muted" style="margin-top:0.25rem;">
-                • Technical training in architectural documentation and representation.
+          <div class="row" style="align-items:flex-start; margin-top:0.45rem;">
+            <div class="col-right muted">
+              Servicio Nacional de<br>Aprendizaje SENA<br>
+              Armenia, Colombia
+            </div>
+            <div class="col-left">
+              <div class="job">
+                <div style="display:flex; justify-content:space-between; gap:0.5rem;">
+                  <div class="title">Architectural Design Technician</div>
+                  <div class="dates">2014 — 2015<br><span class="muted">2 years</span></div>
+                </div>
+                <div class="muted" style="margin-top:0.25rem;">
+                  • Technical training in architectural documentation and representation.
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <hr class="sep">
+        <hr class="sep">
 
-      <section aria-labelledby="awards-title">
-        <h3 id="awards-title">AWARDS &amp; HONORS</h3>
+        <!-- AWARDS -->
+        <section aria-labelledby="awards-title">
+          <h3 id="awards-title">AWARDS &amp; HONORS</h3>
 
-        <div class="row" style="margin-top:0.15rem;">
-          <div class="col-right muted">Playing Models<br>Pittsburgh, PA</div>
-          <div class="col-left">
-            <div class="job">
+          <div class="row" style="margin-top:0.15rem;">
+            <div class="col-right muted">Playing Models<br>Pittsburgh, PA</div>
+            <div class="col-left">
+              <div class="job">
+                <div style="display:flex; justify-content:space-between;">
+                  <div class="title">Selected Work (Open Call)</div>
+                  <div class="dates">2025</div>
+                </div>
+                <div class="muted" style="margin-top:0.25rem;">
+                  Image series from exploratory studies using LoRA in ComfyUI and 3D-to-Image pipelines. Carnegie Mellon University (CMU).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:0.45rem;">
+            <div class="col-right muted">Universidad del Valle<br>Cali, Colombia</div>
+            <div class="col-left">
+              <div class="job">
+                <div style="display:flex; justify-content:space-between;">
+                  <div class="title">Academic Excellence Scholarship</div>
+                  <div class="dates">2020</div>
+                </div>
+                <div class="muted" style="margin-top:0.25rem;">
+                  Awarded for outstanding academic performance in the Architecture program. Received on four occasions:
+                  <ul>
+                    <li>June 2018</li>
+                    <li>April 2019</li>
+                    <li>December 2020</li>
+                    <li>March 2022</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="sep">
+
+        <!-- CERTIFICATIONS -->
+        <section aria-labelledby="certs-title">
+          <h3 id="certs-title">CERTIFICATIONS</h3>
+
+          <div class="row" style="margin-top:0.15rem;">
+            <div class="col-right muted">Nvidia<br><span class="muted">Self-paced Course</span></div>
+            <div class="col-left">
               <div style="display:flex; justify-content:space-between;">
-                <div class="title">Selected Work (Open Call)</div>
-                <div class="dates">2025</div>
+                <div class="title">Generative AI with Diffusion Models</div>
+                <div class="dates">07/2025 — 08/2025<br><span class="muted">1 month</span></div>
               </div>
               <div class="muted" style="margin-top:0.25rem;">
-                Image series from exploratory studies using LoRA in ComfyUI and 3D-to-Image pipelines. Carnegie Mellon University (CMU).
+                Course Objectives: Build a U-Net to generate images from pure noise; improve the quality of generated images with the denoising diffusion process; control the image output with context embeddings; generate images from English text prompts using CLIP.
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="row" style="margin-top:0.45rem;">
-          <div class="col-right muted">Universidad del Valle<br>Cali, Colombia</div>
-          <div class="col-left">
-            <div class="job">
-              <div style="display:flex; justify-content:space-between;">
-                <div class="title">Academic Excellence Scholarship</div>
-                <div class="dates">2020</div>
+        <hr class="sep">
+
+        <!-- TECHNICAL SKILLS -->
+        <section aria-labelledby="skills-title">
+          <h3 id="skills-title">TECHNICAL SKILLS</h3>
+          <dl class="skills">
+            <dt>Stable Diffusion:</dt>
+            <dd>ComfyUI / ForgeUI / Automatic1111</dd>
+
+            <dt>Coding Languages: 3D /</dt>
+            <dd>Python</dd>
+
+            <dt>Parametric Modeling:</dt>
+            <dd>Rhino / Grasshopper / Gh Python / 3ds Max / SketchUp / Blender</dd>
+
+            <dt>CAD / BIM :</dt>
+            <dd>AutoCAD / Revit</dd>
+
+            <dt>Rendering :</dt>
+            <dd>V-Ray (Rhino, 3ds max) / Corona (3ds max) / Lumion / Twinmotion</dd>
+          </dl>
+        </section>
+
+        <hr class="sep">
+
+        <!-- WORK EXPERIENCE -->
+        <section aria-labelledby="work-title">
+          <h3 id="work-title">WORK EXPERIENCE</h3>
+
+          <div class="job" style="margin-bottom:0.7rem;">
+            <div style="display:flex; justify-content:space-between; gap:0.5rem;">
+              <div>
+                <div class="title">ARUP Colombia — Computational development / Architectural Designer</div>
+                <div class="muted">Bogotá, Colombia — full-time employment</div>
               </div>
-              <div class="muted" style="margin-top:0.25rem;">
-                Awarded for outstanding academic performance in the Architecture program. Received on four occasions:
-                <ul>
-                  <li>June 2018</li>
-                  <li>April 2019</li>
-                  <li>December 2020</li>
-                  <li>March 2022</li>
-                </ul>
-              </div>
+              <div class="dates">03/2025 — 06/2025<br><span class="muted">3 months</span></div>
             </div>
+            <ul>
+              <li class="bullet">Perform advanced computational design tasks using tools such as Grasshopper, Python, and Stable Diffusion.</li>
+              <li class="bullet">Develop parametric scripts for large-scale urban analysis, focusing on urban geometry and individual statistical patterns for a project in the Dominican Republic.</li>
+              <li class="bullet">Generate AI-assisted renderings and photomontages by editing real environments and transforming architectural scenes.</li>
+            </ul>
           </div>
-        </div>
-      </section>
 
-      <hr class="sep">
+          <div class="job" style="margin-bottom:0.7rem;">
+            <div style="display:flex; justify-content:space-between; gap:0.5rem;">
+              <div>
+                <div class="title">DL320 Studio — Architectural Designer Co-founder</div>
+                <div class="muted">Boston, MA — part-time</div>
+              </div>
+              <div class="dates">01/2024 — 08/2025<br><span class="muted">1 year, 6 months</span></div>
+            </div>
+            <ul>
+              <li class="bullet">Establish a visualization and interior design studio delivering compelling visual solutions for architecture and real estate.</li>
+              <li class="bullet">Integrate emerging AI technologies into daily architectural workflows to enhance project development and creative experimentation.</li>
+              <li class="bullet">Conduct independent research on the development of AI-driven tools and create custom workflows in ComfyUI for image generation and visualization processes.</li>
+              <li class="bullet">Execute high-quality 3D modeling for design proposals, emphasizing precision and spatial storytelling.</li>
+              <li class="bullet">Manage the studio’s digital presence through strategic content creation for social media and website platforms.</li>
+            </ul>
+          </div>
 
-      <section aria-labelledby="certs-title">
-        <h3 id="certs-title">CERTIFICATIONS</h3>
+          <div class="job" style="margin-bottom:0.7rem;">
+            <div style="display:flex; justify-content:space-between; gap:0.5rem;">
+              <div>
+                <div class="title">Taller 77 — Architectural Designer</div>
+                <div class="muted">Cali, Colombia — full-time employment</div>
+              </div>
+              <div class="dates">05/2024 — 10/2024<br><span class="muted">6 months</span></div>
+            </div>
+            <ul>
+              <li class="bullet">Designed innovative bamboo (guadua) structures with unconventional roof geometries, responding to the unique characteristics of this native material.</li>
+              <li class="bullet">Applied advanced 3D modeling techniques to manage complex geometries and support organic design approaches.</li>
+              <li class="bullet">Produced detailed planimetry and technical documentation for fabrication and on-site construction guidance.</li>
+            </ul>
+          </div>
+        </section>
 
-        <div class="row" style="margin-top:0.15rem;">
-          <div class="col-right muted">Nvidia<br><span class="muted">Self-paced Course</span></div>
-          <div class="col-left">
+        <hr class="sep">
+
+        <!-- CO-OP WORK EXPERIENCE (restored) -->
+        <section aria-labelledby="coop-title">
+          <h3 id="coop-title">CO-OP WORK EXPERIENCE</h3>
+
+          <div class="job" style="margin-bottom:0.45rem;">
             <div style="display:flex; justify-content:space-between;">
-              <div class="title">Generative AI with Diffusion Models</div>
-              <div class="dates">07/2025 — 08/2025<br><span class="muted">1 month</span></div>
+              <div>
+                <div class="title">Universidad del Valle — Internship</div>
+                <div class="muted">Cali, Colombia</div>
+              </div>
+              <div class="dates">2022<br><span class="muted">6 months</span></div>
             </div>
             <div class="muted" style="margin-top:0.25rem;">
-              Course Objectives: Build a U-Net to generate images from pure noise; improve the quality of generated images with the denoising diffusion process; control the image output with context embeddings; generate images from English text prompts using CLIP.
+              Completed a research internship with the Group for Representation and Architecture (Observatorio de Arquitectura Contemporánea) under the project "RE-EXISTENCIA Y RE-HABITACIÓN VIRTUAL DIGITAL (2022)". Digitally reconstructed modernist housing from the 1950s in Cali, Colombia.
             </div>
           </div>
-        </div>
-      </section>
 
-      <hr class="sep">
-
-      <section aria-labelledby="skills-title">
-        <h3 id="skills-title">TECHNICAL SKILLS</h3>
-        <dl class="skills">
-          <dt>Stable Diffusion:</dt>
-          <dd>ComfyUI / ForgeUI / Automatic1111</dd>
-
-          <dt>Coding Languages: 3D /</dt>
-          <dd>Python</dd>
-
-          <dt>Parametric Modeling:</dt>
-          <dd>Rhino / Grasshopper / Gh Python / 3ds Max / SketchUp / Blender</dd>
-
-          <dt>CAD / BIM :</dt>
-          <dd>AutoCAD / Revit</dd>
-
-          <dt>Rendering :</dt>
-          <dd>V-Ray (Rhino, 3ds max) / Corona (3ds max) / Lumion / Twinmotion</dd>
-        </dl>
-      </section>
-
-      <hr class="sep">
-
-      <section aria-labelledby="work-title">
-        <h3 id="work-title">WORK EXPERIENCE</h3>
-
-        <div class="job" style="margin-bottom:0.7rem;">
-          <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-            <div>
-              <div class="title">ARUP Colombia — Computational development / Architectural Designer</div>
-              <div class="muted">Bogotá, Colombia — full-time employment</div>
+          <div class="job" style="margin-bottom:0.45rem;">
+            <div style="display:flex; justify-content:space-between;">
+              <div>
+                <div class="title">Recinto Estudio — Internship</div>
+                <div class="muted">Cali, Colombia</div>
+              </div>
+              <div class="dates">2021<br><span class="muted">5 months</span></div>
             </div>
-            <div class="dates">03/2025 — 06/2025<br><span class="muted">3 months</span></div>
-          </div>
-          <ul>
-            <li class="bullet">Perform advanced computational design tasks using tools such as Grasshopper, Python, and Stable Diffusion.</li>
-            <li class="bullet">Develop parametric scripts for large-scale urban analysis, focusing on urban geometry and individual statistical patterns for a project in the Dominican Republic.</li>
-            <li class="bullet">Generate AI-assisted renderings and photomontages by editing real environments and transforming architectural scenes.</li>
-          </ul>
-        </div>
-
-        <div class="job" style="margin-bottom:0.7rem;">
-          <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-            <div>
-              <div class="title">DL320 Studio — Architectural Designer Co-founder</div>
-              <div class="muted">Boston, MA — part-time</div>
+            <div class="muted" style="margin-top:0.25rem;">
+              Part of a design team reconstructing a hurricane-damaged home in Providencia; designed the timber structural system for hurricane conditions including lateral bracing, uplift-resistant connections, and corrosion-resistant hardware.
             </div>
-            <div class="dates">01/2024 — 08/2025<br><span class="muted">1 year, 6 months</span></div>
           </div>
-          <ul>
-            <li class="bullet">Establish a visualization and interior design studio delivering compelling visual solutions for architecture and real estate.</li>
-            <li class="bullet">Integrate emerging AI technologies into daily architectural workflows to enhance project development and creative experimentation.</li>
-            <li class="bullet">Conduct independent research on the development of AI-driven tools and create custom workflows in ComfyUI for image generation and visualization processes.</li>
-            <li class="bullet">Execute high-quality 3D modeling for design proposals, emphasizing precision and spatial storytelling.</li>
-            <li class="bullet">Manage the studio’s digital presence through strategic content creation for social media and website platforms.</li>
-          </ul>
-        </div>
 
-        <div class="job" style="margin-bottom:0.7rem;">
-          <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-            <div>
-              <div class="title">Taller 77 — Architectural Designer</div>
-              <div class="muted">Cali, Colombia — full-time employment</div>
+          <div class="job" style="margin-bottom:0.45rem;">
+            <div style="display:flex; justify-content:space-between;">
+              <div>
+                <div class="title">Pantoja Arquitectos — Internship</div>
+                <div class="muted">Cali, Colombia</div>
+              </div>
+              <div class="dates">2020<br><span class="muted">9 months</span></div>
             </div>
-            <div class="dates">05/2024 — 10/2024<br><span class="muted">6 months</span></div>
-          </div>
-          <ul>
-            <li class="bullet">Designed innovative bamboo (guadua) structures with unconventional roof geometries, responding to the unique characteristics of this native material.</li>
-            <li class="bullet">Applied advanced 3D modeling techniques to manage complex geometries and support organic design approaches.</li>
-            <li class="bullet">Produced detailed planimetry and technical documentation for fabrication and on-site construction guidance.</li>
-          </ul>
-        </div>
-      </section>
-
-      <hr class="sep">
-
-      <!-- CO-OP WORK EXPERIENCE (restored) -->
-      <section aria-labelledby="coop-title">
-        <h3 id="coop-title">CO-OP WORK EXPERIENCE</h3>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Universidad del Valle — Internship</div>
-              <div class="muted">Cali, Colombia</div>
+            <div class="muted" style="margin-top:0.25rem;">
+              Worked with an architecture studio on multiple public design competitions for civic buildings — including museums and a music building — contributing to concept development, programming, massing studies, acoustic and code considerations, and presentation boards.
             </div>
-            <div class="dates">2022<br><span class="muted">6 months</span></div>
           </div>
+        </section>
+
+        <hr class="sep">
+
+        <!-- PRESENTATIONS / TALKS -->
+        <section aria-labelledby="pres-title">
+          <h3 id="pres-title">PRESENTATIONS / TALKS</h3>
+
           <div class="muted" style="margin-top:0.25rem;">
-            Completed a research internship with the Group for Representation and Architecture (Observatorio de Arquitectura Contemporánea) under the project "RE-EXISTENCIA Y RE-HABITACIÓN VIRTUAL DIGITAL (2022)". Digitally reconstructed modernist housing from the 1950s in Cali, Colombia.
-          </div>
-        </div>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Recinto Estudio — Internship</div>
-              <div class="muted">Cali, Colombia</div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+              <div>
+                <div class="title">ArmyOne Studio — Presented a talk on AI tools</div>
+                <div class="muted">Cali, Colombia</div>
+              </div>
+              <div class="dates">2025</div>
             </div>
-            <div class="dates">2021<br><span class="muted">5 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Part of a design team reconstructing a hurricane-damaged home in Providencia; designed the timber structural system for hurricane conditions including lateral bracing, uplift-resistant connections, and corrosion-resistant hardware.
-          </div>
-        </div>
 
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Pantoja Arquitectos — Internship</div>
-              <div class="muted">Cali, Colombia</div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+              <div>
+                <div class="title">Universidad del Valle — Guest at the Machinehaus design workshop</div>
+                <div class="muted">Cali, Colombia</div>
+              </div>
+              <div class="dates">2025</div>
             </div>
-            <div class="dates">2020<br><span class="muted">9 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Worked with an architecture studio on multiple public design competitions for civic buildings — including museums and a music building — contributing to concept development, programming, massing studies, acoustic and code considerations, and presentation boards.
-          </div>
-        </div>
-      </section>
 
-      <hr class="sep">
-
-      <section aria-labelledby="pres-title">
-        <h3 id="pres-title">PRESENTATIONS / TALKS</h3>
-
-        <div class="muted" style="margin-top:0.25rem;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
-            <div>
-              <div class="title">ArmyOne Studio — Presented a talk on AI tools</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
-            <div>
-              <div class="title">Universidad del Valle — Guest at the Machinehaus design workshop</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">INEM Jose Celestino Mutis — Talk for high school students</div>
-              <div class="muted">Armenia, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-        </div>
-      </section>
-
-      <hr class="sep">
-
-      <section aria-labelledby="lang-title">
-        <h3 id="lang-title">LANGUAGES & CONTACT</h3>
-        <div class="row" style="margin-top:0.15rem;">
-          <div class="col-left muted">
-            English — Professional<br>
-            Spanish — Native
-          </div>
-          <div class="col-right">
-            <div class="contact-links">
-              <a href="https://www.linkedin.com/in/diegosecor" target="_blank" rel="noopener">linkedin</a>
-              <a href="https://github.com/diegosecor" target="_blank" rel="noopener">Github</a>
-              <a href="https://www.instagram.com/diegosecor_/" target="_blank" rel="noopener">Instagram</a>
+            <div style="display:flex; justify-content:space-between;">
+              <div>
+                <div class="title">INEM Jose Celestino Mutis — Talk for high school students</div>
+                <div class="muted">Armenia, Colombia</div>
+              </div>
+              <div class="dates">2025</div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <hr class="sep">
+
+        <!-- LANGUAGES (renamed: removed & CONTACT and removed links at the bottom) -->
+        <section aria-labelledby="lang-title">
+          <h3 id="lang-title">LANGUAGES</h3>
+          <div class="row" style="margin-top:0.15rem;">
+            <div class="col-left muted">
+              English — Professional<br>
+              Spanish — Native
+            </div>
+            <div class="col-right">
+              <!-- Links removed here as requested -->
+            </div>
+          </div>
+        </section>
+
+      </div> <!-- end #cv-content -->
 
     </div>
   </main>
@@ -439,5 +486,48 @@
   <footer>
     <span class="email">diegosecor@gmail.com</span>
   </footer>
+
+  <script>
+    (function(){
+      var btn = document.getElementById('cv-title-button');
+      var content = document.getElementById('cv-content');
+
+      function setExpanded(expanded) {
+        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        if (expanded) {
+          content.classList.remove('collapsed');
+          content.classList.remove('collapsed'); // ensure expanded
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          // allow repaint
+          requestAnimationFrame(function(){
+            content.classList.add('collapsed');
+            content.style.maxHeight = '0';
+          });
+        }
+      }
+
+      // default: expanded
+      // ensure initial maxHeight fits content for transition
+      window.addEventListener('load', function(){
+        content.style.maxHeight = content.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      });
+
+      btn.addEventListener('click', function(){
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        setExpanded(!expanded);
+      });
+
+      // keyboard support (Enter/Space)
+      btn.addEventListener('keydown', function(e){
+        if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
