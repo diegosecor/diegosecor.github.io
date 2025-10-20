@@ -1,4 +1,4 @@
-/* --- TU CSS ORIGINAL --- */
+/* --- ORIGINAL CSS RESTORED --- */
 body {
   margin: 0;
   padding: 0;
@@ -103,8 +103,7 @@ footer {
   }
 }
 
-/* --- ESTILOS SCOPEADOS PARA LA PÁGINA INFO --- */
-/* Estos estilos sólo aplican si el <body> tiene la clase .info-page */
+/* Scoped styles for info page (do NOT affect landing) */
 .info-page {
   --base-font-size: 12px;
   --scale-ratio: 1.083;
@@ -157,7 +156,6 @@ footer {
 .info-page a { color: var(--accent); text-decoration: none; }
 .info-page a:hover { text-decoration: underline; }
 
-/* Mobile: reduce base font-size to 10px and tighten rhythm */
 @media (max-width: 820px) {
   .info-page {
     --base-font-size: 10px;
