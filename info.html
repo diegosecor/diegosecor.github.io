@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>diegoSecor — Information / CV</title>
-  <!-- Same fonts and stylesheet as index.html -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+  <!-- Cargar Space Grotesk incluyendo peso 500 y 700 para poder usar font-weight:700 -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,13 +24,13 @@
       padding: 0 0.75rem;
     }
 
-    /* Use Space Grotesk (same as index centered title) for emphasized titles */
+    /* Use Space Grotesk for emphasized titles and make them más gruesos (700) */
     .cv h1,
     .cv h2,
     .cv h3,
     .job .title {
       font-family: 'Space Grotesk', 'Arial', sans-serif;
-      font-weight: 500; /* match index .centered weight */
+      font-weight: 700; /* más grueso */
     }
 
     /* Size adjustments while keeping Space Grotesk for headings */
