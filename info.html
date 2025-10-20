@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>diegoSecor — Information / CV</title>
-  <!-- Cargar Space Grotesk incluyendo peso 500 y 700 para poder usar font-weight:700 -->
+  <!-- Cargar Space Grotesk incluyendo peso 500 y 700 -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
@@ -13,14 +13,28 @@
     /* Prevent the page's global main centering (from styles.css) affecting this page */
     main { display: block; }
 
+    /* Underline header links and the brand link (kept from previous) */
+    .top-bar a,
+    .brand-link {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      color: inherit; /* keep same color as body/header */
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+    }
+
     .cv {
       /* smaller base text like header titles */
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 12px;           /* compact text size */
       line-height: 1.4;
       color: inherit;            /* inherit color from body (same as index) */
-      max-width: 520px;         /* narrow column */
-      margin: 4rem 0 4rem 3.5rem; /* top/bottom and left offset to stick to side */
+      max-width: 560px;         /* narrow column */
+      margin: 4rem 0 4rem 12px; /* moved much more to the left (12px) */
       padding: 0 0.75rem;
     }
 
@@ -31,6 +45,19 @@
     .job .title {
       font-family: 'Space Grotesk', 'Arial', sans-serif;
       font-weight: 700; /* más grueso */
+    }
+
+    /* Ensure TECHNICAL SKILLS titles (dt) also use Space Grotesk 700 */
+    .skills dt {
+      font-family: 'Space Grotesk', 'Arial', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      margin-top: 0.35rem;
+    }
+    .skills dd {
+      margin: 0 0 0.4rem 1rem;
+      color: inherit;
+      font-size: 12px;
     }
 
     /* Size adjustments while keeping Space Grotesk for headings */
@@ -62,9 +89,6 @@
     ul { margin: 0.25rem 0 0.4rem 1.05rem; padding: 0; font-size:12px; }
     .bullet { margin-bottom:0.18rem; }
 
-    .skills dt { font-weight:700; margin-top:0.35rem; font-size:12px; }
-    .skills dd { margin: 0 0 0.4rem 1rem; color:inherit; font-size:12px; }
-
     /* Contact links stacked (linkedin / Github) */
     .contact-links { display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
     .contact-links a { color: inherit; text-decoration: none; font-size:11.5px; }
@@ -81,10 +105,12 @@
   </style>
 </head>
 <body>
-  <!-- Header EXACT copy from index.html -->
+  <!-- Header: brand links to index.html and header links are underlined -->
   <header class="top-bar">
     <div class="left">
-      <span class="brand"><strong>DS</strong> &middot; Architect</span>
+      <a href="index.html" class="brand-link" aria-label="Go to home">
+        <span class="brand"><strong>DS</strong> &middot; Architect</span>
+      </a>
     </div>
     <nav class="right">
       <a href="info.html">Information</a>
@@ -284,97 +310,6 @@
           </ul>
         </div>
 
-        <div class="job" style="margin-bottom:0.7rem;">
-          <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-            <div>
-              <div class="title">Universidad del Valle — Architectural Assistant Designer</div>
-              <div class="muted">Cali, Colombia — half-time employment</div>
-            </div>
-            <div class="dates">10/2021 — 03/2023<br><span class="muted">6 months</span></div>
-          </div>
-          <ul>
-            <li class="bullet">Designed a modular pergola network to organize circulation, provide shade, and activate public programs in the park.</li>
-            <li class="bullet">Integrated rooftop photovoltaic panels into the canopy to power lighting and amenities, with concealed conduit routing, drainage, and inverter locations in the structural profiles.</li>
-            <li class="bullet">Delivered a complete construction document set: site layout, foundations/anchorage, member schedules, shop drawings, connection details, and electrical diagrams.</li>
-          </ul>
-        </div>
-      </section>
-
-      <hr class="sep">
-
-      <section aria-labelledby="coop-title">
-        <h2 id="coop-title">CO-OP WORK EXPERIENCE</h2>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Universidad del Valle — Internship</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2022<br><span class="muted">6 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Completed a research internship with the Group for Representation and Architecture (Observatorio de Arquitectura Contemporánea) under the project "RE-EXISTENCIA Y RE-HABITACIÓN VIRTUAL DIGITAL (2022)". Digitally reconstructed modernist housing from the 1950s in Cali, Colombia.
-          </div>
-        </div>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Recinto Estudio — Internship</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2021<br><span class="muted">5 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Part of a design team reconstructing a hurricane-damaged home in Providencia; designed the timber structural system for hurricane conditions including lateral bracing, uplift-resistant connections, and corrosion-resistant hardware.
-          </div>
-        </div>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Pantoja Arquitectos — Internship</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2020<br><span class="muted">9 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Worked with an architecture studio on multiple public design competitions for civic buildings — including museums and a music building — contributing to concept development, programming, massing studies, acoustic and code considerations, and presentation boards.
-          </div>
-        </div>
-      </section>
-
-      <hr class="sep">
-
-      <section aria-labelledby="pres-title">
-        <h2 id="pres-title">PRESENTATIONS / TALKS</h2>
-
-        <div class="muted" style="margin-top:0.25rem;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
-            <div>
-              <div class="title">ArmyOne Studio — Presented a talk on AI tools</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
-            <div>
-              <div class="title">Universidad del Valle — Guest at the Machinehaus design workshop</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">INEM Jose Celestino Mutis — Talk for high school students</div>
-              <div class="muted">Armenia, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-        </div>
       </section>
 
       <hr class="sep">
