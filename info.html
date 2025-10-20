@@ -24,7 +24,16 @@
       padding: 0 0.75rem;
     }
 
-    /* Make section headers slightly larger than body but still compact */
+    /* Use Space Grotesk (same as index centered title) for emphasized titles */
+    .cv h1,
+    .cv h2,
+    .cv h3,
+    .job .title {
+      font-family: 'Space Grotesk', 'Arial', sans-serif;
+      font-weight: 500; /* match index .centered weight */
+    }
+
+    /* Size adjustments while keeping Space Grotesk for headings */
     .cv h1 { font-size: 14px; margin: 0 0 0.35rem 0; }
     .cv h2 { font-size: 13px; margin: 0 0 0.25rem 0; letter-spacing: .6px; }
     .cv h3 { font-size: 12px; margin: 0 0 0.25rem 0; }
@@ -46,7 +55,6 @@
 
     .muted { color:#6b7072; opacity:0.85; font-size:11.5px; }
     .job { margin-bottom:0.55rem; font-size:12px; }
-    .job .title { font-weight:700; font-size:12px; }
     .dates { text-align:right; color:#6b7072; opacity:0.85; font-size:11.5px; min-width:70px; }
 
     hr.sep { border: none; border-top: 1px dashed #ddd; margin: 0.7rem 0; }
@@ -91,13 +99,7 @@
       <section class="hero" aria-labelledby="about-title">
         <h2 id="about-title">ABOUT</h2>
         <p class="muted">
-          Colombian architect passionate about architecture, the visual arts, geometric generation, artificial intelligence, and parametric modeling.
-          I focus on exploring and applying technology to improve design outcomes. My self-taught drive to research and adopt new tools has opened doors
-          to collaborate in different places and teams, applying them effectively.
-        </p>
-        <p class="muted">
-          I’ve delivered talks and hands-on sessions (Stable Diffusion, AI-assisted visualization) at academic venues and design studios.
-          I consider myself highly inquisitive, always seeking new tools and approaches to achieve my goals.
+          Colombian architect passionate about architecture, the visual arts, geometric generation, artificial intelligence, and parametric modeling. I focus on exploring and applying technology to improve design outcomes. My self-taught drive to research and adopt new tools has opened doors to collaborate in different places and teams, applying them effectively.I consider myself highly inquisitive, always seeking new tools and approaches to achieve my goals.
         </p>
       </section>
 
