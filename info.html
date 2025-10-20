@@ -43,26 +43,30 @@
       text-align: left;
     }
 
-    /* Make the CV title look like a button (underlined) with green color */
-    #cv-title-button {
+    /* Toggle button shared style (used by CV and CONTACT) */
+    .toggle-button {
       background: none;
       border: none;
       padding: 0;
       margin: 0;
       font: inherit;
-      color: #008000;                 /* CV in green */
       cursor: pointer;
-      text-decoration: underline;     /* palabra CV subrayada */
+      text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
       display: inline-block;
     }
-    #cv-title-button:focus {
+    /* CV color: green #008000 (as requested) */
+    #cv-title-button { color: #008000; }
+    /* CONTACT: leave normal/inherited color */
+    #contact-title-button { color: inherit; }
+
+    .toggle-button:focus {
       outline: 2px solid rgba(0,0,0,0.12);
       outline-offset: 3px;
     }
 
-    /* Ensure CV content transitions smoothly (max-height) */
+    /* Ensure collapsible content transitions smoothly (max-height technique) */
     .collapsible {
       overflow: hidden;
       transition: max-height 260ms ease;
@@ -163,9 +167,18 @@
 
       <hr class="sep">
 
-      <!-- CONTACT -->
-      <section aria-labelledby="contact-title">
-        <h2 id="contact-title">CONTACT</h2>
+      <!-- CONTACT title (underlined, toggle) -->
+      <h2 id="contact-heading">
+        <button id="contact-title-button" class="toggle-button"
+                aria-controls="contact-content"
+                aria-expanded="false"
+                title="Mostrar u ocultar Contact">
+          CONTACT
+        </button>
+      </h2>
+
+      <!-- CONTACT collapsible content (default: collapsed) -->
+      <div id="contact-content" class="collapsible collapsed" role="region" aria-labelledby="contact-heading">
         <div class="row" style="margin-top:0.15rem;">
           <div class="col-left muted">
             +57 3226321199<br>
@@ -179,13 +192,13 @@
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <hr class="sep">
 
       <!-- CV title (underlined, green) and toggle control -->
       <h2 id="cv-heading-2">
-        <button id="cv-title-button"
+        <button id="cv-title-button" class="toggle-button"
                 aria-controls="cv-content"
                 aria-expanded="false"
                 title="Mostrar u ocultar secciones del CV">
@@ -487,45 +500,59 @@
 
   <script>
     (function(){
-      var btn = document.getElementById('cv-title-button');
-      var content = document.getElementById('cv-content');
+      var cvBtn = document.getElementById('cv-title-button');
+      var cvContent = document.getElementById('cv-content');
+      var contactBtn = document.getElementById('contact-title-button');
+      var contactContent = document.getElementById('contact-content');
 
-      function setExpanded(expanded) {
-        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      function toggleSection(btn, content) {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+
         if (expanded) {
-          content.classList.remove('collapsed');
-          // set maxHeight to actual height for smooth transition
-          content.style.maxHeight = content.scrollHeight + 'px';
-        } else {
-          // set maxHeight to current height then to 0 to animate
+          // collapse
           content.style.maxHeight = content.scrollHeight + 'px';
           requestAnimationFrame(function(){
             content.classList.add('collapsed');
             content.style.maxHeight = '0';
           });
+        } else {
+          // expand
+          content.classList.remove('collapsed');
+          content.style.maxHeight = content.scrollHeight + 'px';
         }
       }
 
-      // default: collapsed on first load
+      // initial: collapsed on first load for both
       window.addEventListener('load', function(){
-        // ensure collapsed state visually (maxHeight 0)
-        content.classList.add('collapsed');
-        content.style.maxHeight = '0';
-        btn.setAttribute('aria-expanded', 'false');
+        // ensure collapsed visual state
+        [cvContent, contactContent].forEach(function(c){
+          if (c) {
+            c.classList.add('collapsed');
+            c.style.maxHeight = '0';
+          }
+        });
+        if (cvBtn) cvBtn.setAttribute('aria-expanded', 'false');
+        if (contactBtn) contactBtn.setAttribute('aria-expanded', 'false');
       });
 
-      btn.addEventListener('click', function(){
-        var expanded = btn.getAttribute('aria-expanded') === 'true';
-        setExpanded(!expanded);
-      });
+      if (cvBtn && cvContent) {
+        cvBtn.addEventListener('click', function(){ toggleSection(cvBtn, cvContent); });
+        cvBtn.addEventListener('keydown', function(e){
+          if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') {
+            e.preventDefault(); cvBtn.click();
+          }
+        });
+      }
 
-      // keyboard support (Enter/Space)
-      btn.addEventListener('keydown', function(e){
-        if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') {
-          e.preventDefault();
-          btn.click();
-        }
-      });
+      if (contactBtn && contactContent) {
+        contactBtn.addEventListener('click', function(){ toggleSection(contactBtn, contactContent); });
+        contactBtn.addEventListener('keydown', function(e){
+          if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') {
+            e.preventDefault(); contactBtn.click();
+          }
+        });
+      }
     })();
   </script>
 </body>
