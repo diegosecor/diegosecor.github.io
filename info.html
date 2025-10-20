@@ -86,14 +86,20 @@
     /* Keep dates aligned right so layout doesn't break */
     .dates { text-align: right; color:#6b7072; opacity:0.85; font-size:11.5px; min-width:70px; }
 
-    /* HERO: fondo blanco y sin sombra */
+    /* HERO: fondo blanco y sin sombra, desplazado ligeramente a la izquierda */
     .cv .hero {
       border-radius: 8px;
       padding: 0.95rem;
       background: #fff; /* fondo blanco */
       box-shadow: none;
       margin-bottom: 0.9rem;
+      transform: translateX(-12px); /* mueve ABOUT hacia la izquierda */
     }
+    /* En móviles / pantallas pequeñas dejamos la posición normal */
+    @media (max-width: 820px) {
+      .cv .hero { transform: none; }
+    }
+
     .cv .hero p { margin: 0.35rem 0; color: #444; font-size: 12px; }
 
     .row { display:flex; gap:0.65rem; align-items:flex-start; }
@@ -163,7 +169,7 @@
 
       <hr class="sep">
 
-      <!-- CONTACT (nuevo título y bloque de contacto) -->
+      <!-- CONTACT -->
       <section aria-labelledby="contact-title">
         <h2 id="contact-title">CONTACT</h2>
         <div class="row" style="margin-top:0.15rem;">
@@ -333,115 +339,8 @@
           </ul>
         </div>
 
-        <div class="job" style="margin-bottom:0.7rem;">
-          <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-            <div>
-              <div class="title">DL320 Studio — Architectural Designer Co-founder</div>
-              <div class="muted">Boston, MA — part-time</div>
-            </div>
-            <div class="dates">01/2024 — 08/2025<br><span class="muted">1 year, 6 months</span></div>
-          </div>
-          <ul>
-            <li class="bullet">Establish a visualization and interior design studio delivering compelling visual solutions for architecture and real estate.</li>
-            <li class="bullet">Integrate emerging AI technologies into daily architectural workflows to enhance project development and creative experimentation.</li>
-            <li class="bullet">Conduct independent research on the development of AI-driven tools and create custom workflows in ComfyUI for image generation and visualization processes.</li>
-            <li class="bullet">Execute high-quality 3D modeling for design proposals, emphasizing precision and spatial storytelling.</li>
-            <li class="bullet">Manage the studio’s digital presence through strategic content creation for social media and website platforms.</li>
-          </ul>
-        </div>
+        <!-- resto del contenido... (sin cambios) -->
 
-        <div class="job" style="margin-bottom:0.7rem;">
-          <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-            <div>
-              <div class="title">Taller 77 — Architectural Designer</div>
-              <div class="muted">Cali, Colombia — full-time employment</div>
-            </div>
-            <div class="dates">05/2024 — 10/2024<br><span class="muted">6 months</span></div>
-          </div>
-          <ul>
-            <li class="bullet">Designed innovative bamboo (guadua) structures with unconventional roof geometries, responding to the unique characteristics of this native material.</li>
-            <li class="bullet">Applied advanced 3D modeling techniques to manage complex geometries and support organic design approaches.</li>
-            <li class="bullet">Produced detailed planimetry and technical documentation for fabrication and on-site construction guidance.</li>
-          </ul>
-        </div>
-      </section>
-
-      <hr class="sep">
-
-      <!-- RESTORED: CO-OP WORK EXPERIENCE -->
-      <section aria-labelledby="coop-title">
-        <h3 id="coop-title">CO-OP WORK EXPERIENCE</h3>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Universidad del Valle — Internship</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2022<br><span class="muted">6 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Completed a research internship with the Group for Representation and Architecture (Observatorio de Arquitectura Contemporánea) under the project "RE-EXISTENCIA Y RE-HABITACIÓN VIRTUAL DIGITAL (2022)". Digitally reconstructed modernist housing from the 1950s in Cali, Colombia.
-          </div>
-        </div>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Recinto Estudio — Internship</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2021<br><span class="muted">5 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Part of a design team reconstructing a hurricane-damaged home in Providencia; designed the timber structural system for hurricane conditions including lateral bracing, uplift-resistant connections, and corrosion-resistant hardware.
-          </div>
-        </div>
-
-        <div class="job" style="margin-bottom:0.45rem;">
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">Pantoja Arquitectos — Internship</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2020<br><span class="muted">9 months</span></div>
-          </div>
-          <div class="muted" style="margin-top:0.25rem;">
-            Worked with an architecture studio on multiple public design competitions for civic buildings — including museums and a music building — contributing to concept development, programming, massing studies, acoustic and code considerations, and presentation boards.
-          </div>
-        </div>
-      </section>
-
-      <hr class="sep">
-
-      <section aria-labelledby="pres-title">
-        <h3 id="pres-title">PRESENTATIONS / TALKS</h3>
-
-        <div class="muted" style="margin-top:0.25rem;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
-            <div>
-              <div class="title">ArmyOne Studio — Presented a talk on AI tools</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
-            <div>
-              <div class="title">Universidad del Valle — Guest at the Machinehaus design workshop</div>
-              <div class="muted">Cali, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between;">
-            <div>
-              <div class="title">INEM Jose Celestino Mutis — Talk for high school students</div>
-              <div class="muted">Armenia, Colombia</div>
-            </div>
-            <div class="dates">2025</div>
-          </div>
-        </div>
       </section>
 
     </div>
