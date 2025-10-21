@@ -12,42 +12,15 @@
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Igual que en index: solo evitamos subrayado en la marca -->
   <style>
-    /* HEADER: match index.html exactly */
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-    }
-
-    /* Brand (left) not underlined and inherits color */
     .brand-link,
     .brand-link * {
       text-decoration: none;
       color: inherit;
     }
 
-    /* Nav links spacing exactly like index */
-    .top-bar .right a {
-      text-decoration: none;
-      margin-left: 18px;
-      color: inherit;
-    }
-
-    /* On this page underline only 'Information' */
-    .top-bar .right a[href="info.html"] {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-    }
-
-    /* Ensure Work is not underlined here (override if needed) */
-    .top-bar .right a[href="work.html"] {
-      text-decoration: none;
-    }
-
-    /* Scoped layout styles (rest of the page) */
+    /* Estilos de contenido (no tocamos .top-bar ni .right a para que hereden de styles.css) */
     main { display: block; }
 
     .cv {
@@ -383,7 +356,7 @@
 
         <hr class="sep">
 
-        <!-- CO-OP WORK EXPERIENCE (restored) -->
+        <!-- CO-OP WORK EXPERIENCE -->
         <section aria-labelledby="coop-title">
           <h3 id="coop-title">CO-OP WORK EXPERIENCE</h3>
 
