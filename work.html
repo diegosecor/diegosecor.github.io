@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <title>diegoSecor — Work</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Fuentes (mismas que index/info) -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -12,134 +12,72 @@
   <!-- Estilos globales -->
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Igual que en index: no subrayar la marca; subrayar solo 'Work' en esta página -->
   <style>
-    :root {
-      --gap: 18px;
-      --thumb-aspect: 66.66%; /* 3:2 */
-      --caption-color: #6b7072;
-      --caption-size: 12px;
-      --thumb-bg: #f4f4f4;
-    }
-
-    /* HEADER — match index exactly */
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px; /* same spacing as index */
-    }
-
-    /* Brand left: link with no underline, inherit color */
     .brand-link,
     .brand-link * {
       text-decoration: none;
       color: inherit;
     }
-
-    /* Nav links spacing identical to index */
-    .top-bar .right a {
-      text-decoration: none;
-      margin-left: 18px;
-      color: inherit;
-    }
-
-    /* On this page underline only 'Work' */
     .top-bar .right a[href="work.html"] {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
 
-    /* Layout: pull gallery full-bleed and closer to edges */
-    main { padding: 0; }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 12px 20px; /* keeps consistent page padding for content above gallery */
-    }
-
-    /* Gallery: full-bleed grid with 6 columns on wide screens */
+    /* Galería: 6 columnas, separación mínima (7.5px = misma que el header) y mismo offset lateral que "DS · Architect" */
     .gallery-wrap {
-      width: 100vw;
-      max-width: none;
-      margin-left: calc(50% - 50vw);
-      margin-right: calc(50% - 50vw);
-      box-sizing: border-box;
-      padding: 18px 8px 36px 8px; /* slightly lower start and less horizontal padding */
-      background: transparent;
+      padding-left: 7.5px;
+      padding-right: 7.5px;
+      padding-top: 0;
+      padding-bottom: 0;
     }
-
     .gallery {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: var(--gap);
+      gap: 7.5px; /* mínima separación entre columnas/filas */
       align-items: start;
-      margin-top: 12px; /* baja un poquito donde inician las imágenes enumeradas */
     }
 
     figure.work-item {
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
-
     .thumb {
       position: relative;
       width: 100%;
-      padding-top: var(--thumb-aspect);
-      background: var(--thumb-bg);
+      padding-top: 66.66%; /* 3:2 */
+      background: #f4f4f4;
       overflow: hidden;
       border: 1px solid #e6e6e6;
-      display: block;
     }
-
     .thumb img,
     .thumb svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
     }
-
     figcaption {
-      font-size: var(--caption-size);
-      color: var(--caption-color);
-      text-align: left;
+      font-size: 12px;
+      color: #6b7072;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding-right: 6px;
     }
 
-    /* Responsive breakpoints */
-    @media (max-width: 1200px) {
-      .gallery { grid-template-columns: repeat(4, 1fr); }
-    }
-    @media (max-width: 900px) {
-      .gallery { grid-template-columns: repeat(3, 1fr); }
-      .gallery-wrap { padding-left: 16px; padding-right: 16px; }
-    }
-    @media (max-width: 640px) {
-      .gallery { grid-template-columns: repeat(1, 1fr); }
-      .gallery-wrap { padding-left: 12px; padding-right: 12px; }
-      figcaption { white-space: normal; }
-    }
-
-    footer { text-align: center; padding: 28px 0; color: #6b7072; font-size: 12px; }
-
-    /* Utility */
-    h1, h2, h3 { margin: 0; font-family: 'Space Grotesk', sans-serif; }
+    /* Opcional: responsivo sin cambiar el offset lateral ni el gap mínimo */
+    @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 640px)  { .gallery { grid-template-columns: repeat(1, 1fr); } }
   </style>
 </head>
 <body>
+  <!-- Header idéntico a index.html (hereda styles.css) -->
   <header class="top-bar">
     <div class="left">
-      <a href="index.html" class="brand-link" aria-label="Go to home">
+      <a class="brand-link" href="index.html" aria-label="Go to home">
         <span class="brand"><strong>DS</strong> &middot; Architect</span>
       </a>
     </div>
@@ -150,19 +88,12 @@
   </header>
 
   <main>
-    <!-- Optional small intro (keeps layout consistent with index) -->
-    <div class="container" aria-hidden="true">
-      <!-- leave empty or add intro text if needed -->
-    </div>
-
-    <!-- Full-bleed gallery block -->
     <div class="gallery-wrap" role="region" aria-label="Work gallery">
       <div class="gallery" role="list" aria-label="Work items">
-
-        <!-- Example item 1 -->
+        <!-- Item 1 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-010">
           <div class="thumb" aria-hidden="true">
-            <!-- Replace the SVG placeholder with <img src="images/010.jpg" alt="Shade Structures System For Public Space"> when ready -->
+            <!-- Reemplaza el SVG por tu imagen: <img src="images/010.jpg" alt="Shade Structures System For Public Space"> -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="[010] Shade Structures System For Public Space placeholder">
               <rect width="100%" height="100%" fill="#f4f4f4"/>
               <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
@@ -171,7 +102,7 @@
           <figcaption id="cap-010">[010] Shade Structures System For Public Space</figcaption>
         </figure>
 
-        <!-- Example item 2 -->
+        <!-- Item 2 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-020">
           <div class="thumb" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
@@ -182,7 +113,7 @@
           <figcaption id="cap-020">[020] AI Personal Research</figcaption>
         </figure>
 
-        <!-- Example item 3 -->
+        <!-- Item 3 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-030">
           <div class="thumb" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
@@ -193,7 +124,7 @@
           <figcaption id="cap-030">[030] R.D. Urban Analysis</figcaption>
         </figure>
 
-        <!-- Example item 4 -->
+        <!-- Item 4 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-040">
           <div class="thumb" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
@@ -204,7 +135,7 @@
           <figcaption id="cap-040">[040] Tusa Bamboo Roof</figcaption>
         </figure>
 
-        <!-- Example item 5 -->
+        <!-- Item 5 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-050">
           <div class="thumb" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
@@ -215,7 +146,7 @@
           <figcaption id="cap-050">[050] REC Residence</figcaption>
         </figure>
 
-        <!-- Example item 6 -->
+        <!-- Item 6 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-060">
           <div class="thumb" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
@@ -225,12 +156,11 @@
           </div>
           <figcaption id="cap-060">[060] Re-existence and digital virtual re-habitation</figcaption>
         </figure>
-
-        <!-- Add more items below following the same structure -->
       </div>
     </div>
   </main>
 
+  <!-- Footer idéntico a index.html (hereda styles.css) -->
   <footer>
     <span class="email">diegocsecor@gmail.com</span>
   </footer>
