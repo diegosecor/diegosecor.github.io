@@ -1,1 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>diegoSecor — Work</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root{
+      --gap: 18px;
+      --caption-color: #6b7072;
+      --caption-size: 12px;
+      --thumb-bg: #f4f4f4;
+      --max-width: 1180px;
+    }
 
+    body{ font-family: "Segoe UI", Arial, sans-serif; margin:0; color: #222; }
+    .top-bar{ display:flex; justify-content:space-between; align-items:center; padding:12px 20px; font-size:13px; }
+    .brand-link { text-decoration:none; color:inherit; font-weight:700; }
+    .top-bar .right a { text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; margin-left:18px; color:inherit; }
+    .top-bar .right a[href="work.html"] { text-decoration:none; } /* current page not underlined */
+
+    main{ max-width: var(--max-width); margin: 36px auto; padding: 0 18px; }
+
+    /* Grid: 5 columns */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--gap);
+      align-items: start;
+    }
+
+    figure.work-item {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Thumbnail maintains aspect ratio */
+    .thumb {
+      position: relative;
+      width: 100%;
+      padding-top: 66.66%; /* 3:2 ratio */
+      background: var(--thumb-bg);
+      overflow: hidden;
+      border: 1px solid #e6e6e6;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+
+    /* Inline SVG placeholder fills the thumb */
+    .thumb svg { position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+    /* When you replace placeholder with <img>, use object-fit */
+    .thumb img {
+      position:absolute;
+      top:0; left:0; width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    figcaption {
+      font-size: var(--caption-size);
+      color: var(--caption-color);
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 6px;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width:1100px){
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width:640px){
+      .gallery { grid-template-columns: repeat(1, 1fr); }
+      main{ margin:20px auto; }
+    }
+
+    /* Small visual tweaks for footer/header */
+    footer { text-align:center; padding:28px 0; color: #6b7072; font-size:12px; }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="left">
+      <a class="brand-link" href="index.html">DS · Architect</a>
+    </div>
+    <nav class="right">
+      <a href="info.html">Information</a>
+      <a href="work.html">Work</a>
+    </nav>
+  </header>
+
+  <main>
+    <section aria-labelledby="work-title">
+      <h1 id="work-title" style="font-family:'Space Grotesk',sans-serif; font-size:16px; margin:0 0 14px 0;">Work</h1>
+
+      <div class="gallery" role="list">
+        <!-- Item 1 -->
+        <figure class="work-item" role="listitem">
+          <div class="thumb" aria-hidden="true">
+            <!-- placeholder SVG: reemplaza con <img src="images/010.jpg" alt="..."> cuando subas imágenes -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="[010] Shade Structures System For Public Space placeholder">
+              <rect width="100%" height="100%" fill="#f4f4f4"/>
+              <g fill="#e0e0e0">
+                <rect x="20" y="20" width="560" height="360" rx="2"/>
+              </g>
+            </svg>
+          </div>
+          <figcaption>[010] Shade Structures System For Public Space</figcaption>
+        </figure>
+
+        <!-- Item 2 -->
+        <figure class="work-item" role="listitem">
+          <div class="thumb" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="100%" height="100%" fill="#f4f4f4"/>
+              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
+            </svg>
+          </div>
+          <figcaption>[020] AI Personal Research</figcaption>
+        </figure>
+
+        <!-- Item 3 -->
+        <figure class="work-item" role="listitem">
+          <div class="thumb" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="100%" height="100%" fill="#f4f4f4"/>
+              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
+            </svg>
+          </div>
+          <figcaption>[030] R.D. Urban Analysis</figcaption>
+        </figure>
+
+        <!-- Item 4 -->
+        <figure class="work-item" role="listitem">
+          <div class="thumb" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="100%" height="100%" fill="#f4f4f4"/>
+              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
+            </svg>
+          </div>
+          <figcaption>[040] Tusa Bamboo Roof</figcaption>
+        </figure>
+
+        <!-- Item 5 -->
+        <figure class="work-item" role="listitem">
+          <div class="thumb" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="100%" height="100%" fill="#f4f4f4"/>
+              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
+            </svg>
+          </div>
+          <figcaption>[050] REC Residence</figcaption>
+        </figure>
+
+        <!-- Item 6 (envía a la siguiente fila; diseño de 5 columnas mantiene consistencia visual) -->
+        <figure class="work-item" role="listitem">
+          <div class="thumb" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+              <rect width="100%" height="100%" fill="#f4f4f4"/>
+              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
+            </svg>
+          </div>
+          <figcaption>[060] Re-existence and digital virtual re-habitation</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    diegocsecor@gmail.com
+  </footer>
+</body>
+</html>
