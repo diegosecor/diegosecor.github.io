@@ -8,23 +8,29 @@
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    /* Barra superior: quitar subrayado por defecto y subrayar solo Work */
+    /* Match spacing of nav links with index.html and only underline the active page (Information) */
     .top-bar .right a {
       text-decoration: none;
       margin-left: 18px;
       color: inherit;
     }
-    .top-bar .right a[href="work.html"] {
+    /* On the information page underline only 'Information' */
+    .top-bar .right a[href="info.html"] {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
 
-    /* Asegurar marca (izquierda) sin subrayado */
-    .brand-link { display: inline-flex; align-items: center; text-decoration: none; }
+    /* Ensure brand link (left) is not underlined and inherits color */
+    .brand-link,
+    .brand-link * {
+      text-decoration: none;
+      color: inherit;
+    }
 
-    /* Scoped layout styles (no height:100% ni ocultación de scrollbar global) */
+    /* Scoped layout styles (kept from your original file) */
     main { display: block; }
 
     .cv {
@@ -38,7 +44,6 @@
       text-align: justify;
     }
 
-    /* Headings use Space Grotesk 700 and left-aligned */
     .cv h1,
     .cv h2,
     .cv h3,
@@ -48,7 +53,6 @@
       text-align: left;
     }
 
-    /* Toggle button shared style (used by CV and CONTACT) */
     .toggle-button {
       background: none;
       border: none;
@@ -97,7 +101,6 @@
     }
     .skills dd { margin: 0; padding: 0; font-size:12px; text-align: justify; }
 
-    /* ABOUT: color más suave para mejor lectura */
     .about-paragraph {
       margin-top: 0.25rem;
       color: #6b7072;
