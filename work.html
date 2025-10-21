@@ -91,7 +91,21 @@
     /* Responsive (mantiene mismo gutter=gap a los lados) */
     @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
     @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media (max-width: 640px)  { .gallery { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
+    @media (max-width: 640px)  { 
+      .gallery { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+      
+      /* Ajustar menú List para móvil - mitad del ancho */
+      .project-menu {
+        width: 50vw;
+        right: 0;
+        left: auto;
+        padding: 15px 7.5px;
+      }
+      
+      .list-text {
+        right: 7.5px;
+      }
+    }
 
     /* List en negrilla debajo de Work */
     .list-text {
@@ -189,7 +203,7 @@
       <li>[10] TT House <span class="year">2021</span></li>
       <li>[11] Parametric ramp <span class="year">2021</span></li>
       <li>[12] D House <span class="year">2021</span></li>
-      <li>[13] TREE OF LIBERTY <span class="year">2020</span></li>
+      <li>[13] Tree of Liberty <span class="year">2020</span></li>
       <li>[14] Desk <span class="year">2020</span></li>
       <li>[15] Ensamble <span class="year">2019</span></li>
     </ul>
