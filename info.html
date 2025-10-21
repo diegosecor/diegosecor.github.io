@@ -111,9 +111,11 @@
       .skills dt { white-space: normal; margin-top: 8px; }
       .skills dd { margin-bottom: 8px; }
       .col-right { width: 100%; order: 2; text-align:left; }
-      .dates { text-align:left; }
+      .dates { text-align:left; color: inherit; }
       .contact-links { align-items: flex-start; }
-      .row { flex-direction: column; }
+      .contact-links a { color: inherit; }
+      .row { flex-direction: column; gap: 0.25rem; }
+      .job { margin-bottom: 0.4rem; }
     }
 
     .cv h1 { font-size: 16px; margin: 0 0 0.35rem 0; }
@@ -204,7 +206,7 @@
 
           <div class="row" style="align-items:flex-start;">
             <div class="col-right muted">
-              Universidad del Valle<br>
+              <strong>Universidad del Valle</strong><br>
               Cali, Colombia
             </div>
             <div class="col-left">
@@ -222,6 +224,24 @@
               </div>
             </div>
           </div>
+
+          <div class="row" style="align-items:flex-start; margin-top:0.55rem;">
+            <div class="col-right muted" style="text-align: left;">
+              <strong>Servicio Nacional de Aprendizaje SENA</strong><br>
+              Armenia, Colombia
+            </div>
+            <div class="col-left">
+              <div class="job">
+                <div style="display:flex; justify-content:space-between; gap:0.5rem;">
+                  <div class="title">Architectural Design Technician</div>
+                  <div class="dates">2014 — 2015<br><span class="muted">2 years</span></div>
+                </div>
+                <div class="muted" style="margin-top:0.25rem;">
+                  • Technical training in architectural documentation and representation
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <hr class="sep">
@@ -231,7 +251,7 @@
           <h3 id="awards-title">AWARDS &amp; HONORS</h3>
 
           <div class="row" style="margin-top:0.15rem;">
-            <div class="col-right muted">Playing Models<br>Pittsburgh, PA</div>
+            <div class="col-right muted"><strong>Playing Models</strong><br>Pittsburgh, PA</div>
             <div class="col-left">
               <div class="job">
                 <div style="display:flex; justify-content:space-between;">
@@ -246,7 +266,7 @@
           </div>
 
           <div class="row" style="margin-top:0.45rem;">
-            <div class="col-right muted">Universidad del Valle<br>Cali, Colombia</div>
+            <div class="col-right muted"><strong>Universidad del Valle</strong><br>Cali, Colombia</div>
             <div class="col-left">
               <div class="job">
                 <div style="display:flex; justify-content:space-between;">
@@ -274,10 +294,10 @@
           <h3 id="certs-title">CERTIFICATIONS</h3>
 
           <div class="row" style="margin-top:0.15rem;">
-            <div class="col-right muted">Nvidia<br><span class="muted">Self-paced Course</span></div>
+            <div class="col-right muted"><strong>Nvidia</strong><br><span class="muted">Self-paced Course</span></div>
             <div class="col-left">
               <div style="display:flex; justify-content:space-between;">
-                <div class="title">Generative AI with Diffusion Models</div>
+                <div class="title"><strong>Generative AI with Diffusion Models</strong></div>
                 <div class="dates">07/2025 — 08/2025<br><span class="muted">1 month</span></div>
               </div>
               <div class="muted" style="margin-top:0.25rem;">
