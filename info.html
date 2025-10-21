@@ -3,39 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>diegoSecor — Information</title>
-  <!-- Cargar Space Grotesk incluyendo peso 500 y 700 -->
+
+  <!-- Fuentes (mismas que en index) -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
+
+  <!-- Estilos globales -->
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    /* Asegurar mismo espaciado y padding que en index.html */
-    .top-bar { padding: 12px 20px; display:flex; justify-content:space-between; align-items:center; }
+    /* HEADER: match index.html exactly */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+    }
+
+    /* Brand (left) not underlined and inherits color */
     .brand-link,
     .brand-link * {
       text-decoration: none;
       color: inherit;
     }
 
-    /* Match spacing of nav links with index.html */
+    /* Nav links spacing exactly like index */
     .top-bar .right a {
       text-decoration: none;
       margin-left: 18px;
       color: inherit;
     }
 
-    /* On the information page underline only 'Information' */
+    /* On this page underline only 'Information' */
     .top-bar .right a[href="info.html"] {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
 
-    /* Ensure 'Work' is not underlined here (inherits from the rule above) */
-    .top-bar .right a[href="work.html"] { text-decoration: none; }
+    /* Ensure Work is not underlined here (override if needed) */
+    .top-bar .right a[href="work.html"] {
+      text-decoration: none;
+    }
 
-    /* Scoped layout styles (kept from your original file) */
+    /* Scoped layout styles (rest of the page) */
     main { display: block; }
 
     .cv {
@@ -143,7 +155,6 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="top-bar">
     <div class="left">
       <a href="index.html" class="brand-link" aria-label="Go to home">
@@ -332,7 +343,7 @@
             </div>
             <ul>
               <li class="bullet">Perform advanced computational design tasks using tools such as Grasshopper, Python, and Stable Diffusion.</li>
-              <li class="bullet">Develop paramric scripts for large-scale urban analysis, focusing on urban geometry and individual statistical patterns for a project in the Dominican Republic.</li>
+              <li class="bullet">Develop parametric scripts for large-scale urban analysis, focusing on urban geometry and individual statistical patterns for a project in the Dominican Republic.</li>
               <li class="bullet">Generate AI-assisted renderings and photomontages by editing real environments and transforming architectural scenes.</li>
             </ul>
           </div>
