@@ -5,7 +5,6 @@
   <title>Diego Serna · Architect</title>
   <!-- Google Fonts for Space Grotesk -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
-  <!-- Diatype font (using fontshare CDN, or replace with your own link if needed) -->
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/44/44418.png">
@@ -26,6 +25,11 @@
       text-decoration: none;
     }
 
+    /* Excluir también el enlace hacia info.html (Information) para que no quede subrayado en index */
+    .top-bar .right a[href="info.html"] {
+      text-decoration: none;
+    }
+
     /* Asegurar que la marca no se muestre subrayada */
     .top-bar .left .brand,
     .top-bar .left .brand * {
@@ -40,7 +44,6 @@
     </div>
     <nav class="right">
       <a href="info.html">Information</a>
-      <!-- Reemplazado: índice ahora "Work" -->
       <a href="index.html">Work</a>
     </nav>
   </header>
