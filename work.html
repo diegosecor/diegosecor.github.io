@@ -27,8 +27,15 @@
       text-decoration-thickness: 1px;
     }
 
-    /* El main de styles.css centra el contenido; acá lo desactivamos para usar todo el ancho */
-    main { display: block; padding: 0; }
+    /* Centrar la galería a media altura del viewport (entre header y footer) sin perder ancho completo */
+    main {
+      display: flex;              /* usa el alto disponible porque body ya es flex column y main flex:1 en styles.css */
+      flex-direction: column;     /* permite centrar verticalmente con justify-content */
+      justify-content: center;    /* centra verticalmente el contenido dentro de main */
+      align-items: stretch;       /* ocupa 100% del ancho, sin “encoger” al centro */
+      padding: 0;
+      margin: 0;
+    }
 
     /* Misma separación a la izquierda y derecha que entre columnas */
     :root { --gap: 7.5px; }
