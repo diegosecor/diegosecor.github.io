@@ -10,12 +10,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    /* Match spacing of nav links with index.html and only underline the active page (Information) */
+    /* Asegurar mismo espaciado y padding que en index.html */
+    .top-bar { padding: 12px 20px; display:flex; justify-content:space-between; align-items:center; }
+    .brand-link,
+    .brand-link * {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Match spacing of nav links with index.html */
     .top-bar .right a {
       text-decoration: none;
       margin-left: 18px;
       color: inherit;
     }
+
     /* On the information page underline only 'Information' */
     .top-bar .right a[href="info.html"] {
       text-decoration: underline;
@@ -23,12 +32,8 @@
       text-decoration-thickness: 1px;
     }
 
-    /* Ensure brand link (left) is not underlined and inherits color */
-    .brand-link,
-    .brand-link * {
-      text-decoration: none;
-      color: inherit;
-    }
+    /* Ensure 'Work' is not underlined here (inherits from the rule above) */
+    .top-bar .right a[href="work.html"] { text-decoration: none; }
 
     /* Scoped layout styles (kept from your original file) */
     main { display: block; }
@@ -223,24 +228,6 @@
               </div>
             </div>
           </div>
-
-          <div class="row" style="align-items:flex-start; margin-top:0.45rem;">
-            <div class="col-right muted">
-              Servicio Nacional de<br>Aprendizaje SENA<br>
-              Armenia, Colombia
-            </div>
-            <div class="col-left">
-              <div class="job">
-                <div style="display:flex; justify-content:space-between; gap:0.5rem;">
-                  <div class="title">Architectural Design Technician</div>
-                  <div class="dates">2014 — 2015<br><span class="muted">2 years</span></div>
-                </div>
-                <div class="muted" style="margin-top:0.25rem;">
-                  • Technical training in architectural documentation and representation.
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
 
         <hr class="sep">
@@ -345,7 +332,7 @@
             </div>
             <ul>
               <li class="bullet">Perform advanced computational design tasks using tools such as Grasshopper, Python, and Stable Diffusion.</li>
-              <li class="bullet">Develop parametric scripts for large-scale urban analysis, focusing on urban geometry and individual statistical patterns for a project in the Dominican Republic.</li>
+              <li class="bullet">Develop paramric scripts for large-scale urban analysis, focusing on urban geometry and individual statistical patterns for a project in the Dominican Republic.</li>
               <li class="bullet">Generate AI-assisted renderings and photomontages by editing real environments and transforming architectural scenes.</li>
             </ul>
           </div>
