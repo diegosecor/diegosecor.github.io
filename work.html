@@ -5,11 +5,10 @@
   <title>diegoSecor — Work</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- same fonts as index/info -->
+  <!-- mismas fuentes que index/info -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
 
-  <!-- global styles for consistency -->
   <link rel="stylesheet" href="styles.css">
 
   <style>
@@ -20,33 +19,52 @@
       --thumb-bg: #f4f4f4;
     }
 
-    /* Ensure header spacing and link spacing match index/info */
-    .top-bar { padding: 12px 20px; display:flex; justify-content:space-between; align-items:center; }
-    .brand-link, .brand-link * { text-decoration: none; color: inherit; } /* DS · Architect not underlined */
-    .top-bar .right a { text-decoration: none; margin-left: 18px; color: inherit; }
+    /* HEADER: reglas idénticas a index.html */
+    .top-bar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px 20px; /* match index exactly */
+    }
+
+    /* Asegurar que la marca no se subraye (igual que index) */
+    .top-bar .left .brand,
+    .top-bar .left .brand * {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Separación entre enlaces igual que index (Information / Work) */
+    .top-bar .right a {
+      text-decoration: none;
+      margin-left: 18px;
+      color: inherit;
+    }
+
+    /* En esta página 'Work' debe aparecer subrayado */
     .top-bar .right a[href="work.html"] {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
 
-    /* main spacing — keep consistent but lower the start of the gallery a bit */
+    /* MAIN: bajar un poco el inicio de la galería */
     main { padding: 18px 0; }
 
-    /* Gallery: 6 columns, full-bleed, tighter to edges (smaller horizontal padding) */
+    /* Gallery full-bleed y 6 columnas, más pegadito a los bordes */
     .gallery {
       width: 100vw;
       max-width: none;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
       box-sizing: border-box;
-      /* smaller horizontal padding to be "más pegadito" */
-      padding: 12px 8px 0 8px;
+      /* padding horizontal reducido para estar más pegado a los bordes */
+      padding: 18px 8px 0 8px;
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: var(--gap);
       align-items: start;
-      margin-top: 12px; /* baja un poquito las imágenes */
+      margin-top: 28px; /* baja un poco donde inician las imágenes enumeradas */
     }
 
     figure.work-item { margin:0; display:flex; flex-direction:column; gap:8px; }
@@ -56,21 +74,22 @@
 
     figcaption { font-size: var(--caption-size); color: var(--caption-color); text-align:left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right:6px; }
 
-    /* Responsive breakpoints */
+    /* Responsive breakpoints similares al resto del sitio */
     @media (max-width:1200px){ .gallery { grid-template-columns: repeat(4, 1fr); } }
     @media (max-width:900px){ .gallery { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width:640px){ .gallery { grid-template-columns: repeat(1, 1fr); padding: 0 12px 0 12px; } }
+    @media (max-width:640px){ .gallery { grid-template-columns: repeat(1, 1fr); padding: 0 12px; } }
 
     footer { text-align:center; padding:28px 0; color: #6b7072; font-size:12px; }
 
-    /* avoid unexpected header/title margins */
+    /* evitar márgenes inesperados de headings */
     h1,h2 { margin: 0; }
   </style>
 </head>
 <body>
   <header class="top-bar">
     <div class="left">
-      <a class="brand-link" href="index.html" aria-label="Go to home">DS · Architect</a>
+      <!-- match index: brand is a span (no anchor) -->
+      <span class="brand"><strong>DS</strong> &middot; Architect</span>
     </div>
     <nav class="right">
       <a href="info.html">Information</a>
@@ -79,12 +98,11 @@
   </header>
 
   <main>
-    <!-- no heading above gallery (as requested) -->
     <div class="gallery" role="list" aria-label="Work gallery">
       <!-- Item 1 -->
       <figure class="work-item" role="listitem">
         <div class="thumb" aria-hidden="true">
-          <!-- replace SVG with actual <img src="..."> when ready -->
+          <!-- placeholder: reemplaza por <img src="images/010.jpg" alt="Shade Structures System For Public Space"> -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="[010] Shade Structures System For Public Space placeholder">
             <rect width="100%" height="100%" fill="#f4f4f4"/>
             <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
