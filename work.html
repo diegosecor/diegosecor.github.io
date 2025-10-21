@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="styles.css">
 
   <style>
-    /* Igual que en index: no subrayar la marca */
+    /* No subrayar la marca (igual que index) */
     .brand-link,
     .brand-link * {
       text-decoration: none;
@@ -27,20 +27,26 @@
       text-decoration-thickness: 1px;
     }
 
-    /* Requisito: el gutter izquierdo/derecho = gap entre columnas */
+    /* El main de styles.css centra el contenido; acá lo desactivamos para usar todo el ancho */
+    main { display: block; padding: 0; }
+
+    /* Misma separación a la izquierda y derecha que entre columnas */
     :root { --gap: 7.5px; }
 
     .gallery-wrap {
+      box-sizing: border-box;
+      width: 100%;
       padding-left: var(--gap);
       padding-right: var(--gap);
       padding-top: 0;
       padding-bottom: 0;
+      margin: 0;
     }
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: var(--gap); /* misma separación entre columnas y con los lados */
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: var(--gap); /* igual a los laterales */
       align-items: start;
     }
 
@@ -69,10 +75,10 @@
       text-overflow: ellipsis;
     }
 
-    /* Opcional responsive (mantiene mismo gutter=gap a los lados) */
-    @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
-    @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 640px)  { .gallery { grid-template-columns: repeat(1, 1fr); } }
+    /* Responsive (mantiene mismo gutter=gap a los lados) */
+    @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 640px)  { .gallery { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
   </style>
 </head>
 <body>
