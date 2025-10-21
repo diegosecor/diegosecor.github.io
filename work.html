@@ -92,6 +92,71 @@
     @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
     @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 640px)  { .gallery { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
+
+    /* List en negrilla debajo de Work */
+    .list-text {
+      position: absolute;
+      top: 27px;
+      right: 7.5px;
+      font-family: 'Diatype', 'Arial', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #008000;
+      letter-spacing: 1px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Menú desplegable */
+    .project-menu {
+      position: fixed;
+      top: 55px;
+      right: 0;
+      width: calc(100vw / 6 - 27.5px);
+      height: calc(100vh - 55px);
+      background: white;
+      border-left: none;
+      padding: 15px;
+      box-shadow: none;
+      display: none;
+      z-index: 900;
+      overflow-y: auto;
+    }
+
+    .project-menu.active {
+      display: block;
+    }
+
+    .project-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1.8;
+      color: #6b7072;
+    }
+
+    .project-menu li {
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.2s;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .project-menu li:hover {
+      color: #333;
+    }
+
+    .project-menu .year {
+      font-style: italic;
+      color: #a0a0a0;
+      margin-left: auto;
+      padding-left: 8px;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -106,7 +171,29 @@
       <a href="info.html">Information</a>
       <a href="work.html">Work</a>
     </nav>
+    <span class="list-text" id="list-toggle"><span id="arrow">↓</span><span style="text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;">List</span></span>
   </header>
+
+  <!-- Menú desplegable de proyectos -->
+  <div class="project-menu" id="project-menu">
+    <ul>
+      <li>[01] Shade Structures System For Public Space <span class="year">2022</span></li>
+      <li>[02] AI Personal Research <span class="year">2025</span></li>
+      <li>[03] R.D. Urban Analysis <span class="year">2025</span></li>
+      <li>[04] Tusa Bamboo Roof <span class="year">2024</span></li>
+      <li>[05] REC Residence <span class="year">2024</span></li>
+      <li>[06] Re-existence and digital virtual re-habitation <span class="year">2022</span></li>
+      <li>[07] Roof / UV <span class="year">2023</span></li>
+      <li>[08] Mundus Music Classroom <span class="year">2023</span></li>
+      <li>[09] Surface Restaurant <span class="year">2023</span></li>
+      <li>[10] TT House <span class="year">2021</span></li>
+      <li>[11] Parametric ramp <span class="year">2021</span></li>
+      <li>[12] D House <span class="year">2021</span></li>
+      <li>[13] TREE OF LIBERTY <span class="year">2020</span></li>
+      <li>[14] Desk <span class="year">2020</span></li>
+      <li>[15] Ensamble <span class="year">2019</span></li>
+    </ul>
+  </div>
 
   <main>
     <div class="gallery-wrap" role="region" aria-label="Work gallery">
@@ -167,5 +254,32 @@
   <footer>
     <span class="email">diegocsecor@gmail.com</span>
   </footer>
+
+  <script>
+    // Toggle del menú de proyectos
+    const listToggle = document.getElementById('list-toggle');
+    const projectMenu = document.getElementById('project-menu');
+    const arrow = document.getElementById('arrow');
+
+    listToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      projectMenu.classList.toggle('active');
+      
+      // Cambiar la flecha
+      if (projectMenu.classList.contains('active')) {
+        arrow.textContent = '↑'; // Flecha hacia arriba
+      } else {
+        arrow.textContent = '↓'; // Flecha hacia abajo
+      }
+    });
+
+    // Cerrar el menú al hacer clic fuera
+    document.addEventListener('click', function(e) {
+      if (!projectMenu.contains(e.target) && e.target !== listToggle && !listToggle.contains(e.target)) {
+        projectMenu.classList.remove('active');
+        arrow.textContent = '↓'; // Restaurar flecha hacia abajo
+      }
+    });
+  </script>
 </body>
 </html>
