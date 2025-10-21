@@ -9,18 +9,23 @@
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* Scoped layout styles (no height:100% ni ocultación de scrollbar global) */
-    main { display: block; }
-
-    /* Subrayado solo en enlaces de navegación derecha; marca sin subrayado */
+    /* Barra superior: quitar subrayado por defecto y subrayar solo Work */
     .top-bar .right a {
+      text-decoration: none;
+      margin-left: 18px;
+      color: inherit;
+    }
+    .top-bar .right a[href="work.html"] {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
-      color: inherit;
     }
-    .top-bar .right a[href="index.html"] { text-decoration: none; } /* Index/Work no subrayado */
+
+    /* Asegurar marca (izquierda) sin subrayado */
     .brand-link { display: inline-flex; align-items: center; text-decoration: none; }
+
+    /* Scoped layout styles (no height:100% ni ocultación de scrollbar global) */
+    main { display: block; }
 
     .cv {
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -56,9 +61,7 @@
       text-decoration-thickness: 1px;
       display: inline-block;
     }
-    /* CV color */
     #cv-title-button { color: #008000; }
-    /* CONTACT: leave normal/inherited color */
     #contact-title-button { color: inherit; }
 
     .toggle-button:focus {
@@ -66,17 +69,15 @@
       outline-offset: 3px;
     }
 
-    /* Ensure collapsible content transitions smoothly (max-height technique) */
     .collapsible {
       overflow: hidden;
       transition: max-height 260ms ease;
-      max-height: 2000px; /* large enough for expanded state */
+      max-height: 2000px;
     }
     .collapsible.collapsed {
       max-height: 0;
     }
 
-    /* Skills grid: dt + dd on same line */
     .skills {
       display: grid;
       grid-template-columns: 180px 1fr;
@@ -96,11 +97,10 @@
     }
     .skills dd { margin: 0; padding: 0; font-size:12px; text-align: justify; }
 
-    /* ABOUT: independiente (sin caja) */
-    /* color ajustado a un gris más suave para mejor lectura y consistencia con .muted */
+    /* ABOUT: color más suave para mejor lectura */
     .about-paragraph {
       margin-top: 0.25rem;
-      color: #6b7072; /* cambiado de #444 a #6b7072 (más claro / menos contrastado) */
+      color: #6b7072;
       font-size: 12px;
     }
 
@@ -113,7 +113,6 @@
       .dates { text-align:left; }
     }
 
-    /* Visual tweaks */
     .cv h1 { font-size: 16px; margin: 0 0 0.35rem 0; }
     .cv h2 { font-size: 13px; margin: 0 0 0.35rem 0; letter-spacing: .6px; }
     .cv h3 { font-size: 12px; margin: 0 0 0.25rem 0; }
@@ -145,17 +144,14 @@
     </div>
     <nav class="right">
       <a href="info.html">Information</a>
-      <!-- Reemplazado: índice ahora "Work" -->
       <a href="work.html">Work</a>
     </nav>
   </header>
 
   <main>
     <div class="cv" role="main" aria-labelledby="cv-heading">
-      <!-- Nombre principal -->
       <h1 id="cv-heading">Diego Serna</h1>
 
-      <!-- ABOUT (independiente) -->
       <h2 id="about-title">ABOUT</h2>
       <p class="about-paragraph">
         Colombian architect passionate about architecture, the visual arts, geometric generation, artificial intelligence, and parametric modeling. I focus on exploring and applying technology to improve design outcomes. My self-taught drive to research and adopt new tools has opened doors to collaborate in different places and teams, applying them effectively. I consider myself highly inquisitive, always seeking new tools and approaches to achieve my goals.
@@ -163,7 +159,6 @@
 
       <hr class="sep">
 
-      <!-- CONTACT title (underlined, toggle) -->
       <h2 id="contact-heading">
         <button id="contact-title-button" class="toggle-button"
                 aria-controls="contact-content"
@@ -173,7 +168,6 @@
         </button>
       </h2>
 
-      <!-- CONTACT collapsible content (default: collapsed) -->
       <div id="contact-content" class="collapsible collapsed" role="region" aria-labelledby="contact-heading">
         <div class="row" style="margin-top:0.15rem;">
           <div class="col-left muted">
@@ -192,7 +186,6 @@
 
       <hr class="sep">
 
-      <!-- CV title (underlined, green) and toggle control -->
       <h2 id="cv-heading-2">
         <button id="cv-title-button" class="toggle-button"
                 aria-controls="cv-content"
@@ -202,9 +195,7 @@
         </button>
       </h2>
 
-      <!-- Collapsible content: desde EDUCATION hasta LANGUAGES (inclusive). -->
       <div id="cv-content" class="collapsible collapsed" role="region" aria-labelledby="cv-heading-2">
-
         <!-- EDUCATION -->
         <section aria-labelledby="education-title">
           <h3 id="education-title">EDUCATION</h3>
@@ -470,7 +461,7 @@
 
         <hr class="sep">
 
-        <!-- LANGUAGES (renamed: removed & CONTACT and removed bottom links) -->
+        <!-- LANGUAGES -->
         <section aria-labelledby="lang-title">
           <h3 id="lang-title">LANGUAGES</h3>
           <div class="row" style="margin-top:0.15rem;">
@@ -478,9 +469,7 @@
               English — Professional<br>
               Spanish — Native
             </div>
-            <div class="col-right">
-              <!-- Links removed here as requested -->
-            </div>
+            <div class="col-right"></div>
           </div>
         </section>
 
@@ -493,72 +482,71 @@
     <span class="email">diegocsecor@gmail.com</span>
   </footer>
 
-  <!-- Improved script to avoid clipped collapsible content -->
   <script>
-  (function(){
-    var sections = [
-      { btn: document.getElementById('cv-title-button'), content: document.getElementById('cv-content') },
-      { btn: document.getElementById('contact-title-button'), content: document.getElementById('contact-content') }
-    ].filter(function(s){ return s.btn && s.content; });
+    (function(){
+      var sections = [
+        { btn: document.getElementById('cv-title-button'), content: document.getElementById('cv-content') },
+        { btn: document.getElementById('contact-title-button'), content: document.getElementById('contact-content') }
+      ].filter(function(s){ return s.btn && s.content; });
 
-    function expandContent(content) {
-      content.classList.remove('collapsed');
-      content.style.maxHeight = content.scrollHeight + 'px';
-      function onTransitionEnd(e) {
-        if (e.target !== content) return;
-        content.style.maxHeight = '';
-        content.removeEventListener('transitionend', onTransitionEnd);
+      function expandContent(content) {
+        content.classList.remove('collapsed');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        function onTransitionEnd(e) {
+          if (e.target !== content) return;
+          content.style.maxHeight = '';
+          content.removeEventListener('transitionend', onTransitionEnd);
+        }
+        content.addEventListener('transitionend', onTransitionEnd);
       }
-      content.addEventListener('transitionend', onTransitionEnd);
-    }
 
-    function collapseContent(content) {
-      content.style.maxHeight = content.scrollHeight + 'px';
-      requestAnimationFrame(function(){
-        content.style.maxHeight = '0';
+      function collapseContent(content) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        requestAnimationFrame(function(){
+          content.style.maxHeight = '0';
+          content.classList.add('collapsed');
+        });
+      }
+
+      function toggle(btn, content) {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        if (expanded) collapseContent(content); else expandContent(content);
+      }
+
+      sections.forEach(function(s){
+        var btn = s.btn, content = s.content;
         content.classList.add('collapsed');
+        content.style.maxHeight = '0';
+        btn.setAttribute('aria-expanded', 'false');
+
+        btn.addEventListener('click', function(){ toggle(btn, content); });
+        btn.addEventListener('keydown', function(e){
+          if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') { e.preventDefault(); btn.click(); }
+        });
+
+        var imgs = content.querySelectorAll('img');
+        imgs.forEach(function(img){
+          if (!img.complete) img.addEventListener('load', function(){
+            if (btn.getAttribute('aria-expanded') === 'true') {
+              content.style.maxHeight = content.scrollHeight + 'px';
+              setTimeout(function(){ content.style.maxHeight = ''; }, 300);
+            }
+          });
+        });
       });
-    }
 
-    function toggle(btn, content) {
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      if (expanded) collapseContent(content); else expandContent(content);
-    }
-
-    sections.forEach(function(s){
-      var btn = s.btn, content = s.content;
-      content.classList.add('collapsed');
-      content.style.maxHeight = '0';
-      btn.setAttribute('aria-expanded', 'false');
-
-      btn.addEventListener('click', function(){ toggle(btn, content); });
-      btn.addEventListener('keydown', function(e){
-        if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') { e.preventDefault(); btn.click(); }
-      });
-
-      var imgs = content.querySelectorAll('img');
-      imgs.forEach(function(img){
-        if (!img.complete) img.addEventListener('load', function(){
+      window.addEventListener('resize', function(){
+        sections.forEach(function(s){
+          var btn = s.btn, content = s.content;
           if (btn.getAttribute('aria-expanded') === 'true') {
             content.style.maxHeight = content.scrollHeight + 'px';
-            setTimeout(function(){ content.style.maxHeight = ''; }, 300);
+            clearTimeout(content._resizeTimeout);
+            content._resizeTimeout = setTimeout(function(){ content.style.maxHeight = ''; }, 300);
           }
         });
       });
-    });
-
-    window.addEventListener('resize', function(){
-      sections.forEach(function(s){
-        var btn = s.btn, content = s.content;
-        if (btn.getAttribute('aria-expanded') === 'true') {
-          content.style.maxHeight = content.scrollHeight + 'px';
-          clearTimeout(content._resizeTimeout);
-          content._resizeTimeout = setTimeout(function(){ content.style.maxHeight = ''; }, 300);
-        }
-      });
-    });
-  })();
+    })();
   </script>
 </body>
 </html>
