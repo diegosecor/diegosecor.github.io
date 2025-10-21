@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>diegoSecor — Work</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
 
   <!-- Fuentes (mismas que index/info) -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -55,6 +56,7 @@
       grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: var(--gap); /* igual a los laterales */
       align-items: start;
+      align-items: stretch;
     }
 
     figure.work-item { margin: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -62,16 +64,20 @@
     .thumb {
       position: relative;
       width: 100%;
-      padding-top: 66.66%; /* 3:2 */
+      height: 400px;
       background: #f4f4f4;
       overflow: hidden;
-      border: 1px solid #e6e6e6;
+      border: none;
     }
     .thumb img,
     .thumb svg {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     figcaption {
@@ -108,8 +114,8 @@
         <!-- Item 1 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-010">
           <div class="thumb" aria-hidden="true">
-            <!-- Imagen real para el item 010 -->
-            <img src="Images/AA1.png" alt="[010] Shade Structures System For Public Space" />
+            <!-- Imagen optimizada WebP -->
+            <img src="Images/p1/AA1.webp" alt="[010] Shade Structures System For Public Space" />
           </div>
           <figcaption id="cap-010">[010] Shade Structures System For Public Space</figcaption>
         </figure>
@@ -117,10 +123,7 @@
         <!-- Item 2 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-020">
           <div class="thumb" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
-              <rect width="100%" height="100%" fill="#f4f4f4"/>
-              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
-            </svg>
+            <img src="Images/p2/AA2.webp" alt="[020] AI Personal Research" />
           </div>
           <figcaption id="cap-020">[020] AI Personal Research</figcaption>
         </figure>
@@ -128,10 +131,7 @@
         <!-- Item 3 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-030">
           <div class="thumb" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
-              <rect width="100%" height="100%" fill="#f4f4f4"/>
-              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
-            </svg>
+            <img src="Images/p3/AA3.webp" alt="[030] R.D. Urban Analysis" />
           </div>
           <figcaption id="cap-030">[030] R.D. Urban Analysis</figcaption>
         </figure>
@@ -139,10 +139,7 @@
         <!-- Item 4 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-040">
           <div class="thumb" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
-              <rect width="100%" height="100%" fill="#f4f4f4"/>
-              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
-            </svg>
+            <img src="Images/p4/AA4.webp" alt="[040] Tusa Bamboo Roof" />
           </div>
           <figcaption id="cap-040">[040] Tusa Bamboo Roof</figcaption>
         </figure>
@@ -150,10 +147,7 @@
         <!-- Item 5 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-050">
           <div class="thumb" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
-              <rect width="100%" height="100%" fill="#f4f4f4"/>
-              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
-            </svg>
+            <img src="Images/p5/AA5.webp" alt="[050] REC Residence" />
           </div>
           <figcaption id="cap-050">[050] REC Residence</figcaption>
         </figure>
@@ -161,10 +155,7 @@
         <!-- Item 6 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-060">
           <div class="thumb" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
-              <rect width="100%" height="100%" fill="#f4f4f4"/>
-              <g fill="#e0e0e0"><rect x="20" y="20" width="560" height="360" rx="2"/></g>
-            </svg>
+            <img src="Images/p6/AA6.webp" alt="[060] Re-existence and digital virtual re-habitation" />
           </div>
           <figcaption id="cap-060">[060] Re-existence and digital virtual re-habitation</figcaption>
         </figure>
