@@ -12,12 +12,21 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/44/44418.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Regla puntual para que la marca no se subraye (puedes moverla a styles.css) -->
+  <style>
+    .brand-link,
+    .brand-link * {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
 </head>
 <body>
   <header class="top-bar">
     <div class="left">
       <a href="index.html" class="brand-link" aria-label="Go to home">
-        <span class="brand"><strong>DS</strong> · Architect</span>
+        <span class="brand"><strong>DS</strong> &middot; Architect</span>
       </a>
     </div>
     <nav class="right">
