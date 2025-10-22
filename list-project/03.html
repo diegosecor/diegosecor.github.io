@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[030] R.D. URBAN ANALYSIS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .menu a {
+            color: #1a1a1a;
+            text-decoration: none;
+            padding: 8px 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .menu a:hover {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 560px 1fr;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .left-column {
+            background-color: #ffffff;
+            padding: 60px 40px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .project-number {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .company {
+            font-size: 1rem;
+            color: #999;
+            margin-bottom: 40px;
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .info-content {
+            font-size: 1rem;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .right-column {
+            background-color: #f0f0f0;
+            padding: 60px 40px;
+        }
+
+        .image-container {
+            margin-bottom: 40px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-container img:hover {
+            opacity: 0.9;
+        }
+
+        .image-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .image-caption {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .list-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .list-toggle:hover {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        .list-menu {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 999;
+            min-width: 150px;
+        }
+
+        .list-menu.active {
+            display: block;
+        }
+
+        .list-menu a {
+            display: block;
+            color: #1a1a1a;
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .list-menu a:hover {
+            color: #666;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(240, 240, 240, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .medium {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .xsmall {
+            width: 30%;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+                display: block;
+            }
+
+            .left-column {
+                position: relative;
+                height: auto;
+                padding: 40px 20px;
+            }
+
+            .right-column {
+                padding: 40px 20px;
+            }
+
+            .image-row {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .menu {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+            }
+
+            .list-toggle {
+                top: 10px;
+                right: 10px;
+            }
+
+            .list-menu {
+                top: 50px;
+                right: 10px;
+            }
+
+            .medium, .xsmall {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="../work.html">BACK</a>
+        <a href="../index.html">HOME</a>
+    </div>
+
+    <div class="list-toggle" onclick="toggleList()">LIST</div>
+    <div class="list-menu" id="listMenu">
+        <a href="01.html">[01]</a>
+        <a href="02.html">[02]</a>
+        <a href="03.html">[03]</a>
+    </div>
+
+    <main>
+        <div class="left-column">
+            <div class="project-number">[030]</div>
+            <h1>R.D. URBAN ANALYSIS</h1>
+            <div class="subtitle">Urban Analysis, Grasshopper, AI</div>
+            <div class="company">Arup Bogota Col.</div>
+
+            <div class="info-section">
+                <div class="info-label">Location//</div>
+                <div class="info-content">Cali, Colombia</div>
+
+                <div class="info-label">Type//</div>
+                <div class="info-content">Urban Analysis, Grasshopper, AI</div>
+
+                <div class="info-label">Team//</div>
+                <div class="info-content">Sebastian López, Diego Serna, Sofia Gomez.</div>
+            </div>
+
+            <div class="description">
+                Brief. This project evaluated 2,700 land parcels in Santo Domingo to identify development opportunities and targeted improvements. The study combined site capacity, regulatory context, and stakeholder input to compare scenarios across pre-defined zones and produce decision ready outputs for planning.
+            </div>
+
+            <div class="description">
+                My role. I led the Grasshopper workflow to generate an optimal geometry for each parcel according to the zone it belongs to. The script was designed to respect a wide set of constraints, including multiple buildings, twelve landscape units, eight existing building typologies, while remaining flexible to future rule changes. For every parcel the tool computed an envelope that fits the constraints, resolved clashes, and produced a simple 3D massing model for each lot. In parallel it exported an automated Excel report with eight key fields per lot. These fields summarized the essentials for review, computed minimum and maximum allowable area values. The result was a reproducible pipeline that delivered consistent 30 geometries and statistics data for comparative analysis at city scale.
+            </div>
+
+            <div class="description">
+                At the end of the main process, I also collaborated on the creation of illustrative render images. Given the scope and volume, I proposed using ComfyUI for image generation, prompts, camera framing, and materials.
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="image-container">
+                <img src="../Images/p3/AA3.webp" alt="R.D. Urban Analysis" onclick="openLightbox(this.src)">
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 224.png" alt="Urban Analysis 1" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 225.png" alt="Urban Analysis 2" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 226.png" alt="Urban Analysis 3" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 227.png" alt="Urban Analysis 4" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 228.png" alt="Urban Analysis 5" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 229.png" alt="Urban Analysis 6" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 230.png" alt="Urban Analysis 7" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 231.png" alt="Urban Analysis 8" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 232.png" alt="Urban Analysis 9" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 233.png" alt="Urban Analysis 10" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 234.png" alt="Urban Analysis 11" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 235.png" alt="Urban Analysis 12" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 236.png" alt="Urban Analysis 13" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 237.png" alt="Urban Analysis 14" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 238.png" alt="Urban Analysis 15" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 239.png" alt="Urban Analysis 16" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+
+            <div class="image-row">
+                <div>
+                    <img src="../Images/p3/Asset 242.png" alt="Urban Analysis 17" onclick="openLightbox(this.src)">
+                </div>
+                <div>
+                    <img src="../Images/p3/Asset 243.png" alt="Urban Analysis 18" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <script>
+        function toggleList() {
+            document.getElementById('listMenu').classList.toggle('active');
+        }
+
+        function openLightbox(src) {
+            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightboxImg').src = src;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Close list menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const listMenu = document.getElementById('listMenu');
+            const listToggle = document.querySelector('.list-toggle');
+            
+            if (!listMenu.contains(event.target) && !listToggle.contains(event.target)) {
+                listMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
