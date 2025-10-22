@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Project 01 — diegoSecor</title>
+  <title>Project 05 — diegoSecor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="../Images/favicon.ico">
 
@@ -78,16 +78,6 @@
       width: 100%;
     }
 
-    .images-sidebar img.small {
-      width: 100%;
-      height: auto;
-    }
-
-    .images-sidebar img.mini {
-      width: 12.5%;
-      height: auto;
-    }
-
     .images-sidebar img.medium {
       width: 60%;
       align-self: center;
@@ -96,42 +86,6 @@
     .images-sidebar img.xsmall {
       width: 30%;
       align-self: center;
-    }
-
-    .model-row {
-      display: flex;
-      gap: 1rem;
-      width: 80%;
-      justify-content: center;
-      align-self: center;
-    }
-
-    .model-row img {
-      width: calc(50% - 0.5rem);
-      flex: 1;
-    }
-
-    .small-images-row {
-      display: flex;
-      gap: 1rem;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .images-sidebar > .small-images-row {
-      width: 65%;
-      align-self: center;
-    }
-
-    .images-sidebar > .small-images-row img {
-      width: calc(50% - 0.5rem);
-      height: auto;
-    }
-    
-    .project-description .small-images-row img {
-      width: auto;
-      height: 80px;
     }
 
     @media (max-width: 900px) {
@@ -160,39 +114,9 @@
         align-self: stretch;
       }
 
-      .model-row {
-        flex-direction: column;
-        width: 100%;
-        gap: 2rem;
-      }
-
-      .model-row img {
-        width: 100%;
-      }
-
-      .small-images-row {
-        flex-direction: column;
-        width: 100%;
-        gap: 1rem;
-      }
-
-      .images-sidebar > .small-images-row {
-        width: 100%;
-      }
-
-      .images-sidebar > .small-images-row img {
-        width: 100%;
-      }
-
-      .project-description .small-images-row {
-        flex-direction: row;
-        gap: 0.5rem;
-      }
-
-      .project-description .small-images-row img {
-        height: 60px;
-        width: auto;
-        flex: 1;
+      .image-row {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
       }
     }
 
@@ -231,7 +155,6 @@
       cursor: default;
     }
 
-    /* 1. ROJO: número y título */
     .project-number {
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 12px;
@@ -247,14 +170,12 @@
       text-align: left;
     }
 
-    /* 2. NARANJA: Final Project */
     .project-meta {
       font-size: 12px;
       color: #6b7072;
       margin-bottom: 0.7rem;
     }
 
-    /* 3. AZUL CLARO: Info participantes */
     .project-info {
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 12px;
@@ -266,7 +187,6 @@
       margin: 0.15rem 0;
     }
 
-    /* 4. AZUL OSCURO: Párrafo */
     .project-description {
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 12px;
@@ -280,7 +200,6 @@
       margin: 0.25rem 0 0.4rem 0;
     }
 
-    /* List toggle styles */
     .list-text {
       position: absolute;
       top: 27px;
@@ -344,15 +263,26 @@
       flex-shrink: 0;
     }
 
-    @media (max-width: 640px) {
-      main {
-        padding: 1rem;
-      }
-      
-      .project-header h1 {
-        font-size: 20px;
-      }
+    .image-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 0;
+    }
 
+    .image-row img {
+      width: 100%;
+    }
+
+    .image-caption {
+      font-size: 0.7rem;
+      color: #6b7072;
+      margin-top: 0.5rem;
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    @media (max-width: 640px) {
       .project-menu {
         width: 50vw;
         right: 0;
@@ -402,69 +332,51 @@
   </div>
 
   <main>
-    <!-- 1. ROJO: 01 y título -->
-    <div class="project-number">[010]</div>
-    <h1>SHADE STRUCTURES SYSTEM FOR PUBLIC SPACE</h1>
-    
-    <!-- 2. NARANJA: Final Project -->
-    <div class="project-meta">Final Project of Career</div>
-    
-    <!-- 3. AZUL CLARO: Info participantes -->
+    <div class="project-number">[050]</div>
+    <h1>REC RESIDENCE</h1>
+    <div class="project-meta">Redesign — Recinto Studio</div>
+
     <div class="project-info">
-      <p><strong>Location//</strong> Cali, Colombia</p>
-      <p><strong>Instructor//</strong> Rodrigo Vargas</p>
-      <p><strong>Type//</strong> Parametric Research</p>
-      <p><strong>Team//</strong> Avril Figueroa, Diego Serna.</p>
+      <p><strong>Location//</strong> Providencia Island, Colombia</p>
+      <p><strong>Type//</strong> Redesign</p>
+      <p><strong>Team//</strong> Joaquín Molina, Diego Serna, Avril Figueroa, Juliana Escalante.</p>
     </div>
-    
-    <!-- 4. AZUL OSCURO: Párrafo -->
-    <div class="project-description" style="margin-top: 2rem;">
-      <p>Approaching the project, we considered it an opportunity to engage in parametric design for the first time, exploring a methodology that shifts the architectural focus from static forms to systems defined by relationships and variables, and moving deliberately from theory into practice. The first step was an exploratory phase in Grasshopper, testing data structures, component behavior, and how environmental inputs could drive geometry. From that foundation, I developed a modular shade structure system for public space, derived from a site responsive grid and using digital tools not just to draft but to generate spatial logic and geometry. The system adapts to site conditions such as program, orientation, and climate, so it can scale and morph across different contexts. Roles on the project were intentionally shared and rotating, and both team members engaged in every stage: research, scripting, iteration, and prototyping, so we could learn the full workflow end to end.</p>
+    <br>
+    <div class="project-description">
+      <p>Brief. A coastal house was severely damaged by a hurricane in 2021. The project restores the ground level and adds a rear oriented lookout module. The scope includes structural repair, flood resilient detailing, and hurricane rated envelope components that tie into the existing grid.</p>
       
-      <!-- Imagenes 291-293 entre parrafos -->
-      <div class="small-images-row" style="margin: 1.5rem 0;">
-        <img src="../Images/p1/Asset 291.webp" alt="Asset 291">
-        <img src="../Images/p1/Asset 292.webp" alt="Asset 292">
-        <img src="../Images/p1/Asset 293.webp" alt="Asset 293">
-      </div>
+      <p>My role. I led the design of the lookout extension, while the rest of the team focused on the exact reconstruction of the existing residence through a clear floor path, lateral bracing, and corrosion aware connections. Because sourcing on the island was challenging, we completed pricing and lead times from suppliers in nearby Central American countries and Florida to secure suitable lumber, hardware, and envelope components within schedule and budget.</p>
       
-      <p>After defining the system, we advanced from beams, columns, and joints to the enclosure module through intensive geometric exploration and zoning. We developed a folded panel concept: a base surface receives a subdivision pattern, two perpendicular cuts, and a simultaneous fold along four axes. Because folds need travel ranges at planes, vertices, and edges, we designed mobile or alternate connections; the panel is then sectioned to free movement and standardize the support substructure. Variations were first modeled in Rhino to preview constructability, but we migrated the panel to an independent Grasshopper algorithm to minimize elements, edit variations in real time, test solar-exposure responses, and produce a clear visual gradient across zones.</p>
-      <p>In the final stage we consolidated the workflow into a fully adaptable system. To deploy it on any site, the designer defines three inputs: the overall boundary, the working surface with its topography, and the open and closed zones. With those inputs set, the rule set generates the architectural solution automatically: structural grid, column positions, beam paths, joint locations, and a folded-panel layout with the appropriate variation per zone. In parallel, the script produces a bill of quantities with counts of joints and columns, panel tallies by type, and dimensioned outputs for each member. Checks for maximum spans, slope constraints, and fold limits are built in, and the model exports directly to drawings or fabrication files with minimal rework. The pipeline runs iteratively; any input change updates structure, panels, and quantities in real time.</p>
-      <p>This experience taught me how to identify strong entry points for a parametric project and to decide which workflow is optimal for what I want to achieve, whether traditional or parametric.</p>
+      <p>In addition, I explored the form through physical models and 3D studies. I produced a final scale model and a coordinated digital model to take on site, which improved communication with the crew, clarified assembly sequencing, and tightened tolerance checks. I structured delivery in clear stages—from concept trials to prototype joints and then to shop drawings, fabrication and installation could proceed with minimal rework. The module itself follows a repetitive truss logic, paired with a calibrated set of side tensioners that I used to tune stiffness and limit drift while preserving views and a light, coastal expression.</p>
     </div>
   </main>
 
+  <!-- Columna de imágenes -->
   <div class="images-sidebar">
-    <!-- GIFs -->
-    <img src="../Images/p1/animation.gif" alt="Animation sequence" class="medium">
-    <img src="../Images/p1/5aMap.webp" alt="Map" class="full" style="margin-top: 3rem;">
-    
-    <!-- Otras imágenes -->
-    <div class="model-row">
-      <img src="../Images/p1/3amodel.webp" alt="3D Model">
-      <img src="../Images/p1/3bmodel.webp" alt="3D Model view">
+    <img src="../Images/p5/AA5.webp" alt="REC Residence" class="medium">
+    <img src="../Images/p5/Asset 195.png" alt="REC Residence 5" class="medium">
+
+    <div class="image-row">
+      <img src="../Images/p5/Asset 192.png" alt="REC Residence 3">
+      <img src="../Images/p5/Asset 191.png" alt="REC Residence 2">
     </div>
-    <img src="../Images/p1/4aexplo.webp" alt="Exploration" class="medium">
-    <img src="../Images/p1/Asset 290.webp" alt="Asset 290" class="medium">
-    <img src="../Images/p1/animation_b.gif" alt="Animation B sequence" class="xsmall">
-    <img src="../Images/p1/Asset 349.webp" alt="Asset 349" class="xsmall">
-    <img src="../Images/p1/Asset 294.webp" alt="Asset 294" class="xsmall">
-    
-    <img src="../Images/p1/Asset 347.webp" alt="Asset 347" class="full">
+
+    <img src="../Images/p5/Asset 194.png" alt="REC Residence 4" class="medium">
+    <img src="../Images/p5/Asset 190.png" alt="REC Residence 1" class="medium">
   </div>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
-    <img src="" alt="Enlarged image" id="lightbox-img">
+    <img id="lightbox-img" src="" alt="">
   </div>
 
   <script>
-    // Lightbox functionality for images-sidebar only
+    // Lightbox functionality
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
-    const sidebarImages = document.querySelectorAll('.images-sidebar img');
+    const images = document.querySelectorAll('.images-sidebar img');
 
-    sidebarImages.forEach(img => {
+    images.forEach(img => {
       img.addEventListener('click', function() {
         lightboxImg.src = this.src;
         lightbox.classList.add('active');
