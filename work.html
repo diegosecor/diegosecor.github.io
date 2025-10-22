@@ -68,6 +68,11 @@
       background: #f4f4f4;
       overflow: hidden;
       border: none;
+      cursor: pointer;
+      transition: filter 0.3s ease;
+    }
+    .thumb:hover {
+      filter: brightness(0.7);
     }
     .thumb img,
     .thumb svg {
@@ -86,6 +91,10 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: color 0.2s;
+    }
+    .work-item a:hover figcaption {
+      color: #333;
     }
 
     /* Responsive (mantiene mismo gutter=gap a los lados) */
@@ -191,8 +200,8 @@
   <!-- Menú desplegable de proyectos -->
   <div class="project-menu" id="project-menu">
     <ul>
-      <li>[01] Shade Structures System For Public Space <span class="year">2022</span></li>
-      <li>[02] AI Personal Research <span class="year">2025</span></li>
+      <li><a href="list-project/01.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[01] Shade Structures System For Public Space <span class="year">2022</span></a></li>
+      <li><a href="list-project/02.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[02] AI Personal Research <span class="year">2025</span></a></li>
       <li>[03] R.D. Urban Analysis <span class="year">2025</span></li>
       <li>[04] Tusa Bamboo Roof <span class="year">2024</span></li>
       <li>[05] REC Residence <span class="year">2024</span></li>
@@ -214,19 +223,23 @@
       <div class="gallery" role="list" aria-label="Work items">
         <!-- Item 1 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-010">
-          <div class="thumb" aria-hidden="true">
-            <!-- Imagen optimizada WebP -->
-            <img src="Images/p1/AA1.webp" alt="[010] Shade Structures System For Public Space" />
-          </div>
-          <figcaption id="cap-010">[010] Shade Structures System For Public Space</figcaption>
+          <a href="list-project/01.html" style="text-decoration: none; color: inherit;">
+            <div class="thumb" aria-hidden="true">
+              <!-- Imagen optimizada WebP -->
+              <img src="Images/p1/AA1.webp" alt="[010] Shade Structures System For Public Space" />
+            </div>
+            <figcaption id="cap-010">[010] Shade Structures System For Public Space</figcaption>
+          </a>
         </figure>
 
         <!-- Item 2 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-020">
-          <div class="thumb" aria-hidden="true">
-            <img src="Images/p2/AA2.webp" alt="[020] AI Personal Research" />
-          </div>
-          <figcaption id="cap-020">[020] AI Personal Research</figcaption>
+          <a href="list-project/02.html" style="text-decoration: none; color: inherit;">
+            <div class="thumb" aria-hidden="true">
+              <img src="Images/p2/AA2.webp" alt="[020] AI Personal Research" />
+            </div>
+            <figcaption id="cap-020">[020] AI Personal Research</figcaption>
+          </a>
         </figure>
 
         <!-- Item 3 -->

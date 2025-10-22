@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Project 02 — diegoSecor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../Images/favicon.ico">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
+
+  <!-- Estilos globales -->
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    .brand-link,
+    .brand-link * {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .top-bar .right a[href="../work.html"] {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    body {
+      display: grid;
+      grid-template-columns: 560px 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      z-index: 1000;
+    }
+
+    main {
+      max-width: 560px;
+      margin: 0;
+      padding: 55px 0.75rem 4rem 6px;
+      text-align: left;
+      display: block;
+      flex: none;
+      grid-column: 1;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 560px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .images-sidebar {
+      grid-column: 2;
+      padding: 55px 60px 4rem 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      align-items: stretch;
+    }
+
+    .images-sidebar img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .images-sidebar img.full {
+      width: 100%;
+    }
+
+    .images-sidebar img.medium {
+      width: 60%;
+      align-self: center;
+    }
+
+    .images-sidebar img.xsmall {
+      width: 30%;
+      align-self: center;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+        display: block;
+      }
+      
+      main {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        padding: 55px 0.75rem 2rem 0.75rem;
+      }
+      
+      .images-sidebar {
+        grid-column: 1;
+        padding: 2rem 0.75rem 4rem 0.75rem;
+        gap: 2rem;
+      }
+
+      .images-sidebar img.medium,
+      .images-sidebar img.xsmall {
+        width: 100%;
+        align-self: stretch;
+      }
+
+      .image-row {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+      }
+
+      .image-row[style*="margin-top: 5rem"] {
+        margin-top: 3rem !important;
+        margin-bottom: 3rem !important;
+      }
+    }
+
+    /* Lightbox styles */
+    .images-sidebar img {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .images-sidebar img:hover {
+      opacity: 0.9;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(240, 240, 240, 0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      cursor: default;
+    }
+
+    .project-number {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 12px;
+      color: #6b7072;
+      margin: 0 0 0.25rem 0;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 0.7rem 0;
+      text-align: left;
+    }
+
+    .project-meta {
+      font-size: 12px;
+      color: #6b7072;
+      margin-bottom: 0.7rem;
+    }
+
+    .project-info {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.4;
+      margin-bottom: 0.7rem;
+    }
+
+    .project-info p {
+      margin: 0.15rem 0;
+    }
+
+    .project-description {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.4;
+      color: inherit;
+      text-align: justify;
+      margin-bottom: 2rem;
+    }
+
+    .project-description p {
+      margin: 0.25rem 0 0.4rem 0;
+    }
+
+    .list-text {
+      position: absolute;
+      top: 27px;
+      right: 7.5px;
+      font-family: 'Diatype', 'Arial', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #008000;
+      letter-spacing: 1px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .project-menu {
+      position: fixed;
+      top: 55px;
+      right: 0;
+      width: calc(100vw / 6 - 27.5px);
+      height: calc(100vh - 55px);
+      background: white;
+      border-left: none;
+      padding: 15px;
+      box-shadow: none;
+      display: none;
+      z-index: 900;
+      overflow-y: auto;
+    }
+
+    .project-menu.active {
+      display: block;
+    }
+
+    .project-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1.8;
+      color: #6b7072;
+    }
+
+    .project-menu li {
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.2s;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .project-menu li:hover {
+      color: #333;
+    }
+
+    .project-menu .year {
+      font-style: italic;
+      color: #a0a0a0;
+      margin-left: auto;
+      padding-left: 8px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 640px) {
+      .project-menu {
+        width: 50vw;
+        right: 0;
+        left: auto;
+        padding: 15px 7.5px;
+      }
+      
+      .list-text {
+        right: 7.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="left">
+      <a href="../index.html" class="brand-link" aria-label="Go to home">
+        <span class="brand"><strong>DS</strong> &middot; Architect</span>
+      </a>
+    </div>
+    <nav class="right">
+      <a href="../info.html">Information</a>
+      <a href="../work.html">Work</a>
+      <span class="list-text" id="list-toggle"><span id="arrow">↓</span><span style="text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;">List</span></span>
+    </nav>
+  </header>
+
+  <!-- Menú desplegable de proyectos -->
+  <div class="project-menu" id="project-menu">
+    <ul>
+      <li><a href="01.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[01] Shade Structures System For Public Space <span class="year">2022</span></a></li>
+      <li><a href="02.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[02] AI Personal Research <span class="year">2025</span></a></li>
+      <li>[03] R.D. Urban Analysis <span class="year">2025</span></li>
+      <li>[04] Tusa Bamboo Roof <span class="year">2024</span></li>
+      <li>[05] REC Residence <span class="year">2024</span></li>
+      <li>[06] Re-existence and digital virtual re-habitation <span class="year">2022</span></li>
+      <li>[07] Roof / UV <span class="year">2023</span></li>
+      <li>[08] Mundus Music Classroom <span class="year">2023</span></li>
+      <li>[09] Surface Restaurant <span class="year">2023</span></li>
+      <li>[10] TT House <span class="year">2021</span></li>
+      <li>[11] Parametric ramp <span class="year">2021</span></li>
+      <li>[12] D House <span class="year">2021</span></li>
+      <li>[13] Tree of Liberty <span class="year">2020</span></li>
+      <li>[14] Desk <span class="year">2020</span></li>
+      <li>[15] Ensamble <span class="year">2019</span></li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- 1. Número y título -->
+    <div class="project-number">[020]</div>
+    <h1>AI PERSONAL RESEARCH</h1>
+    
+    <!-- 2. Subtítulo -->
+    <div class="project-meta">Automatic 1111, ForgeUI, ComfyUI</div>
+    
+    <!-- 3. Info participantes -->
+    <div class="project-info">
+      <p><strong>Location//</strong> Armenia, Colombia</p>
+      <p><strong>Type//</strong> Software, AI</p>
+      <p><strong>Team//</strong> Diego Serna</p>
+    </div>
+    
+    <!-- 4. Párrafos -->
+    <div class="project-description" style="margin-top: 2rem;">
+      <p>This project documents my self directed exploration of AI as an architect. I began this research in late 2023, after gaining fluency in Grasshopper and stepping into more complex, system based design. Working from Colombia, where local communities and institutional support are limited, I relied on global forums, online resources, and constant self directed experimentation. In parallel with day to day work in conventional architecture offices, I tested workflows that could support basic professional tasks and extend my experiments.</p>
+      <p>I moved across platforms, starting with Automatic1111, then Forge UI, and eventually building a stable workflow in ComfyUI. I tested these across different design stages, but mainly in image post production and rendering, where they let me iterate looks, lighting, and materials quickly. The research spans text to image, image to image, and image 3D experimentation, prompt engineering, custom image generation with ControlNet, Flux models, LoRAs, and node based orchestration in ComfyUI. The result is a set of repeatable workflows that open new visual directions and help me prototype ideas faster while keeping design intent and constraints in the loop.</p>
+      <p>I ran a broad round of tests to refine generative workflows across several platforms. I worked mainly with Flux and trained my own LoRAs to steer style and detail, using text to image and image to image, plus inpainting and outpainting for targeted edits. I added quality boosts with modern upscalers and used ControlNet inputs like canny and depth when alignment to references was needed, with occasional trials of image to 3D.</p>
+      <img src="../Images/p2/Asset 287.png" alt="Asset 287" style="width: 20%; height: auto; display: block; margin: 1rem auto;">
+      <p>Looking back over two years, it is striking to see how the results and workflows have evolved. Early on I ran ControlNet locally on my PC for about 30 minutes per image; today free online models can deliver comparable results faster and with far less friction for basic interiors and simple architectural tasks in img to img or text to image. Locally, generation times have dropped too: my current setups render in roughly 7 minutes with better models and higher quality. That said, web tools still offer limited control when geometry becomes complex. I still rely on ComfyUI and dedicated models, since online options rarely match the precision of strong upscalers or the mesh fidelity I can reach with tools like Hunyuan3D.</p>
+    </div>
+  </main>
+
+  <div class="images-sidebar">
+    <div class="image-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start;">
+      <div style="display: flex; flex-direction: column;">
+        <img src="../Images/p2/AA2.webp" alt="AI Research" style="width: 100%; margin-bottom: 0.5rem;">
+        <p style="font-size: 0.7rem; line-height: 1.4; margin: 0;">Exploration using Flux and Hunyuan3D (image to 3D). I first generated images of intentionally complex mineral forms using Flux. Those images were then passed to Hunyuan3D to construct a 3D mesh. The result was imported into Blender to evaluate fidelity through overlays, curvature checks, edge continuity, and detail retention around thin members and sharp folds.</p>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <img src="../Images/p2/Asset 259.png" alt="Asset 259" style="width: 100%; margin-bottom: 0.5rem;">
+        <p style="font-size: 0.7rem; line-height: 1.4; margin: 0;">A highlight of this work is that it was selected for the Open Call "Playing Models" 2025.</p>
+      </div>
+    </div>
+    <img src="../Images/p2/Asset 260.png" alt="Asset 260" class="medium" style="margin-top: 1.5rem; margin-bottom: 3rem;">
+    <div class="image-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start;">
+      <div style="display: flex; flex-direction: column;">
+        <img src="../Images/p2/Asset 276.png" alt="Asset 276" style="width: 100%; margin-bottom: 0.5rem;">
+        <p style="font-size: 0.7rem; line-height: 1.4; margin: 0;">This project focused on generating model-style images for a design assignment, using specific LoRAs trained by me on an easy-to-use online platform for small model training to achieve realistic physical model finishes.</p>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <img src="../Images/p2/Asset 277.png" alt="Asset 277" style="width: 100%; margin-bottom: 0.5rem;">
+        <p style="font-size: 0.7rem; line-height: 1.4; margin: 0;">A highlight of this work is that it was selected for the Open Call "Playing Models" 2025.</p>
+      </div>
+    </div>
+    <img src="../Images/p2/Asset 278.png" alt="Asset 278" class="medium">
+    <div style="display: flex; flex-direction: column; gap: 0.3rem; align-items: center; margin-top: 3rem;">
+      <img src="../Images/p2/Asset 268.png" alt="Asset 268" class="medium">
+      <img src="../Images/p2/Asset 279.png" alt="Asset 279" class="medium">
+      <img src="../Images/p2/Asset 280.png" alt="Asset 280" class="medium">
+      <p style="font-size: 0.7rem; line-height: 1.4; margin: 0.5rem 0 0 0; width: 60%; text-align: left;">Series of images exploring Flux, kontext, and LoRA models.</p>
+    </div>
+    <div class="image-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; margin-top: 5rem; margin-bottom: 5rem;">
+      <img src="../Images/p2/Asset 282.png" alt="Asset 282" style="width: 100%;">
+      <img src="../Images/p2/Asset 281.png" alt="Asset 281" style="width: 100%;">
+    </div>
+    <div class="image-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start;">
+      <div style="display: flex; flex-direction: column;">
+        <img src="../Images/p2/Asset 283.png" alt="Asset 283" style="width: 100%; margin-bottom: 1rem;">
+        <img src="../Images/p2/Asset 285.png" alt="Asset 285" style="width: 100%; margin-bottom: 0.5rem;">
+        <p style="font-size: 0.7rem; line-height: 1.4; margin: 0;">Image generated from a quick sketch, using LoRAs and ControlNet in ComfyUI around mid 2024. This workflow was very useful at the time for fast visual exploration and alignment to references.</p>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <img src="../Images/p2/Asset 284.png" alt="Asset 284" style="width: 100%; margin-bottom: 1rem;">
+        <img src="../Images/p2/Asset 286.png" alt="Asset 286" style="width: 100%; margin-bottom: 0.5rem;">
+        <p style="font-size: 0.7rem; line-height: 1.4; margin: 0;">Today, similar quality can be achieved without ControlNet and at no cost directly from ChatGPT, making the process simpler and more accessible.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="Enlarged image" id="lightbox-img">
+  </div>
+
+  <script>
+    // Lightbox functionality for images-sidebar only
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const sidebarImages = document.querySelectorAll('.images-sidebar img');
+
+    sidebarImages.forEach(img => {
+      img.addEventListener('click', function() {
+        lightboxImg.src = this.src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightbox.addEventListener('click', function() {
+      lightbox.classList.remove('active');
+    });
+
+    // Toggle List menu
+    const listToggle = document.getElementById('list-toggle');
+    const projectMenu = document.getElementById('project-menu');
+    const arrow = document.getElementById('arrow');
+
+    listToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      projectMenu.classList.toggle('active');
+      arrow.textContent = projectMenu.classList.contains('active') ? '↑' : '↓';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!projectMenu.contains(e.target) && !listToggle.contains(e.target)) {
+        projectMenu.classList.remove('active');
+        arrow.textContent = '↓';
+      }
+    });
+  </script>
+</body>
+</html>
