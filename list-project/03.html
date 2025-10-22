@@ -363,6 +363,10 @@
       <p>My role. I led the Grasshopper workflow to generate an optimal geometry for each parcel according to the zone it belongs to. The script was designed to respect a wide set of constraints, including multiple buildings, twelve landscape units, eight existing building typologies, while remaining flexible to future rule changes. For every parcel the tool computed an envelope that fits the constraints, resolved clashes, and produced a simple 3D massing model for each lot. In parallel it exported an automated Excel report with eight key fields per lot. These fields summarized the essentials for review, computed minimum and maximum allowable area values. The result was a reproducible pipeline that delivered consistent 30 geometries and statistics data for comparative analysis at city scale.</p>
       
       <p>At the end of the main process, I also collaborated on the creation of illustrative render images. Given the scope and volume, I proposed using ComfyUI for image generation, prompts, camera framing, and materials.</p>
+      
+      <p>Grasshopper command explanation. We organized a comprehensive dataset for each block and parcel, then generated a base extrusion for every record. Using a set of diagonal control planes, the script regulated the allowable enclosure per block, trimming or opening volumes where regulations or context required. Height was handled by zone: each subset extruded to a predetermined value derived from statistical benchmarks, so the model reflected consistent, evidence based envelopes.</p>
+      
+      <p>The workflow demanded extensive list management and careful data filtering, and the tricky part was reliably separating and matching each item to its correct block and zone. As outputs, the pipeline produced multiple three dimensional versions of the study area, including the existing condition model, a proposed height model, and a proposed height model with corrected voids. For each version, the tool also exported structured Excel documentation, with per parcel fields for review and comparison.</p>
     </div>
   </main>
 
