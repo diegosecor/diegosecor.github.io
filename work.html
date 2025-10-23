@@ -98,8 +98,10 @@
     }
 
     /* Responsive (mantiene mismo gutter=gap a los lados) */
-    @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  /* iPad and similar: prefer 3 columns instead of 4 for better proportions */
+  @media (max-width: 1024px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 640px)  { 
       .gallery { grid-template-columns: repeat(1, minmax(0, 1fr)); }
     }
@@ -168,6 +170,73 @@
       padding-left: 8px;
       flex-shrink: 0;
     }
+    /* Make link titles shrink and years stay visible */
+    .project-menu a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: baseline;
+      gap: 6px; /* slightly tighter gap */
+      width: 100%;
+      min-width: 0; /* allow children to shrink */
+    }
+    .project-menu a .title {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .project-menu .year {
+      flex: 0 0 72px; /* fixed width to avoid clipping */
+      width: 72px;
+      margin-left: 0;
+      padding-left: 8px;
+      font-size: 11px; /* slightly smaller to fit */
+      color: #8f8f8f;
+      text-align: center; /* center the year text */
+    }
+    /* Backdrop and mobile fullscreen behavior */
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.45);
+      z-index: 1000; /* below header (set below) and below project-menu */
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+    .menu-overlay.active { display: block; opacity: 1; }
+
+    /* When menu is open and body locked, prevent scroll by fixing the body in place */
+    body.menu-open {
+      overflow: hidden;
+      position: fixed;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+
+    /* Ensure header stays visible above the overlay */
+    .top-bar { position: relative; z-index: 1002; }
+
+    @media (max-width: 1024px) {
+      /* Make project menu fullscreen on small screens */
+      .project-menu {
+        top: 0; left: 0; right: 0;
+        width: 100vw; height: 100vh;
+        padding: 60px 18px 20px 18px; /* leave space so header is not covered by content visually */
+        display: none; /* controlled by .active */
+        z-index: 1001; /* above overlay but below header */
+        box-shadow: none;
+        border-left: none;
+        overflow-y: auto;
+      }
+      .project-menu.active { display: block; }
+    }
   </style>
 </head>
 <body>
@@ -188,21 +257,21 @@
   <!-- Menú desplegable de proyectos -->
   <div class="project-menu" id="project-menu">
     <ul>
-      <li><a href="list-project/01.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[01] Shade Structures System For Public Space <span class="year">2022</span></a></li>
-      <li><a href="list-project/02.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[02] AI Personal Research <span class="year">2025</span></a></li>
-      <li><a href="list-project/03.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[03] R.D. Urban Analysis <span class="year">2025</span></a></li>
-      <li><a href="list-project/04.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[04] Tusa Bamboo Roof <span class="year">2024</span></a></li>
-      <li><a href="list-project/05.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[05] REC Residence <span class="year">2024</span></a></li>
-      <li><a href="list-project/06.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[06] Re-existence and digital virtual re-habitation <span class="year">2022</span></a></li>
-      <li><a href="list-project/07.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[07] Roof / UV <span class="year">2023</span></a></li>
-      <li><a href="list-project/08.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[08] Mundus Music Classroom <span class="year">2023</span></a></li>
-      <li><a href="list-project/09.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[09] Surface Restaurant <span class="year">2023</span></a></li>
-      <li><a href="list-project/10.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[10] TT House <span class="year">2021</span></a></li>
-      <li><a href="list-project/11.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[11] Parametric ramp <span class="year">2021</span></a></li>
-      <li><a href="list-project/12.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[12] D House <span class="year">2021</span></a></li>
-      <li><a href="list-project/13.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[13] Tree of Liberty <span class="year">2020</span></a></li>
-      <li><a href="list-project/14.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[14] Desk <span class="year">2020</span></a></li>
-      <li><a href="list-project/15.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[15] Ensamble <span class="year">2019</span></a></li>
+  <li><a href="list-project/01.html"><span class="title">[01] Shade Structures System For Public Space</span> <span class="year">2022</span></a></li>
+  <li><a href="list-project/02.html"><span class="title">[02] AI Personal Research</span> <span class="year">2025</span></a></li>
+  <li><a href="list-project/03.html"><span class="title">[03] R.D. Urban Analysis</span> <span class="year">2025</span></a></li>
+  <li><a href="list-project/04.html"><span class="title">[04] Tusa Bamboo Roof</span> <span class="year">2024</span></a></li>
+  <li><a href="list-project/05.html"><span class="title">[05] REC Residence</span> <span class="year">2024</span></a></li>
+  <li><a href="list-project/06.html"><span class="title">[06] Re-existence and digital virtual re-habitation</span> <span class="year">2022</span></a></li>
+  <li><a href="list-project/07.html"><span class="title">[07] Roof / UV</span> <span class="year">2023</span></a></li>
+  <li><a href="list-project/08.html"><span class="title">[08] Mundus Music Classroom</span> <span class="year">2023</span></a></li>
+  <li><a href="list-project/09.html"><span class="title">[09] Surface Restaurant</span> <span class="year">2023</span></a></li>
+  <li><a href="list-project/10.html"><span class="title">[10] TT House</span> <span class="year">2021</span></a></li>
+  <li><a href="list-project/11.html"><span class="title">[11] Parametric ramp</span> <span class="year">2021</span></a></li>
+  <li><a href="list-project/12.html"><span class="title">[12] D House</span> <span class="year">2021</span></a></li>
+  <li><a href="list-project/13.html"><span class="title">[13] Tree of Liberty</span> <span class="year">2020</span></a></li>
+  <li><a href="list-project/14.html"><span class="title">[14] Desk</span> <span class="year">2020</span></a></li>
+  <li><a href="list-project/15.html"><span class="title">[15] Ensamble</span> <span class="year">2019</span></a></li>
     </ul>
   </div>
 
@@ -280,29 +349,61 @@
 
   <script>
     // Toggle del menú de proyectos
-    const listToggle = document.getElementById('list-toggle');
-    const projectMenu = document.getElementById('project-menu');
-    const arrow = document.getElementById('arrow');
+    (function(){
+      const listToggle = document.getElementById('list-toggle');
+      const projectMenu = document.getElementById('project-menu');
+      const arrow = document.getElementById('arrow');
 
-    listToggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      projectMenu.classList.toggle('active');
-      
-      // Cambiar la flecha
-      if (projectMenu.classList.contains('active')) {
-        arrow.textContent = '↑'; // Flecha hacia arriba
-      } else {
-        arrow.textContent = '↓'; // Flecha hacia abajo
+      // Create backdrop overlay if not present
+      var menuOverlay = document.querySelector('.menu-overlay');
+      if (!menuOverlay) {
+        menuOverlay = document.createElement('div');
+        menuOverlay.className = 'menu-overlay';
+        document.body.appendChild(menuOverlay);
       }
-    });
 
-    // Cerrar el menú al hacer clic fuera
-    document.addEventListener('click', function(e) {
-      if (!projectMenu.contains(e.target) && e.target !== listToggle && !listToggle.contains(e.target)) {
+      var _scrollY = 0;
+      function openMenu() {
+        // If small screen, show overlay and fullscreen menu
+        if (window.matchMedia && window.matchMedia('(max-width: 820px)').matches) {
+          menuOverlay.classList.add('active');
+          // Save scroll position and lock body
+          _scrollY = window.scrollY || window.pageYOffset;
+          document.body.style.top = '-' + _scrollY + 'px';
+          document.body.classList.add('menu-open');
+        }
+        projectMenu.classList.add('active');
+        arrow.textContent = '↑';
+      }
+
+      function closeMenu() {
+        menuOverlay.classList.remove('active');
+        // Unlock body and restore scroll
+        document.body.classList.remove('menu-open');
+        document.body.style.top = '';
+        if (_scrollY) window.scrollTo(0, _scrollY);
         projectMenu.classList.remove('active');
-        arrow.textContent = '↓'; // Restaurar flecha hacia abajo
+        arrow.textContent = '↓';
       }
-    });
+
+      listToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (projectMenu.classList.contains('active')) closeMenu(); else openMenu();
+      });
+
+      // Close when clicking overlay
+      menuOverlay.addEventListener('click', function(){ closeMenu(); });
+
+      // Close on Escape
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+
+      // Cerrar el menú al hacer clic fuera (desktop fallback)
+      document.addEventListener('click', function(e) {
+        if (!projectMenu.contains(e.target) && e.target !== listToggle && !listToggle.contains(e.target)) {
+          closeMenu();
+        }
+      });
+    })();
   </script>
 </body>
 </html>
