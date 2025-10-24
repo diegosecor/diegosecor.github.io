@@ -47,7 +47,8 @@
 
   listToggle.addEventListener('click', function(e){
     e.stopPropagation();
-    if (window.matchMedia && window.matchMedia('(max-width: 640px)').matches){
+    // Treat small screens and tablets (up to 900px) as mobile for the menu behavior
+    if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches){
       if (projectMenu.classList.contains('active')) closeMobileMenu(); else openMobileMenu();
     } else {
       projectMenu.classList.toggle('active');
@@ -59,7 +60,7 @@
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') { closeMobileMenu(); } });
   document.addEventListener('click', function(e){
     if (!projectMenu.contains(e.target) && !listToggle.contains(e.target)) {
-      if (window.matchMedia && window.matchMedia('(max-width: 640px)').matches) closeMobileMenu();
+      if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches) closeMobileMenu();
       else { projectMenu.classList.remove('active'); if (arrow) arrow.textContent = '↓'; }
     }
   });
