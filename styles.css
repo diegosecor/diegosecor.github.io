@@ -101,3 +101,53 @@ footer {
     font-size: 11px;
   }
 }
+
+/* Ensure the project list (menu) behaves like mobile on tablets/iPad (<=900px)
+   This provides a full-width overlay under the header and a full-height
+   scrollable menu area. The JS (`assets/menu-sync.js`) sets inline `top`
+   on the elements; we provide a sensible fallback using the CSS variable
+   --menu-top (default 55px). */
+@media (max-width: 900px) {
+  .menu-overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--menu-top, 55px);
+    bottom: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 900;
+  }
+  .menu-overlay.active {
+    display: block;
+  }
+
+  .project-menu {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--menu-top, 55px);
+    bottom: 0;
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 0;
+    max-height: calc(100vh - var(--menu-top, 55px));
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 16px 18px 20px 18px;
+    z-index: 901;
+    background: #fff;
+    display: none;
+  }
+  .project-menu.active {
+    display: block;
+  }
+
+  /* prevent body from scrolling when menu is open; menu-sync.js handles inline
+     top/scroll-lock but adding class support is helpful */
+  body.menu-open {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+  }
+}
