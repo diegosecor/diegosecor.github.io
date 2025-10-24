@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="../styles.css">
 
   <style>
+    html, body { overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; }
     .brand-link,
     .brand-link * {
       text-decoration: none;
@@ -42,7 +44,7 @@
       background: white;
       z-index: 1000;
     }
-
+    
     main {
       max-width: 560px;
       margin: 0;
@@ -275,16 +277,10 @@
     }
 
     @media (max-width: 640px) {
-      .project-menu {
-        width: 50vw;
-        right: 0;
-        left: auto;
-        padding: 15px 7.5px;
-      }
-      
-      .list-text {
-        right: 7.5px;
-      }
+      .menu-overlay { display:none; position:fixed; left:0; right:0; top:55px; bottom:0; background:rgba(0,0,0,0.45); z-index:900; }
+      .menu-overlay.active { display:block; }
+      .project-menu { position: fixed; left:0; right:0; top:55px; bottom:0; width:100%; max-height:calc(100vh - 55px); overflow-y:auto; box-sizing:border-box; padding:16px 18px 20px 18px; z-index:901; background:#fff; }
+      .list-text { right:7.5px; }
     }
   </style>
 </head>
@@ -381,24 +377,8 @@
       lightbox.classList.remove('active');
     });
 
-    // Toggle List menu
-    const listToggle = document.getElementById('list-toggle');
-    const projectMenu = document.getElementById('project-menu');
-    const arrow = document.getElementById('arrow');
-
-    listToggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      projectMenu.classList.toggle('active');
-      arrow.textContent = projectMenu.classList.contains('active') ? '↑' : '↓';
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!projectMenu.contains(e.target) && !listToggle.contains(e.target)) {
-        projectMenu.classList.remove('active');
-        arrow.textContent = '↓';
-      }
-    });
+    
   </script>
+  <script src="../assets/menu-sync.js"></script>
 </body>
 </html>

@@ -14,25 +14,99 @@
   <link rel="stylesheet" href="../styles.css">
 
   <style>
+  .model-row { display: flex; gap: 0.75rem; margin-bottom: 2rem; justify-content: center; }
+  .model-row img.half { width: 50%; height: auto; display: block; }
+  /* Stack these images vertically and preserve original resolution/proportion */
+  .triple-row { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  /* Make images 7/8/9 smaller on desktop and centered, but keep full-width on small screens */
+  .triple-row img.third {
+    width: 60%;
+    max-width: 420px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    align-self: center;
+  }
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(240, 240, 240, 0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      cursor: default;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+      background: #fff;
+    }
+    @media (min-width: 901px) {
+      .project-number {
+        margin-top: 0.2rem !important;
+      }
+    }
+    .small-images-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .small-images-row img {
+      width: 32%;
+      min-width: 0;
+      height: auto;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+    @media (max-width: 640px) {
+      .small-images-row {
+        gap: 0.3rem;
+        margin-left: -2px;
+        margin-right: -2px;
+      }
+      .small-images-row img {
+        width: 32%;
+        max-width: 32vw;
+        min-width: 0;
+        height: auto;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    html, body { overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; }
     .brand-link,
     .brand-link * {
       text-decoration: none;
       color: inherit;
     }
-
     .top-bar .right a[href="../work.html"] {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
-
     body {
       display: grid;
       grid-template-columns: 560px 1fr;
       grid-template-rows: auto 1fr;
       min-height: 100vh;
     }
-
     header {
       grid-column: 1 / -1;
       position: fixed;
@@ -42,9 +116,9 @@
       background: white;
       z-index: 1000;
     }
-
     main {
       max-width: 560px;
+      width: 560px;
       margin: 0;
       padding: 55px 0.75rem 4rem 6px;
       text-align: left;
@@ -54,11 +128,10 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 560px;
-      height: 100vh;
       overflow-y: auto;
+      overflow-x: hidden;
+      box-sizing: border-box;
     }
-
     .images-sidebar {
       grid-column: 2;
       padding: 55px 60px 4rem 60px;
@@ -67,178 +140,33 @@
       gap: 3rem;
       align-items: stretch;
     }
-
     .images-sidebar img {
       width: 100%;
       height: auto;
       display: block;
+      cursor: pointer;
+      transition: opacity 0.2s;
     }
-
+    .images-sidebar img:hover {
+      opacity: 0.9;
+    }
     .images-sidebar img.full {
       width: 100%;
     }
-
-    .images-sidebar img.small {
-      width: 100%;
-      height: auto;
-    }
-
-    .images-sidebar img.mini {
-      width: 12.5%;
-      height: auto;
-    }
-
     .images-sidebar img.medium {
       width: 60%;
       align-self: center;
     }
-
     .images-sidebar img.xsmall {
       width: 30%;
       align-self: center;
     }
-
-    .model-row {
-      display: flex;
-      gap: 1rem;
-      width: 80%;
-      justify-content: center;
-      align-self: center;
-    }
-
-    .model-row img {
-      width: calc(50% - 0.5rem);
-      flex: 1;
-    }
-
-    .small-images-row {
-      display: flex;
-      gap: 1rem;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .images-sidebar > .small-images-row {
-      width: 65%;
-      align-self: center;
-    }
-
-    .images-sidebar > .small-images-row img {
-      width: calc(50% - 0.5rem);
-      height: auto;
-    }
-    
-    .project-description .small-images-row img {
-      width: auto;
-      height: 80px;
-    }
-
-    @media (max-width: 900px) {
-      body {
-        grid-template-columns: 1fr;
-        display: block;
-      }
-      
-      main {
-        position: relative;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        padding: 55px 0.75rem 2rem 0.75rem;
-      }
-      
-      .images-sidebar {
-        grid-column: 1;
-        padding: 2rem 0.75rem 4rem 0.75rem;
-        gap: 2rem;
-      }
-
-      .images-sidebar img.medium,
-      .images-sidebar img.xsmall {
-        width: 100%;
-        align-self: stretch;
-      }
-
-      .model-row {
-        flex-direction: column;
-        width: 100%;
-        gap: 2rem;
-      }
-
-      .model-row img {
-        width: 100%;
-      }
-
-      .small-images-row {
-        flex-direction: column;
-        width: 100%;
-        gap: 1rem;
-      }
-
-      .images-sidebar > .small-images-row {
-        width: 100%;
-      }
-
-      .images-sidebar > .small-images-row img {
-        width: 100%;
-      }
-
-      .project-description .small-images-row {
-        flex-direction: row;
-        gap: 0.5rem;
-      }
-
-      .project-description .small-images-row img {
-        height: 60px;
-        width: auto;
-        flex: 1;
-      }
-    }
-
-    /* Lightbox styles */
-    .images-sidebar img {
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .images-sidebar img:hover {
-      opacity: 0.9;
-    }
-
-    .lightbox {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(240, 240, 240, 0.95);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .lightbox.active {
-      display: flex;
-    }
-
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-      cursor: default;
-    }
-
-    /* 1. ROJO: número y título */
     .project-number {
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 12px;
       color: #6b7072;
       margin: 0 0 0.25rem 0;
     }
-
     h1 {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 16px;
@@ -246,41 +174,32 @@
       margin: 0 0 0.7rem 0;
       text-align: left;
     }
-
-    /* 2. NARANJA: Final Project */
     .project-meta {
       font-size: 12px;
       color: #6b7072;
       margin-bottom: 0.7rem;
     }
-
-    /* 3. AZUL CLARO: Info participantes */
     .project-info {
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 12px;
       line-height: 1.4;
       margin-bottom: 0.7rem;
     }
-
     .project-info p {
       margin: 0.15rem 0;
     }
-
-    /* 4. AZUL OSCURO: Párrafo */
     .project-description {
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 12px;
       line-height: 1.4;
       color: inherit;
       text-align: justify;
+  margin-top: 2rem;
       margin-bottom: 2rem;
     }
-
     .project-description p {
       margin: 0.25rem 0 0.4rem 0;
     }
-
-    /* List toggle styles */
     .list-text {
       position: absolute;
       top: 27px;
@@ -293,7 +212,6 @@
       cursor: pointer;
       user-select: none;
     }
-
     .project-menu {
       position: fixed;
       top: 55px;
@@ -308,11 +226,9 @@
       z-index: 900;
       overflow-y: auto;
     }
-
     .project-menu.active {
       display: block;
     }
-
     .project-menu ul {
       list-style: none;
       margin: 0;
@@ -321,7 +237,6 @@
       line-height: 1.8;
       color: #6b7072;
     }
-
     .project-menu li {
       text-align: left;
       cursor: pointer;
@@ -331,11 +246,9 @@
       justify-content: space-between;
       align-items: baseline;
     }
-
     .project-menu li:hover {
       color: #333;
     }
-
     .project-menu .year {
       font-style: italic;
       color: #a0a0a0;
@@ -343,25 +256,91 @@
       padding-left: 8px;
       flex-shrink: 0;
     }
-
-    @media (max-width: 640px) {
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr !important;
+        display: block;
+        overflow-x: hidden;
+      }
       main {
-        padding: 1rem;
+        position: relative;
+        width: 100vw;
+        max-width: 100vw;
+        min-width: 0;
+        height: auto;
+        box-sizing: border-box;
+        padding: 55px 0.75rem 2rem 0.75rem;
+        overflow-x: hidden;
       }
-      
-      .project-header h1 {
-        font-size: 20px;
+      .project-description, .project-info, .project-meta, h1 {
+        max-width: 100vw;
+        box-sizing: border-box;
+        word-break: break-word;
+        overflow-wrap: break-word;
       }
-
+      .images-sidebar {
+        grid-column: 1;
+        padding: 2rem 0.75rem 4rem 0.75rem;
+        gap: 2rem;
+      }
+      /* On smaller screens, allow the triple images to expand to full width */
+      .images-sidebar .triple-row img.third {
+        width: 100%;
+        max-width: 100vw;
+        align-self: stretch;
+        margin: 0;
+      }
+      /* Ensure .model-row images (01-03 / 01-04) are full-width on mobile so they don't appear tiny */
+      .images-sidebar .model-row img.half {
+        width: 100%;
+        max-width: 100vw;
+        height: auto;
+        display: block;
+        margin: 0;
+        align-self: stretch;
+      }
+      /* Stack model-row images vertically on mobile so they don't get cropped */
+      .images-sidebar .model-row {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+      .images-sidebar img.medium,
+      .images-sidebar img.xsmall {
+        width: 100%;
+        align-self: stretch;
+      }
+    }
+    @media (max-width: 640px) {
+      /* mobile: project menu becomes full-width overlay under header */
+      .menu-overlay { display:none; position:fixed; left:0; right:0; top:55px; bottom:0; background:rgba(0,0,0,0.45); z-index:900; }
+      .menu-overlay.active { display:block; }
       .project-menu {
-        width: 50vw;
+        position: fixed;
+        left: 0;
         right: 0;
-        left: auto;
-        padding: 15px 7.5px;
+        top: 55px;
+        bottom: 0;
+        width: 100vw;
+        max-width: 100vw;
+        min-width: 0;
+        max-height: calc(100vh - 55px);
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 16px 18px 20px 18px;
+        z-index: 901;
+        background: #fff;
       }
-      
       .list-text {
         right: 7.5px;
+      }
+      main, .project-description, .project-info, .project-meta, h1 {
+        max-width: 100vw;
+        min-width: 0;
+        box-sizing: border-box;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
       }
     }
   </style>
@@ -402,32 +381,27 @@
   </div>
 
   <main>
-    <!-- 1. ROJO: 01 y título -->
+    <!-- 1. Número y título -->
     <div class="project-number">[010]</div>
     <h1>SHADE STRUCTURES SYSTEM FOR PUBLIC SPACE</h1>
-    
-    <!-- 2. NARANJA: Final Project -->
+    <!-- 2. Subtítulo -->
     <div class="project-meta">Final Project of Career</div>
-    
-    <!-- 3. AZUL CLARO: Info participantes -->
+    <!-- 3. Info participantes -->
     <div class="project-info">
       <p><strong>Location//</strong> Cali, Colombia</p>
       <p><strong>Instructor//</strong> Rodrigo Vargas</p>
       <p><strong>Type//</strong> Parametric Research</p>
       <p><strong>Team//</strong> Avril Figueroa, Diego Serna.</p>
     </div>
-    
-    <!-- 4. AZUL OSCURO: Párrafo -->
+    <!-- 4. Párrafos -->
     <div class="project-description" style="margin-top: 2rem;">
       <p>Approaching the project, we considered it an opportunity to engage in parametric design for the first time, exploring a methodology that shifts the architectural focus from static forms to systems defined by relationships and variables, and moving deliberately from theory into practice. The first step was an exploratory phase in Grasshopper, testing data structures, component behavior, and how environmental inputs could drive geometry. From that foundation, I developed a modular shade structure system for public space, derived from a site responsive grid and using digital tools not just to draft but to generate spatial logic and geometry. The system adapts to site conditions such as program, orientation, and climate, so it can scale and morph across different contexts. Roles on the project were intentionally shared and rotating, and both team members engaged in every stage: research, scripting, iteration, and prototyping, so we could learn the full workflow end to end.</p>
-      
       <!-- Imagenes 291-293 entre parrafos -->
       <div class="small-images-row" style="margin: 1.5rem 0;">
         <img src="../Images/p1/01-11.webp" alt="Asset 291">
         <img src="../Images/p1/01-12.webp" alt="Asset 292">
         <img src="../Images/p1/01-13.webp" alt="Asset 293">
       </div>
-      
       <p>After defining the system, we advanced from beams, columns, and joints to the enclosure module through intensive geometric exploration and zoning. We developed a folded panel concept: a base surface receives a subdivision pattern, two perpendicular cuts, and a simultaneous fold along four axes. Because folds need travel ranges at planes, vertices, and edges, we designed mobile or alternate connections; the panel is then sectioned to free movement and standardize the support substructure. Variations were first modeled in Rhino to preview constructability, but we migrated the panel to an independent Grasshopper algorithm to minimize elements, edit variations in real time, test solar-exposure responses, and produce a clear visual gradient across zones.</p>
       <p>In the final stage we consolidated the workflow into a fully adaptable system. To deploy it on any site, the designer defines three inputs: the overall boundary, the working surface with its topography, and the open and closed zones. With those inputs set, the rule set generates the architectural solution automatically: structural grid, column positions, beam paths, joint locations, and a folded-panel layout with the appropriate variation per zone. In parallel, the script produces a bill of quantities with counts of joints and columns, panel tallies by type, and dimensioned outputs for each member. Checks for maximum spans, slope constraints, and fold limits are built in, and the model exports directly to drawings or fabrication files with minimal rework. The pipeline runs iteratively; any input change updates structure, panels, and quantities in real time.</p>
       <p>This experience taught me how to identify strong entry points for a parametric project and to decide which workflow is optimal for what I want to achieve, whether traditional or parametric.</p>
@@ -435,21 +409,19 @@
   </main>
 
   <div class="images-sidebar">
-    <!-- GIFs -->
     <img src="../Images/p1/01-01.gif" alt="Animation sequence" class="medium">
     <img src="../Images/p1/01-02.webp" alt="Map" class="full" style="margin-top: 3rem;">
-    
-    <!-- Otras imágenes -->
     <div class="model-row">
-      <img src="../Images/p1/01-03.webp" alt="3D Model">
-      <img src="../Images/p1/01-04.webp" alt="3D Model view">
+  <img src="../Images/p1/01-03.webp" alt="3D Model" class="half">
+      <img src="../Images/p1/01-04.webp" alt="3D Model view" class="half">
     </div>
     <img src="../Images/p1/01-05.webp" alt="Exploration" class="medium">
     <img src="../Images/p1/01-06.webp" alt="Asset 290" class="medium">
-    <img src="../Images/p1/01-07.gif" alt="Animation B sequence" class="xsmall">
-    <img src="../Images/p1/01-08.webp" alt="Asset 349" class="xsmall">
-    <img src="../Images/p1/01-09.webp" alt="Asset 294" class="xsmall">
-    
+    <div class="triple-row">
+      <img src="../Images/p1/01-07.gif" alt="Animation B sequence" class="third">
+      <img src="../Images/p1/01-08.webp" alt="Asset 349" class="third">
+      <img src="../Images/p1/01-09.webp" alt="Asset 294" class="third">
+    </div>
     <img src="../Images/p1/01-10.webp" alt="Asset 347" class="full">
   </div>
 
@@ -475,24 +447,7 @@
       lightbox.classList.remove('active');
     });
 
-    // Toggle List menu
-    const listToggle = document.getElementById('list-toggle');
-    const projectMenu = document.getElementById('project-menu');
-    const arrow = document.getElementById('arrow');
-
-    listToggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      projectMenu.classList.toggle('active');
-      arrow.textContent = projectMenu.classList.contains('active') ? '↑' : '↓';
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!projectMenu.contains(e.target) && !listToggle.contains(e.target)) {
-        projectMenu.classList.remove('active');
-        arrow.textContent = '↓';
-      }
-    });
   </script>
+  <script src="../assets/menu-sync.js"></script>
 </body>
 </html>

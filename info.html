@@ -15,6 +15,22 @@
 
   <!-- Igual que en index: solo evitamos subrayado en la marca -->
   <style>
+    @media (max-width: 900px) {
+      #cv-title-button {
+        display: none !important;
+      }
+    }
+    @media (max-width: 900px) {
+      h2#cv-heading-2 {
+        display: none !important;
+      }
+    }
+    @media (max-width: 900px) {
+      h2#cv-heading-2,
+      #cv-content {
+        display: none !important;
+      }
+    }
     .brand-link,
     .brand-link * {
       text-decoration: none;
@@ -105,7 +121,7 @@
       font-size: 12px;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 900px) {
       .cv { max-width: 92%; margin: 2rem auto; padding: 0 1rem; }
       .skills { grid-template-columns: 1fr; }
       .skills dt { white-space: normal; margin-top: 8px; }
@@ -124,6 +140,32 @@
       /* keep toggle buttons available but avoid hiding content */
       .collapsible {
         transition: none !important;
+      }
+
+    /* Por defecto, oculta mobile-only y muestra desktop-only */
+    .mobile-only { display: none !important; }
+    .desktop-only { display: block !important; }
+
+    @media (max-width: 900px) {
+      .mobile-only { display: block !important; }
+      .desktop-only { display: none !important; }
+    }
+
+    /* Ensure titles remain visible; content panels are controlled by
+      desktop-only / mobile-only wrappers. */
+    h2#contact-heading, h2#cv-heading-2 { display: block !important; }
+
+      /* Mobile: show links stacked (column) under phone/email for the contact links */
+      section[aria-labelledby="contact-heading"] .mobile-only .mobile-links {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        align-items: flex-start !important; /* Align links to the left */
+      }
+      section[aria-labelledby="contact-heading"] .mobile-only .mobile-links a {
+        display: block !important;
+        width: auto !important;
+        padding: 0 !important;
       }
     }
 
@@ -146,6 +188,9 @@
     .contact-links { display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
     .contact-links a { color: inherit; text-decoration: none; font-size:11.5px; }
     .contact-links a:hover { text-decoration: underline; }
+    /* Default helpers: desktop shows .desktop-only, hide .mobile-only by default */
+    .desktop-only { display: block; }
+    .mobile-only { display: none; }
   </style>
 </head>
 <body>
@@ -182,19 +227,29 @@
       </h2>
 
       <div id="contact-content" class="collapsible collapsed" role="region" aria-labelledby="contact-heading">
-        <div class="row" style="margin-top:0.15rem;">
-          <div class="col-left muted">
-            +57 3226321199<br>
-            diegocsecor@gmail.com
-          </div>
-          <div class="col-right">
-            <div class="contact-links">
-              <a href="https://www.linkedin.com/in/diegosecor" target="_blank" rel="noopener">linkedin</a>
-              <a href="https://github.com/diegosecor" target="_blank" rel="noopener">Github</a>
-              <a href="https://www.instagram.com/diegosecor_/" target="_blank" rel="noopener">Instagram</a>
+        <div class="desktop-only">
+          <div class="row" style="margin-top:0.15rem;">
+            <div class="col-left muted">
+              +57 3226321199<br>
+              diegocsecor@gmail.com
+            </div>
+            <div class="col-left">
+              <div class="contact-links">
+                <a href="https://www.linkedin.com/in/diegosecor" target="_blank" rel="noopener">linkedin</a>
+                <a href="https://github.com/diegosecor" target="_blank" rel="noopener">Github</a>
+                <a href="https://www.instagram.com/diegosecor_/" target="_blank" rel="noopener">Instagram</a>
+              </div>
             </div>
           </div>
+        si sol</div>
+
+        <div class="mobile-only" style="margin-top:0.7rem;">
+          <a href="mailto:diegocsecor@gmail.com" class="muted" style="text-decoration:underline; font-size:13px; display:block; text-align:left; margin-bottom:0.35rem;">diegocsecor@gmail.com</a>
+          <a href="https://www.linkedin.com/in/diegosecor" class="muted" style="text-decoration:underline; font-size:13px; display:block; text-align:left; margin-bottom:0.35rem;" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/diegosecor" class="muted" style="text-decoration:underline; font-size:13px; display:block; text-align:left; margin-bottom:0.35rem;" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.instagram.com/diegosecor_/" class="muted" style="text-decoration:underline; font-size:13px; display:block; text-align:left; margin-bottom:0.35rem;" target="_blank" rel="noopener">Instagram</a>
         </div>
+
       </div>
 
       <hr class="sep">
