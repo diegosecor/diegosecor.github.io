@@ -346,64 +346,6 @@
   <footer>
     <span class="email">diegocsecor@gmail.com</span>
   </footer>
-
-  <script>
-    // Toggle del menú de proyectos
-    (function(){
-      const listToggle = document.getElementById('list-toggle');
-      const projectMenu = document.getElementById('project-menu');
-      const arrow = document.getElementById('arrow');
-
-      // Create backdrop overlay if not present
-      var menuOverlay = document.querySelector('.menu-overlay');
-      if (!menuOverlay) {
-        menuOverlay = document.createElement('div');
-        menuOverlay.className = 'menu-overlay';
-        document.body.appendChild(menuOverlay);
-      }
-
-      var _scrollY = 0;
-      function openMenu() {
-        // If small screen, show overlay and fullscreen menu
-        if (window.matchMedia && window.matchMedia('(max-width: 820px)').matches) {
-          menuOverlay.classList.add('active');
-          // Save scroll position and lock body
-          _scrollY = window.scrollY || window.pageYOffset;
-          document.body.style.top = '-' + _scrollY + 'px';
-          document.body.classList.add('menu-open');
-        }
-        projectMenu.classList.add('active');
-        arrow.textContent = '↑';
-      }
-
-      function closeMenu() {
-        menuOverlay.classList.remove('active');
-        // Unlock body and restore scroll
-        document.body.classList.remove('menu-open');
-        document.body.style.top = '';
-        if (_scrollY) window.scrollTo(0, _scrollY);
-        projectMenu.classList.remove('active');
-        arrow.textContent = '↓';
-      }
-
-      listToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (projectMenu.classList.contains('active')) closeMenu(); else openMenu();
-      });
-
-      // Close when clicking overlay
-      menuOverlay.addEventListener('click', function(){ closeMenu(); });
-
-      // Close on Escape
-      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
-
-      // Cerrar el menú al hacer clic fuera (desktop fallback)
-      document.addEventListener('click', function(e) {
-        if (!projectMenu.contains(e.target) && e.target !== listToggle && !listToggle.contains(e.target)) {
-          closeMenu();
-        }
-      });
-    })();
-  </script>
+  <script src="assets/menu-sync.js"></script>
 </body>
 </html>
