@@ -1,44 +1,46 @@
 <!doctype html>
 <html lang="es">
 <head>
+  <!-- * ========================================================================== -->
+  <!-- * 1. META TAGS & DOCUMENT CONFIGURATION -->
+  <!-- * ========================================================================== -->
   <meta charset="utf-8">
   <title>diegoSecor — Work</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
 
-  <!-- Fuentes (mismas que index/info) -->
+  <!-- * ========================================================================== -->
+  <!-- * 2. EXTERNAL FONTS & GLOBAL STYLESHEETS -->
+  <!-- * ========================================================================== -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
-
-  <!-- Estilos globales -->
   <link rel="stylesheet" href="styles.css">
 
+  <!-- * ========================================================================== -->
+  <!-- * 3. CUSTOM INLINE STYLES -->
+  <!-- * ========================================================================== -->
   <style>
-    /* No subrayar la marca (igual que index) */
     .brand-link,
     .brand-link * {
       text-decoration: none;
       color: inherit;
     }
 
-    /* En esta página, solo 'Work' subrayado */
     .top-bar .right a[href="work.html"] {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
     }
 
-    /* Centrar la galería a media altura del viewport (entre header y footer) sin perder ancho completo */
     main {
-      display: flex;              /* usa el alto disponible porque body ya es flex column y main flex:1 en styles.css */
-      flex-direction: column;     /* permite centrar verticalmente con justify-content */
-      justify-content: center;    /* centra verticalmente el contenido dentro de main */
-      align-items: stretch;       /* ocupa 100% del ancho, sin “encoger” al centro */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
       padding: 0;
       margin: 0;
     }
 
-    /* Misma separación a la izquierda y derecha que entre columnas */
     :root { --gap: 7.5px; }
 
     .gallery-wrap {
@@ -54,7 +56,7 @@
     .gallery {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: var(--gap); /* igual a los laterales */
+      gap: var(--gap);
       align-items: start;
       align-items: stretch;
     }
@@ -97,7 +99,6 @@
       color: #333;
     }
 
-    /* Responsive (mantiene mismo gutter=gap a los lados) */
   @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   /* iPad and similar: prefer 3 columns instead of 4 for better proportions */
   @media (max-width: 1024px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -106,7 +107,6 @@
       .gallery { grid-template-columns: repeat(1, minmax(0, 1fr)); }
     }
 
-    /* List en negrilla debajo de Work */
     .list-text {
       position: absolute;
       top: 27px;
@@ -120,7 +120,6 @@
       user-select: none;
     }
 
-    /* Menú desplegable */
     .project-menu {
       position: fixed;
       top: 55px;
@@ -196,7 +195,6 @@
       color: #8f8f8f;
       text-align: center; /* center the year text */
     }
-    /* Backdrop and mobile fullscreen behavior */
     .menu-overlay {
       display: none;
       position: fixed;
@@ -211,7 +209,6 @@
     }
     .menu-overlay.active { display: block; opacity: 1; }
 
-    /* When menu is open and body locked, prevent scroll by fixing the body in place */
     body.menu-open {
       overflow: hidden;
       position: fixed;
@@ -220,17 +217,15 @@
       width: 100%;
     }
 
-    /* Ensure header stays visible above the overlay */
     .top-bar { position: relative; z-index: 1002; }
 
     @media (max-width: 1024px) {
-      /* Make project menu fullscreen on small screens */
       .project-menu {
         top: 0; left: 0; right: 0;
         width: 100vw; height: 100vh;
-        padding: 60px 18px 20px 18px; /* leave space so header is not covered by content visually */
-        display: none; /* controlled by .active */
-        z-index: 1001; /* above overlay but below header */
+        padding: 60px 18px 20px 18px;
+        display: none;
+        z-index: 1001;
         box-shadow: none;
         border-left: none;
         overflow-y: auto;
@@ -240,7 +235,9 @@
   </style>
 </head>
 <body>
-  <!-- Header idéntico a index.html (hereda styles.css) -->
+  <!-- * ========================================================================== -->
+  <!-- * 4. HEADER & TOP NAVIGATION -->
+  <!-- * ========================================================================== -->
   <header class="top-bar">
     <div class="left">
       <a class="brand-link" href="index.html" aria-label="Go to home">
@@ -254,17 +251,19 @@
     <span class="list-text" id="list-toggle"><span id="arrow">↓</span><span style="text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;">List</span></span>
   </header>
 
-  <!-- Menú desplegable de proyectos -->
+  <!-- * ========================================================================== -->
+  <!-- * 5. PROJECT NAVIGATION MENU -->
+  <!-- * ========================================================================== -->
   <div class="project-menu" id="project-menu">
     <ul>
   <li><a href="list-project/01.html"><span class="title">[01] Shade Structures System For Public Space</span> <span class="year">2022</span></a></li>
   <li><a href="list-project/02.html"><span class="title">[02] AI Personal Research</span> <span class="year">2025</span></a></li>
-  <li><a href="list-project/03.html"><span class="title">[03] R.D. Urban Analysis</span> <span class="year">2025</span></a></li>
+  <li><a href="list-project/03.html"><span class="title">[03] Urban Analysis</span> <span class="year">2026</span></a></li>
   <li><a href="list-project/04.html"><span class="title">[04] Tusa Bamboo Roof</span> <span class="year">2024</span></a></li>
   <li><a href="list-project/05.html"><span class="title">[05] REC Residence</span> <span class="year">2024</span></a></li>
   <li><a href="list-project/06.html"><span class="title">[06] Re-existence and digital virtual re-habitation</span> <span class="year">2022</span></a></li>
   <li><a href="list-project/07.html"><span class="title">[07] Roof / UV</span> <span class="year">2023</span></a></li>
-  <li><a href="list-project/08.html"><span class="title">[08] Mundus Music Classroom</span> <span class="year">2023</span></a></li>
+  <li><a href="list-project/08.html"><span class="title">[08] Tfstairs</span> <span class="year">2023</span></a></li>
   <li><a href="list-project/09.html"><span class="title">[09] Surface Restaurant</span> <span class="year">2023</span></a></li>
   <li><a href="list-project/10.html"><span class="title">[10] TT House</span> <span class="year">2021</span></a></li>
   <li><a href="list-project/11.html"><span class="title">[11] Parametric ramp</span> <span class="year">2021</span></a></li>
@@ -275,6 +274,9 @@
     </ul>
   </div>
 
+  <!-- * ========================================================================== -->
+  <!-- * 6. WORK PROJECT GALLERY -->
+  <!-- * ========================================================================== -->
   <main>
     <div class="gallery-wrap" role="region" aria-label="Work gallery">
       <div class="gallery" role="list" aria-label="Work items">
@@ -282,7 +284,6 @@
         <figure class="work-item" role="listitem" aria-labelledby="cap-010">
           <a href="list-project/01.html" style="text-decoration: none; color: inherit;">
             <div class="thumb" aria-hidden="true">
-              <!-- Imagen optimizada WebP -->
               <img src="Images/p1/AA1.webp" alt="[010] Shade Structures System For Public Space" />
             </div>
             <figcaption id="cap-010">[010] Shade Structures System For Public Space</figcaption>
@@ -303,9 +304,9 @@
         <figure class="work-item" role="listitem" aria-labelledby="cap-030">
           <a href="list-project/03.html" style="text-decoration: none; color: inherit; display: block;">
             <div class="thumb" aria-hidden="true">
-              <img src="Images/p3/AA3.webp" alt="[030] R.D. Urban Analysis" />
+              <img src="Images/p3.1/p3.1-03.webp" alt="[030] R.D. Urban Analysis" />
             </div>
-            <figcaption id="cap-030">[030] R.D. Urban Analysis</figcaption>
+            <figcaption id="cap-030">[030] Urban Analysis</figcaption>
           </a>
         </figure>
 
@@ -342,10 +343,16 @@
     </div>
   </main>
 
-  <!-- Footer idéntico a index.html (hereda styles.css) -->
+  <!-- * ========================================================================== -->
+  <!-- * 7. FOOTER & CONTACT INFORMATION -->
+  <!-- * ========================================================================== -->
   <footer>
     <span class="email">diegocsecor@gmail.com</span>
   </footer>
+
+  <!-- * ========================================================================== -->
+  <!-- * 8. NAVIGATION MENU SCRIPT -->
+  <!-- * ========================================================================== -->
   <script src="assets/menu-sync.js"></script>
 </body>
 </html>

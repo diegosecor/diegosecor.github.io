@@ -1,13 +1,22 @@
 <!doctype html>
 <html lang="es">
 <head>
+  <!-- * ========================================================================== -->
+  <!-- * 1. META TAGS & DOCUMENT CONFIGURATION -->
+  <!-- * ========================================================================== -->
   <meta charset="utf-8">
   <title>Project 08 — diegoSecor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="../Images/favicon.ico">
+  <!-- * ========================================================================== -->
+  <!-- * 2. EXTERNAL FONTS & GLOBAL STYLESHEETS -->
+  <!-- * ========================================================================== -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <!-- * ========================================================================== -->
+  <!-- * 3. CUSTOM INLINE STYLES -->
+  <!-- * ========================================================================== -->
   <style>
     html, body { overflow-x: hidden; }
     *, *::before, *::after { box-sizing: border-box; }
@@ -39,6 +48,7 @@
     .project-menu li:hover { color: #333; }
     .project-menu .year { font-style: italic; color: #a0a0a0; margin-left: auto; padding-left: 8px; flex-shrink: 0; }
     .image-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0; }
+    .image-row.three { grid-template-columns: repeat(3, 1fr); }
     .image-row img { width: 100%; }
     @media (max-width: 900px) {
       body { grid-template-columns: 1fr; display: block; }
@@ -57,6 +67,9 @@
   </style>
 </head>
 <body>
+  <!-- * ========================================================================== -->
+  <!-- * 4. HEADER & TOP NAVIGATION -->
+  <!-- * ========================================================================== -->
   <header class="top-bar">
     <div class="left"><a href="../index.html" class="brand-link"><span class="brand"><strong>DS</strong> &middot; Architect</span></a></div>
     <nav class="right">
@@ -65,16 +78,19 @@
       <span class="list-text" id="list-toggle"><span id="arrow">↓</span><span style="text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;">List</span></span>
     </nav>
   </header>
+  <!-- * ========================================================================== -->
+  <!-- * 5. PROJECT NAVIGATION MENU (SLIDE-OUT) -->
+  <!-- * ========================================================================== -->
   <div class="project-menu" id="project-menu">
     <ul>
       <li><a href="01.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[01] Shade Structures System For Public Space <span class="year">2022</span></a></li>
       <li><a href="02.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[02] AI Personal Research <span class="year">2025</span></a></li>
-      <li><a href="03.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[03] R.D. Urban Analysis <span class="year">2025</span></a></li>
+      <li><a href="03.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[03] Urban Analysis <span class="year">2026</span></a></li>
       <li><a href="04.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[04] Tusa Bamboo Roof <span class="year">2024</span></a></li>
       <li><a href="05.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[05] REC Residence <span class="year">2024</span></a></li>
       <li><a href="06.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[06] Re-existence and digital virtual re-habitation <span class="year">2022</span></a></li>
       <li><a href="07.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[07] Roof / UV <span class="year">2023</span></a></li>
-      <li><a href="08.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[08] Mundus Music Classroom <span class="year">2023</span></a></li>
+      <li><a href="08.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[08] Tfstairs <span class="year">2023</span></a></li>
       <li><a href="09.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[09] Surface Restaurant <span class="year">2023</span></a></li>
       <li><a href="10.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[10] TT House <span class="year">2021</span></a></li>
       <li><a href="11.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[11] Parametric ramp <span class="year">2021</span></a></li>
@@ -84,35 +100,61 @@
       <li><a href="15.html" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: baseline; width: 100%;">[15] Ensamble <span class="year">2019</span></a></li>
     </ul>
   </div>
+  <!-- * ========================================================================== -->
+  <!-- * 6. MAIN CONTENT PANEL (LEFT SIDEBAR - TEXT & PROJECT INFORMATION) -->
+  <!-- * ========================================================================== -->
   <main>
     <div class="project-number">[080]</div>
-    <h1>MUNDUS MUSIC CLASSROOM</h1>
-    <div class="project-meta">Design Project</div>
+    <h1>Tfstairs</h1>
     <div class="project-info">
-      <p><strong>Year//</strong> 2023</p>
-      <p><strong>Type//</strong> Design Project</p>
-      <p><strong>Location//</strong> Cali, Colombia</p>
+      <p><strong>Year//</strong> 2026</p>
+      <p><strong>Type//</strong> Design, point cloud management, Rhino and Revit</p>
+      <p><strong>Location//</strong> FL USA</p>
     </div>
     <div class="project-description">
-      <p>Design of a music classroom for Fundación Cantores, an organization dedicated to working with children facing social and behavioral challenges. The space integrates acoustic considerations, flexible learning areas, and an environment that fosters creativity and emotional expression through music.</p>
+      <p>Over the course of these projects, I led the digital modeling and technical execution for more than 30 custom, high-end staircases installed in luxury mansions across Florida. Working in the ultra-luxury residential sector required absolute precision, seamlessly translating complex architectural designs into buildable, fabrication-ready models. The project scope covered a wide range of structural types, from complex organic sweeps to minimalist structural steel frameworks, ensuring that every design met strict site constraints while preserving its architectural intent.</p>
+      <p>To model the curved and organic staircases, I developed a Scan-to-BIM workflow using Rhinoceros directly integrated with point cloud data from 3D laser scans. Working with raw point clouds presented significant challenges, such as filtering out construction site noise and reconciling the discrepancies between ideal architectural drawings and uneven, real-world site dimensions. Using Rhino's advanced NURBS modeling, I extracted precise spatial references from the point clouds, allowing me to generate smooth, continuous double-curved surfaces and custom tread geometries that fitted the actual physical space with millimeter accuracy.</p>
+      <p>For the Mono Beam and Cantilever staircases, I utilized Autodesk Revit to develop parametric structural systems and detailed connection assemblies. Working over the point cloud data inside Revit allowed me to map hidden steel supports, wall embeds, and cantilevered anchor plates against real-world framing tolerances, eliminating costly site adjustments during installation. Beyond the structural BIM model, I coordinated the final material finishes, glass balustrades, and lighting details to produce high-resolution renderings that communicated the design vision clearly to both fabrication teams and luxury clients.</p>
     </div>
   </main>
+  <!-- * ========================================================================== -->
+  <!-- * 7. IMAGES SIDEBAR (RIGHT PANEL) -->
+  <!-- * ========================================================================== -->
   <div class="images-sidebar">
-    <img src="../Images/p8/08-01.webp" alt="Project Image" class="full">
-    <img src="../Images/p8/08-02.webp" alt="Project Image" class="full">
-    <img src="../Images/p8/08-03.webp" alt="Project Image" class="full">
-    <img src="../Images/p8/08-04.webp" alt="Project Image" class="full">
-    <img src="../Images/p8/08-05.webp" alt="Project Image" class="full">
-    <img src="../Images/p8/08-06.webp" alt="Project Image" class="full">
+    <div class="image-row three">
+      <img src="../Images/p8/08-01.webp" alt="Project Image">
+      <img src="../Images/p8/08-02.webp" alt="Project Image">
+      <img src="../Images/p8/08-03.webp" alt="Project Image">
+    </div>
     <div class="image-row">
+      <img src="../Images/p8/08-04.webp" alt="Project Image">
+      <img src="../Images/p8/08-05.webp" alt="Project Image">
+    </div>
+    <div class="image-row">
+      <img src="../Images/p8/08-06.webp" alt="Project Image">
       <img src="../Images/p8/08-07.webp" alt="Project Image">
+    </div>
+    <div class="image-row">
       <img src="../Images/p8/08-08.webp" alt="Project Image">
       <img src="../Images/p8/08-09.webp" alt="Project Image">
-      <img src="../Images/p8/08-10.webp" alt="Project Image">
     </div>
-    <img src="../Images/p8/08-11.webp" alt="Project Image" class="full">
+    <div class="image-row three">
+      <img src="../Images/p8/08-10.webp" alt="Project Image">
+      <img src="../Images/p8/08-11.webp" alt="Project Image">
+      <img src="../Images/p8/08-12.webp" alt="Project Image">
+    </div>
+    <div class="image-row">
+      <img src="../Images/p8/08-13.webp" alt="Project Image">
+      <img src="../Images/p8/08-14.webp" alt="Project Image">
+    </div>
   </div>
+  <!-- * ========================================================================== -->
+  <!-- * 8. LIGHTBOX MODAL CONTAINER -->
+  <!-- * ========================================================================== -->
   <div class="lightbox" id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+  <!-- * ========================================================================== -->
+  <!-- * 9. JAVASCRIPT LOGIC -->
+  <!-- * ========================================================================== -->
   <script>
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');

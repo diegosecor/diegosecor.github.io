@@ -1,19 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- * ========================================================================== -->
+  <!-- * 1. META TAGS & DOCUMENT CONFIGURATION -->
+  <!-- * ========================================================================== -->
   <meta charset="UTF-8">
   <title>diegoSecor — Information</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
 
-  <!-- Fuentes (mismas que en index) -->
+  <!-- * ========================================================================== -->
+  <!-- * 2. EXTERNAL FONTS & GLOBAL STYLESHEETS -->
+  <!-- * ========================================================================== -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=diatype@400&display=swap" rel="stylesheet">
-
-  <!-- Estilos globales -->
   <link rel="stylesheet" href="styles.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Igual que en index: solo evitamos subrayado en la marca -->
+  <!-- * ========================================================================== -->
+  <!-- * 3. CUSTOM INLINE STYLES -->
+  <!-- * ========================================================================== -->
   <style>
     @media (max-width: 900px) {
       #cv-title-button {
@@ -194,6 +199,9 @@
   </style>
 </head>
 <body>
+  <!-- * ========================================================================== -->
+  <!-- * 4. HEADER & TOP NAVIGATION -->
+  <!-- * ========================================================================== -->
   <header class="top-bar">
     <div class="left">
       <a href="index.html" class="brand-link" aria-label="Go to home">
@@ -206,6 +214,9 @@
     </nav>
   </header>
 
+  <!-- * ========================================================================== -->
+  <!-- * 5. INFORMATION & CURRICULUM VITAE -->
+  <!-- * ========================================================================== -->
   <main>
     <div class="cv" role="main" aria-labelledby="cv-heading">
       <h1 id="cv-heading">Diego Serna</h1>
@@ -230,6 +241,7 @@
         <div class="desktop-only">
           <div class="row" style="margin-top:0.15rem;">
             <div class="col-left muted">
+              +1 617 785-9240<br>
               +57 3226321199<br>
               diegocsecor@gmail.com
             </div>
@@ -267,6 +279,21 @@
         <!-- EDUCATION -->
         <section aria-labelledby="education-title">
           <h3 id="education-title">EDUCATION</h3>
+
+          <div class="row" style="align-items:flex-start;">
+            <div class="col-right muted">
+              <strong>Carnegie Mellon University</strong><br>
+              Pittsburgh, PA
+            </div>
+            <div class="col-left">
+              <div class="job">
+                <div style="display:flex; justify-content:space-between; gap:0.5rem;">
+                  <div class="title">Masters of Science in Computational Design (MSCD)</div>
+                  <div class="dates">2026 — 2028<br><span class="muted">2 years</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="row" style="align-items:flex-start;">
             <div class="col-right muted">
@@ -546,10 +573,16 @@
     </div>
   </main>
 
+  <!-- * ========================================================================== -->
+  <!-- * 6. FOOTER & CONTACT INFORMATION -->
+  <!-- * ========================================================================== -->
   <footer>
     <span class="email">diegocsecor@gmail.com</span>
   </footer>
 
+  <!-- * ========================================================================== -->
+  <!-- * 7. INTERACTION & COLLAPSIBLE CONTENT LOGIC -->
+  <!-- * ========================================================================== -->
   <script>
     (function(){
       var sections = [
