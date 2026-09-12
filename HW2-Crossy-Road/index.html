@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#08090d">
+    <title>Vector Crossing // Glitch Protocol</title>
+    <style>
+        :root {
+            --ink: #090a0e;
+            --paper: #f1f0eb;
+            --white: #fcfcf8;
+            --cyan: #18dcff;
+            --magenta: #ff2d88;
+            --acid: #c9ff2f;
+            --muted: #9ca0aa;
+            --panel: rgba(8, 9, 13, 0.94);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: var(--ink);
+            color: var(--white);
+            font-family: Consolas, "Courier New", monospace;
+            user-select: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        #gameShell {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            min-width: 680px;
+            min-height: 500px;
+            isolation: isolate;
+            overflow: hidden;
+            background: var(--paper);
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: var(--paper);
+        }
+
+        #gameShell::before,
+        #gameShell::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        #gameShell::before {
+            opacity: 0.16;
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 3px,
+                    rgba(9, 10, 14, 0.13) 4px
+                );
+            mix-blend-mode: multiply;
+        }
+
+        #gameShell::after {
+            inset: -8%;
+            opacity: 0.1;
+            background:
+                linear-gradient(115deg, transparent 42%, var(--cyan) 42.1%, transparent 42.4%),
+                linear-gradient(67deg, transparent 63%, var(--magenta) 63.1%, transparent 63.35%);
+            animation: veilDrift 9s steps(2, end) infinite;
+        }
+
+        #hud {
+            position: absolute;
+            inset: 0 0 auto 0;
+            z-index: 8;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 20px 24px;
+            pointer-events: none;
+        }
+
+        .hudCluster {
+            display: flex;
+            gap: 8px;
+        }
+
+        .hudCell {
+            position: relative;
+            min-width: 118px;
+            padding: 10px 14px 9px;
+            color: var(--white);
+            background: rgba(7, 8, 12, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            box-shadow: 3px 3px 0 var(--cyan), -2px -2px 0 rgba(255, 45, 136, 0.75);
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+        }
+
+        .hudCell::after {
+            content: "";
+            position: absolute;
+            right: 8px;
+            bottom: 6px;
+            width: 24px;
+            height: 2px;
+            background: var(--acid);
+        }
+
+        .hudLabel {
+            display: block;
+            margin-bottom: 2px;
+            color: #b9bcc4;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+        }
+
+        .hudValue {
+            display: block;
+            font-size: clamp(18px, 2vw, 28px);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.08em;
+        }
+
+        #hudMode {
+            color: var(--cyan);
+        }
+
+        .screen {
+            position: absolute;
+            inset: 0;
+            z-index: 12;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: rgba(4, 5, 8, 0.52);
+            backdrop-filter: blur(3px) contrast(1.08);
+        }
+
+        .panel {
+            position: relative;
+            width: min(820px, calc(100vw - 56px));
+            max-height: calc(100vh - 48px);
+            overflow: auto;
+            padding: clamp(26px, 4vw, 50px);
+            color: var(--white);
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.82);
+            box-shadow:
+                8px 8px 0 rgba(24, 220, 255, 0.72),
+                -7px -7px 0 rgba(255, 45, 136, 0.55),
+                0 24px 80px rgba(0, 0, 0, 0.42);
+            clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+        }
+
+        .panel::before {
+            content: "// COMPUTATIONAL GEOMETRY / LIVE";
+            position: absolute;
+            top: 11px;
+            right: 42px;
+            color: var(--cyan);
+            font-size: 9px;
+            letter-spacing: 0.16em;
+        }
+
+        .eyebrow {
+            margin-bottom: 12px;
+            color: var(--acid);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+        }
+
+        .glitchTitle {
+            position: relative;
+            display: inline-block;
+            color: var(--white);
+            font-size: clamp(42px, 7vw, 86px);
+            font-weight: 950;
+            line-height: 0.84;
+            letter-spacing: -0.08em;
+            text-transform: uppercase;
+            text-shadow: 3px 0 var(--cyan), -3px 0 var(--magenta);
+        }
+
+        .glitchTitle::before,
+        .glitchTitle::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .glitchTitle::before {
+            color: var(--cyan);
+            clip-path: inset(12% 0 61% 0);
+            transform: translate(-5px, 1px);
+            animation: titleGlitchA 2.8s steps(1, end) infinite;
+        }
+
+        .glitchTitle::after {
+            color: var(--magenta);
+            clip-path: inset(63% 0 14% 0);
+            transform: translate(5px, -1px);
+            animation: titleGlitchB 2.1s steps(1, end) infinite;
+        }
+
+        .lead {
+            max-width: 640px;
+            margin: 22px 0 24px;
+            color: #c8cad1;
+            font-size: 13px;
+            line-height: 1.65;
+            letter-spacing: 0.035em;
+        }
+
+        .protocolLabel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 11px;
+            color: var(--white);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .protocolLabel::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,.65), transparent);
+        }
+
+        .difficultyGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .difficultyButton,
+        .actionButton {
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.045);
+            cursor: pointer;
+            text-align: left;
+            transition: transform 100ms ease, background 100ms ease, border-color 100ms ease;
+        }
+
+        .difficultyButton {
+            min-height: 116px;
+            padding: 16px;
+            overflow: hidden;
+        }
+
+        .difficultyButton::before {
+            content: "";
+            position: absolute;
+            right: -24px;
+            bottom: -30px;
+            width: 90px;
+            height: 90px;
+            border: 1px solid var(--button-accent, var(--cyan));
+            transform: rotate(45deg);
+            opacity: 0.35;
+        }
+
+        .difficultyButton:hover,
+        .difficultyButton:focus-visible,
+        .actionButton:hover,
+        .actionButton:focus-visible {
+            z-index: 1;
+            outline: none;
+            border-color: var(--button-accent, var(--cyan));
+            background: rgba(255, 255, 255, 0.11);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--button-accent, var(--cyan));
+        }
+
+        .difficultyButton strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--button-accent, var(--cyan));
+            font-size: 18px;
+            letter-spacing: 0.12em;
+        }
+
+        .difficultyButton small {
+            display: block;
+            max-width: 150px;
+            color: #aeb1ba;
+            font-size: 10px;
+            line-height: 1.45;
+        }
+
+        .recordLine {
+            display: block;
+            margin-top: 12px;
+            color: var(--white);
+            font-size: 10px;
+            letter-spacing: 0.08em;
+        }
+
+        .controlsLine {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 16px;
+            margin-top: 22px;
+            color: #9da0aa;
+            font-size: 10px;
+            letter-spacing: 0.09em;
+        }
+
+        .key {
+            display: inline-grid;
+            place-items: center;
+            min-width: 24px;
+            height: 24px;
+            padding: 0 6px;
+            color: var(--ink);
+            background: var(--white);
+            border-bottom: 3px solid #8c8f96;
+            font-weight: 900;
+        }
+
+        .gameOverGrid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 28px;
+            align-items: end;
+        }
+
+        #deathReason {
+            margin-top: 18px;
+            color: var(--magenta);
+            font-size: 12px;
+            letter-spacing: 0.18em;
+        }
+
+        .finalNumber {
+            margin-top: 8px;
+            color: var(--white);
+            font-size: clamp(54px, 10vw, 104px);
+            font-weight: 950;
+            line-height: 0.9;
+            text-shadow: 4px 0 var(--cyan), -4px 0 var(--magenta);
+        }
+
+        .finalMeta {
+            margin-top: 10px;
+            color: #aeb1ba;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+        }
+
+        #newRecord {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 5px 8px;
+            color: var(--ink);
+            background: var(--acid);
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+            transform: rotate(-1deg);
+        }
+
+        .actionStack {
+            display: grid;
+            gap: 10px;
+            width: 220px;
+        }
+
+        .actionButton {
+            padding: 13px 15px;
+            --button-accent: var(--cyan);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .actionButton.secondary {
+            --button-accent: var(--magenta);
+        }
+
+        #milestone {
+            position: absolute;
+            inset: 0;
+            z-index: 16;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+        }
+
+        #milestoneNumber {
+            position: relative;
+            color: var(--white);
+            font-size: clamp(130px, 31vw, 430px);
+            font-weight: 950;
+            line-height: 0.7;
+            letter-spacing: -0.12em;
+            text-shadow: 9px 0 var(--cyan), -9px 0 var(--magenta);
+            opacity: 0;
+            transform: scale(0.75) skew(-8deg);
+        }
+
+        #milestone.active #milestoneNumber {
+            animation: milestoneBurst 1.2s steps(1, end) both;
+        }
+
+        #milestoneNumber::before,
+        #milestoneNumber::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+        }
+
+        #milestoneNumber::before {
+            color: var(--cyan);
+            clip-path: inset(8% 0 58% 0);
+            transform: translate(-16px, -5px);
+        }
+
+        #milestoneNumber::after {
+            color: var(--magenta);
+            clip-path: inset(61% 0 4% 0);
+            transform: translate(18px, 6px);
+        }
+
+        #statusStrip {
+            position: absolute;
+            right: 16px;
+            bottom: 14px;
+            z-index: 7;
+            color: rgba(9, 10, 14, 0.55);
+            font-size: 9px;
+            letter-spacing: 0.13em;
+            pointer-events: none;
+        }
+
+        @keyframes titleGlitchA {
+            0%, 89%, 100% { transform: translate(-5px, 1px); }
+            90% { transform: translate(8px, -3px); }
+            93% { transform: translate(-11px, 4px); }
+            96% { transform: translate(2px, 0); }
+        }
+
+        @keyframes titleGlitchB {
+            0%, 81%, 100% { transform: translate(5px, -1px); }
+            82% { transform: translate(-9px, 2px); }
+            87% { transform: translate(12px, -4px); }
+            91% { transform: translate(1px, 3px); }
+        }
+
+        @keyframes milestoneBurst {
+            0% { opacity: 0; transform: scale(0.6) skew(-12deg); filter: blur(8px); }
+            9% { opacity: 0.92; transform: scale(1.08) skew(5deg); filter: none; }
+            14% { opacity: 0.25; transform: translateX(-25px) scale(0.96); }
+            20% { opacity: 0.9; transform: translateX(15px) scale(1); }
+            72% { opacity: 0.72; transform: scale(1) skew(-2deg); }
+            100% { opacity: 0; transform: scale(1.24) skew(3deg); filter: blur(3px); }
+        }
+
+        @keyframes veilDrift {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(1.5%, -1%); }
+            66% { transform: translate(-1%, 1.5%); }
+        }
+
+        @media (max-width: 860px) {
+            .difficultyGrid {
+                grid-template-columns: 1fr;
+            }
+
+            .difficultyButton {
+                min-height: 82px;
+            }
+
+            .gameOverGrid {
+                grid-template-columns: 1fr;
+            }
+
+            .actionStack {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 1ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main id="gameShell">
+        <canvas id="gameCanvas" aria-label="Vector Crossing game"></canvas>
+
+        <div id="hud" hidden>
+            <div class="hudCluster">
+                <div class="hudCell">
+                    <span class="hudLabel">SCORE</span>
+                    <strong class="hudValue" id="scoreValue">000</strong>
+                </div>
+                <div class="hudCell">
+                    <span class="hudLabel">BEST</span>
+                    <strong class="hudValue" id="bestValue">000</strong>
+                </div>
+            </div>
+            <div class="hudCell">
+                <span class="hudLabel">PROTOCOL</span>
+                <strong class="hudValue" id="hudMode">NORMAL</strong>
+            </div>
+        </div>
+
+        <section class="screen" id="menuScreen">
+            <div class="panel">
+                <p class="eyebrow">10×∞ SIMULATION // PROTOCOL SELECT</p>
+                <h1 class="glitchTitle" data-text="VECTOR CROSSING">VECTOR<br>CROSSING</h1>
+                <p class="lead">
+                    Cross a procedural architecture of safe zones, traffic, and flow. Each keystroke
+                    moves the sphere exactly one cell. The system generates and displays the entire
+                    available horizon before you advance.
+                </p>
+                <p class="protocolLabel">Select difficulty</p>
+                <div class="difficultyGrid">
+                    <button class="difficultyButton" data-difficulty="easy" style="--button-accent: var(--cyan)">
+                        <strong>01 / EASY</strong>
+                        <small>More safe zones, slower vehicles, and longer platforms.</small>
+                        <span class="recordLine">RECORD <b id="recordEasy">000</b></span>
+                    </button>
+                    <button class="difficultyButton" data-difficulty="normal" style="--button-accent: var(--white)">
+                        <strong>02 / NORMAL</strong>
+                        <small>Balanced pacing with controlled hazard sequences.</small>
+                        <span class="recordLine">RECORD <b id="recordNormal">000</b></span>
+                    </button>
+                    <button class="difficultyButton" data-difficulty="hard" style="--button-accent: var(--magenta)">
+                        <strong>03 / HARD</strong>
+                        <small>Higher density and strict crossing windows.</small>
+                        <span class="recordLine">RECORD <b id="recordHard">000</b></span>
+                    </button>
+                </div>
+                <div class="controlsLine">
+                    <span><span class="key">↑</span> <span class="key">↓</span> FORWARD / BACK</span>
+                    <span><span class="key">←</span> <span class="key">→</span> SHIFT</span>
+                    <span><span class="key">1</span>–<span class="key">3</span> SELECT</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="screen" id="gameOverScreen" hidden>
+            <div class="panel">
+                <p class="eyebrow">CONNECTION TERMINATED</p>
+                <div class="gameOverGrid">
+                    <div>
+                        <h2 class="glitchTitle" data-text="GAME OVER">GAME<br>OVER</h2>
+                        <p id="deathReason">IMPACT DETECTED</p>
+                        <div class="finalNumber" id="finalScore">000</div>
+                        <p class="finalMeta">PROTOCOL RECORD: <strong id="finalBest">000</strong></p>
+                        <span id="newRecord" hidden>NEW RECORD</span>
+                    </div>
+                    <div class="actionStack">
+                        <button class="actionButton" id="restartButton">RESTART // SPACE</button>
+                        <button class="actionButton secondary" id="menuButton">CHANGE PROTOCOL // ESC</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="milestone" hidden>
+            <div id="milestoneNumber" data-text="25">25</div>
+        </div>
+
+        <div id="statusStrip">ARROW INPUT // STATIC BUILD // GITHUB PAGES READY</div>
+    </main>
+
+    <script>
+        "use strict";
+
+        window.addEventListener("error", (event) => {
+            document.body.dataset.gameError = event.message || "runtime-error";
+        });
+
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const shell = document.getElementById("gameShell");
+        const menuScreen = document.getElementById("menuScreen");
+        const gameOverScreen = document.getElementById("gameOverScreen");
+        const hud = document.getElementById("hud");
+        const scoreValue = document.getElementById("scoreValue");
+        const bestValue = document.getElementById("bestValue");
+        const hudMode = document.getElementById("hudMode");
+        const finalScore = document.getElementById("finalScore");
+        const finalBest = document.getElementById("finalBest");
+        const deathReason = document.getElementById("deathReason");
+        const newRecord = document.getElementById("newRecord");
+        const restartButton = document.getElementById("restartButton");
+        const menuButton = document.getElementById("menuButton");
+        const milestone = document.getElementById("milestone");
+        const milestoneNumber = document.getElementById("milestoneNumber");
+
+        const COLORS = Object.freeze({
+            ink: "#090a0e",
+            paper: "#f1f0eb",
+            white: "#fcfcf8",
+            cyan: "#18dcff",
+            magenta: "#ff2d88",
+            acid: "#c9ff2f",
+            gray: "#a9acb3",
+            dark: "#101218",
+            river: "#05060a"
+        });
+
+        const COLS = 10;
+        const PATH_HALF = COLS / 2;
+        const FIRST_CENTER_X = -(COLS - 1) / 2;
+        const START_COLUMN = 4;
+        const PLAYER_HALF = 0.22;
+        const PLAYER_DEPTH = 0.34;
+        const WRAP_MIN = -10;
+        const WRAP_MAX = 10;
+        const FIXED_STEP = 1 / 60;
+        const STORAGE_KEY = "vector-crossing-records-v1";
+        const MILESTONES = new Set([25, 50, 100]);
+        const MODES = Object.freeze({ MENU: "menu", PLAYING: "playing", GAME_OVER: "game-over" });
+
+        const DIFFICULTIES = Object.freeze({
+            easy: Object.freeze({
+                id: "easy",
+                label: "EASY",
+                accent: COLORS.cyan,
+                safeWeight: 0.5,
+                roadWeight: 0.3,
+                maxHazards: 1,
+                carCount: [1, 2],
+                carSpeed: [1.2, 1.75],
+                carLength: [1.05, 1.35],
+                logCount: [4, 5],
+                logSpeed: [0.72, 1.02],
+                logLength: [3.9, 5.0],
+                blockerCount: [1, 2]
+            }),
+            normal: Object.freeze({
+                id: "normal",
+                label: "NORMAL",
+                accent: COLORS.white,
+                safeWeight: 0.36,
+                roadWeight: 0.39,
+                maxHazards: 2,
+                carCount: [2, 3],
+                carSpeed: [1.65, 2.35],
+                carLength: [1.1, 1.5],
+                logCount: [4, 5],
+                logSpeed: [0.9, 1.3],
+                logLength: [3.3, 4.4],
+                blockerCount: [2, 3]
+            }),
+            hard: Object.freeze({
+                id: "hard",
+                label: "HARD",
+                accent: COLORS.magenta,
+                safeWeight: 0.25,
+                roadWeight: 0.45,
+                maxHazards: 3,
+                carCount: [3, 4],
+                carSpeed: [2.25, 3.15],
+                carLength: [1.2, 1.65],
+                logCount: [3, 4],
+                logSpeed: [1.15, 1.65],
+                logLength: [2.7, 3.7],
+                blockerCount: [3, 4]
+            })
+        });
+
+        const app = {
+            mode: MODES.MENU,
+            difficultyId: "normal",
+            records: loadRecords(),
+            run: null,
+            view: { width: 0, height: 0, dpr: 1 },
+            metrics: { tileWidth: 72, tileHeight: 36, zScale: 52 },
+            camera: { x: 0, y: 0 },
+            particles: [],
+            accumulator: 0,
+            lastTime: performance.now(),
+            ambientTime: 0,
+            milestoneTimer: 0
+        };
+
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        function randomBetween(min, max) {
+            return min + Math.random() * (max - min);
+        }
+
+        function randomInt(min, max) {
+            return Math.floor(randomBetween(min, max + 1));
+        }
+
+        function padScore(value) {
+            return String(Math.max(0, Math.floor(value))).padStart(3, "0");
+        }
+
+        function columnToX(column) {
+            return FIRST_CENTER_X + column;
+        }
+
+        function intervalsOverlap(aCenter, aHalf, bCenter, bHalf) {
+            return Math.abs(aCenter - bCenter) < aHalf + bHalf;
+        }
+
+        function hash01(value) {
+            const result = Math.sin(value * 127.1 + 311.7) * 43758.5453123;
+            return result - Math.floor(result);
+        }
+
+        function loadRecords() {
+            const fallback = { easy: 0, normal: 0, hard: 0 };
+            try {
+                const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                if (!parsed || typeof parsed !== "object") return fallback;
+                for (const key of Object.keys(fallback)) {
+                    const value = Number(parsed[key]);
+                    fallback[key] = Number.isFinite(value) && value >= 0 ? Math.floor(value) : 0;
+                }
+            } catch (error) {
+                console.warn("Unable to read saved records:", error);
+            }
+            return fallback;
+        }
+
+        function saveRecords() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(app.records));
+            } catch (error) {
+                console.warn("Unable to save records:", error);
+            }
+        }
+
+        function refreshRecordUI() {
+            document.getElementById("recordEasy").textContent = padScore(app.records.easy);
+            document.getElementById("recordNormal").textContent = padScore(app.records.normal);
+            document.getElementById("recordHard").textContent = padScore(app.records.hard);
+        }
+
+        function resizeCanvas() {
+            const width = Math.max(680, window.innerWidth);
+            const height = Math.max(500, window.innerHeight);
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            app.view.width = width;
+            app.view.height = height;
+            app.view.dpr = dpr;
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+
+            const tileWidth = clamp(Math.min(width * 0.061, height * 0.108), 62, 96);
+            app.metrics.tileWidth = tileWidth;
+            app.metrics.tileHeight = tileWidth * 0.5;
+            app.metrics.zScale = tileWidth * 0.72;
+
+            if (app.run) {
+                ensureVisibleWorld(app.run);
+                updateCamera(0, true);
+            }
+        }
+
+        // Classic 2:1 isometric projection. X and forward movement form
+        // opposing diagonals while height remains vertical.
+        function project(worldX, row, z = 0) {
+            const halfWidth = app.metrics.tileWidth * 0.5;
+            const halfHeight = app.metrics.tileHeight * 0.5;
+            return {
+                x: (worldX + row) * halfWidth,
+                y: (worldX - row) * halfHeight - z * app.metrics.zScale
+            };
+        }
+
+        function toScreen(worldX, row, z = 0) {
+            const point = project(worldX, row, z);
+            return {
+                x: app.view.width * 0.5 + point.x - app.camera.x,
+                y: app.view.height * 0.5 + point.y - app.camera.y
+            };
+        }
+
+        function getCameraAnchor() {
+            const minimumX = app.metrics.tileWidth * (PATH_HALF + 0.75) * 0.5 + 28;
+            return {
+                x: Math.max(app.view.width * 0.3, minimumX),
+                y: app.view.height * 0.74
+            };
+        }
+
+        // In a true isometric view, upcoming rows consume both horizontal and
+        // vertical space. The horizon is therefore fitted against both axes.
+        function getVisibleRows(run, extra = 0) {
+            const anchor = getCameraAnchor();
+            const halfWidth = app.metrics.tileWidth * 0.5;
+            const halfHeight = app.metrics.tileHeight * 0.5;
+            const padding = 30;
+            const footprint = PATH_HALF + 0.75;
+
+            const aheadByWidth = (app.view.width - padding - anchor.x) / halfWidth - footprint;
+            const aheadByHeight = (anchor.y - padding) / halfHeight - footprint;
+            const behindByWidth = (anchor.x - padding) / halfWidth - footprint;
+            const behindByHeight = (app.view.height - padding - anchor.y) / halfHeight - footprint;
+
+            const ahead = Math.max(7, Math.floor(Math.min(aheadByWidth, aheadByHeight))) + extra;
+            const behind = Math.max(2, Math.floor(Math.min(behindByWidth, behindByHeight))) + extra;
+
+            return {
+                min: Math.max(-6, run.player.row - behind),
+                max: run.player.row + ahead
+            };
+        }
+
+        function createRun(difficultyId, preview = false) {
+            const difficulty = DIFFICULTIES[difficultyId];
+            const run = {
+                preview,
+                difficulty,
+                score: 0,
+                maxRow: 0,
+                recordAtStart: app.records[difficultyId],
+                newRecord: false,
+                deathCause: "",
+                world: {
+                    lanes: new Map(),
+                    minGenerated: -6,
+                    maxGenerated: -7,
+                    nextEntityId: 1,
+                    routeColumn: START_COLUMN,
+                    hazardStreak: 0
+                },
+                player: {
+                    x: columnToX(START_COLUMN),
+                    row: 0,
+                    supportId: null,
+                    glitchUntil: 0,
+                    blockedUntil: 0
+                }
+            };
+
+            ensureRowsThrough(run, 3);
+            ensureVisibleWorld(run);
+            return run;
+        }
+
+        function ensureRowsThrough(run, targetRow) {
+            while (run.world.maxGenerated < targetRow) {
+                const nextRow = run.world.maxGenerated + 1;
+                const lane = createLane(run, nextRow);
+                run.world.lanes.set(nextRow, lane);
+                run.world.maxGenerated = nextRow;
+            }
+        }
+
+        function ensureVisibleWorld(run) {
+            const range = getVisibleRows(run, 7);
+            ensureRowsThrough(run, range.max);
+        }
+
+        function chooseLaneType(run, row) {
+            if (row <= 3) return "safe";
+
+            // Visual tutorial: traffic and river lanes always appear near the start.
+            if (row === 4) return "road";
+            if (row === 5) return "safe";
+            if (row === 6) return "river";
+            if (row === 7) return "safe";
+
+            const previous = run.world.lanes.get(row - 1);
+            if (previous && previous.type === "river") return "safe";
+            if (run.world.hazardStreak >= run.difficulty.maxHazards) return "safe";
+
+            const roll = Math.random();
+            if (roll < run.difficulty.safeWeight) return "safe";
+            if (roll < run.difficulty.safeWeight + run.difficulty.roadWeight) return "road";
+            return "river";
+        }
+
+        function createLane(run, row) {
+            const type = chooseLaneType(run, row);
+            const previousLane = run.world.lanes.get(row - 1);
+            const previousRoute = previousLane ? previousLane.routeColumn : run.world.routeColumn;
+            const routeStep = row <= 3 ? 0 : randomInt(-1, 1);
+            const routeColumn = clamp(previousRoute + routeStep, 0, COLS - 1);
+            run.world.routeColumn = routeColumn;
+
+            if (type === "safe") {
+                run.world.hazardStreak = 0;
+            } else {
+                run.world.hazardStreak += 1;
+            }
+
+            const lane = {
+                row,
+                type,
+                routeColumn,
+                direction: Math.random() < 0.5 ? -1 : 1,
+                seed: Math.random() * 10000,
+                entities: []
+            };
+
+            if (type === "safe") createSafeObstacles(run, lane, previousRoute);
+            if (type === "road") createVehicles(run, lane);
+            if (type === "river") createLogs(run, lane);
+            return lane;
+        }
+
+        function createSafeObstacles(run, lane, previousRoute) {
+            if (lane.row <= 3) return;
+            const count = randomInt(...run.difficulty.blockerCount);
+            const protectedColumns = new Set([
+                lane.routeColumn,
+                previousRoute,
+                clamp(lane.routeColumn - 1, 0, COLS - 1),
+                clamp(lane.routeColumn + 1, 0, COLS - 1)
+            ]);
+            const candidates = [];
+            for (let column = 0; column < COLS; column += 1) {
+                if (!protectedColumns.has(column)) candidates.push(column);
+            }
+
+            for (let index = candidates.length - 1; index > 0; index -= 1) {
+                const swapIndex = randomInt(0, index);
+                [candidates[index], candidates[swapIndex]] = [candidates[swapIndex], candidates[index]];
+            }
+
+            for (const column of candidates.slice(0, count)) {
+                lane.entities.push({
+                    id: run.world.nextEntityId++,
+                    kind: "barrier",
+                    x: columnToX(column),
+                    length: 0.68,
+                    depth: 0.66,
+                    height: randomBetween(0.7, 1.08),
+                    velocity: 0,
+                    prevX: columnToX(column),
+                    dx: 0,
+                    wrapped: false,
+                    accent: hash01(lane.seed + column) > 0.5 ? COLORS.cyan : COLORS.magenta
+                });
+            }
+        }
+
+        function createVehicles(run, lane) {
+            const count = randomInt(...run.difficulty.carCount);
+            const speed = randomBetween(...run.difficulty.carSpeed) * lane.direction;
+            const span = WRAP_MAX - WRAP_MIN;
+
+            for (let index = 0; index < count; index += 1) {
+                const x = WRAP_MIN + ((index + 0.5) / count) * span + randomBetween(-0.55, 0.55);
+                lane.entities.push({
+                    id: run.world.nextEntityId++,
+                    kind: "vehicle",
+                    x,
+                    length: randomBetween(...run.difficulty.carLength),
+                    depth: 0.72,
+                    height: randomBetween(0.42, 0.58),
+                    velocity: speed,
+                    prevX: x,
+                    dx: 0,
+                    wrapped: false,
+                    accent: index % 2 === 0 ? COLORS.cyan : COLORS.magenta
+                });
+            }
+        }
+
+        function createLogs(run, lane) {
+            const count = randomInt(...run.difficulty.logCount);
+            const speed = randomBetween(...run.difficulty.logSpeed) * lane.direction;
+            const span = WRAP_MAX - WRAP_MIN;
+
+            for (let index = 0; index < count; index += 1) {
+                const x = WRAP_MIN + ((index + 0.5) / count) * span + randomBetween(-0.35, 0.35);
+                lane.entities.push({
+                    id: run.world.nextEntityId++,
+                    kind: "log",
+                    x,
+                    length: randomBetween(...run.difficulty.logLength),
+                    depth: 0.68,
+                    height: 0.17,
+                    velocity: speed,
+                    prevX: x,
+                    dx: 0,
+                    wrapped: false,
+                    accent: index % 2 === 0 ? COLORS.white : COLORS.cyan
+                });
+            }
+        }
+
+        function laneAt(row) {
+            return app.run ? app.run.world.lanes.get(row) : null;
+        }
+
+        function isBarrierBlocking(lane, x) {
+            return lane.entities.some((entity) =>
+                entity.kind === "barrier" && intervalsOverlap(x, PLAYER_HALF, entity.x, entity.length * 0.5)
+            );
+        }
+
+        function findSupportingLog(lane, playerX) {
+            const epsilon = 0.012;
+            return lane.entities.find((entity) => {
+                if (entity.kind !== "log") return false;
+                const logHalf = entity.length * 0.5;
+                return playerX - PLAYER_HALF >= entity.x - logHalf - epsilon &&
+                    playerX + PLAYER_HALF <= entity.x + logHalf + epsilon;
+            }) || null;
+        }
+
+        function vehicleTouchesPlayer(entity, playerX, includeSweep) {
+            const vehicleHalf = entity.length * 0.5;
+            if (intervalsOverlap(playerX, PLAYER_HALF, entity.x, vehicleHalf)) return true;
+            if (!includeSweep || entity.wrapped) return false;
+            const sweepLeft = Math.min(entity.prevX, entity.x) - vehicleHalf;
+            const sweepRight = Math.max(entity.prevX, entity.x) + vehicleHalf;
+            return playerX + PLAYER_HALF > sweepLeft && playerX - PLAYER_HALF < sweepRight;
+        }
+
+        function attemptMove(action) {
+            if (app.mode !== MODES.PLAYING || !app.run) return;
+
+            const run = app.run;
+            const player = run.player;
+            let targetX = player.x;
+            let targetRow = player.row;
+
+            if (action === "up") targetRow += 1;
+            if (action === "down") targetRow -= 1;
+            if (action === "left") targetX -= 1;
+            if (action === "right") targetX += 1;
+
+            if (targetRow < 0 || targetX - PLAYER_HALF < -PATH_HALF || targetX + PLAYER_HALF > PATH_HALF) {
+                signalBlockedMove();
+                return;
+            }
+
+            ensureRowsThrough(run, targetRow + 1);
+            const targetLane = run.world.lanes.get(targetRow);
+            if (!targetLane || isBarrierBlocking(targetLane, targetX)) {
+                signalBlockedMove();
+                return;
+            }
+
+            player.x = targetX;
+            player.row = targetRow;
+            player.supportId = null;
+            player.glitchUntil = performance.now() + 190;
+            spawnMoveParticles(action);
+
+            if (targetRow > run.maxRow) {
+                run.maxRow = targetRow;
+                run.score = targetRow;
+                updateScoreAndRecord();
+            }
+
+            ensureVisibleWorld(run);
+            resolveLanding();
+        }
+
+        function signalBlockedMove() {
+            if (!app.run) return;
+            app.run.player.blockedUntil = performance.now() + 170;
+            app.run.player.glitchUntil = performance.now() + 130;
+            spawnMoveParticles("blocked", COLORS.magenta);
+        }
+
+        function resolveLanding() {
+            const run = app.run;
+            if (!run || app.mode !== MODES.PLAYING) return;
+            const lane = run.world.lanes.get(run.player.row);
+            if (!lane) return;
+
+            if (lane.type === "safe") {
+                run.player.supportId = null;
+                return;
+            }
+
+            if (lane.type === "road") {
+                const hit = lane.entities.some((entity) =>
+                    entity.kind === "vehicle" && vehicleTouchesPlayer(entity, run.player.x, false)
+                );
+                if (hit) endGame("vehicle");
+                return;
+            }
+
+            const support = findSupportingLog(lane, run.player.x);
+            if (!support) {
+                endGame("water");
+            } else {
+                run.player.supportId = support.id;
+            }
+        }
+
+        function updateEntity(entity, dt) {
+            if (entity.velocity === 0) {
+                entity.prevX = entity.x;
+                entity.dx = 0;
+                entity.wrapped = false;
+                return;
+            }
+
+            entity.prevX = entity.x;
+            entity.x += entity.velocity * dt;
+            entity.wrapped = false;
+
+            if (entity.velocity > 0 && entity.x - entity.length * 0.5 > WRAP_MAX) {
+                entity.x = WRAP_MIN - entity.length * 0.5;
+                entity.wrapped = true;
+            } else if (entity.velocity < 0 && entity.x + entity.length * 0.5 < WRAP_MIN) {
+                entity.x = WRAP_MAX + entity.length * 0.5;
+                entity.wrapped = true;
+            }
+
+            entity.dx = entity.wrapped ? 0 : entity.x - entity.prevX;
+        }
+
+        function updateVisibleEntities(dt) {
+            if (!app.run) return;
+            const range = getVisibleRows(app.run, 3);
+            for (let row = range.min; row <= range.max; row += 1) {
+                const lane = app.run.world.lanes.get(row);
+                if (!lane) continue;
+                for (const entity of lane.entities) updateEntity(entity, dt);
+            }
+        }
+
+        function updateSimulation(dt) {
+            updateParticles(dt);
+            if (!app.run) return;
+
+            if (app.mode === MODES.MENU) {
+                updateVisibleEntities(dt);
+                return;
+            }
+            if (app.mode !== MODES.PLAYING) return;
+
+            const run = app.run;
+            const player = run.player;
+            const currentLaneBefore = run.world.lanes.get(player.row);
+            const supportBefore = currentLaneBefore && player.supportId !== null
+                ? currentLaneBefore.entities.find((entity) => entity.id === player.supportId)
+                : null;
+
+            updateVisibleEntities(dt);
+
+            if (supportBefore) {
+                if (supportBefore.wrapped) {
+                    endGame("water");
+                    return;
+                }
+                player.x += supportBefore.dx;
+            }
+
+            if (player.x - PLAYER_HALF < -PATH_HALF || player.x + PLAYER_HALF > PATH_HALF) {
+                endGame("edge");
+                return;
+            }
+
+            const currentLane = run.world.lanes.get(player.row);
+            if (!currentLane) return;
+
+            if (currentLane.type === "road") {
+                player.supportId = null;
+                const hit = currentLane.entities.some((entity) =>
+                    entity.kind === "vehicle" && vehicleTouchesPlayer(entity, player.x, true)
+                );
+                if (hit) endGame("vehicle");
+                return;
+            }
+
+            if (currentLane.type === "river") {
+                const support = findSupportingLog(currentLane, player.x);
+                if (!support) {
+                    endGame("water");
+                } else {
+                    player.supportId = support.id;
+                }
+                return;
+            }
+
+            player.supportId = null;
+        }
+
+        function updateScoreAndRecord() {
+            const run = app.run;
+            if (!run) return;
+
+            if (run.score > app.records[run.difficulty.id]) {
+                app.records[run.difficulty.id] = run.score;
+                run.newRecord = run.score > run.recordAtStart;
+                saveRecords();
+            }
+
+            scoreValue.textContent = padScore(run.score);
+            bestValue.textContent = padScore(app.records[run.difficulty.id]);
+
+            if (MILESTONES.has(run.score)) showMilestone(run.score);
+        }
+
+        function showMilestone(value) {
+            window.clearTimeout(app.milestoneTimer);
+            milestoneNumber.textContent = String(value);
+            milestoneNumber.dataset.text = String(value);
+            milestone.hidden = false;
+            milestone.classList.remove("active");
+            void milestone.offsetWidth;
+            milestone.classList.add("active");
+            app.milestoneTimer = window.setTimeout(() => {
+                milestone.classList.remove("active");
+                milestone.hidden = true;
+            }, 1250);
+        }
+
+        function startRun(difficultyId) {
+            app.difficultyId = difficultyId;
+            app.mode = MODES.PLAYING;
+            app.run = createRun(difficultyId, false);
+            app.particles.length = 0;
+            app.accumulator = 0;
+            window.clearTimeout(app.milestoneTimer);
+            milestone.hidden = true;
+            milestone.classList.remove("active");
+
+            menuScreen.hidden = true;
+            gameOverScreen.hidden = true;
+            hud.hidden = false;
+            shell.dataset.mode = difficultyId;
+
+            scoreValue.textContent = "000";
+            bestValue.textContent = padScore(app.records[difficultyId]);
+            hudMode.textContent = DIFFICULTIES[difficultyId].label;
+            hudMode.style.color = DIFFICULTIES[difficultyId].accent;
+            updateCamera(0, true);
+        }
+
+        function endGame(cause) {
+            if (app.mode !== MODES.PLAYING || !app.run) return;
+            app.mode = MODES.GAME_OVER;
+            app.run.deathCause = cause;
+            app.run.player.glitchUntil = performance.now() + 650;
+
+            const messages = {
+                vehicle: "IMPACT // HOSTILE GEOMETRY",
+                water: "SIGNAL LOST // BLACK FLOW",
+                edge: "OUTSIDE PERIMETER // DISCONNECTED"
+            };
+
+            deathReason.textContent = messages[cause] || "SIMULATION INTERRUPTED";
+            finalScore.textContent = padScore(app.run.score);
+            finalBest.textContent = padScore(app.records[app.run.difficulty.id]);
+            newRecord.hidden = !app.run.newRecord;
+            gameOverScreen.hidden = false;
+            refreshRecordUI();
+            spawnCrashParticles(cause);
+        }
+
+        function openMenu() {
+            app.mode = MODES.MENU;
+            app.run = createRun(app.difficultyId, true);
+            app.particles.length = 0;
+            app.accumulator = 0;
+            menuScreen.hidden = false;
+            gameOverScreen.hidden = true;
+            hud.hidden = true;
+            refreshRecordUI();
+            updateCamera(0, true);
+        }
+
+        function spawnMoveParticles(action, forcedColor) {
+            if (!app.run) return;
+            const player = app.run.player;
+            const baseColor = forcedColor || (action === "up" ? COLORS.cyan : COLORS.magenta);
+            for (let index = 0; index < 7; index += 1) {
+                app.particles.push({
+                    x: player.x + randomBetween(-0.18, 0.18),
+                    row: player.row + randomBetween(-0.12, 0.12),
+                    z: randomBetween(0.2, 0.72),
+                    vx: randomBetween(-0.55, 0.55),
+                    vr: randomBetween(-0.45, 0.45),
+                    vz: randomBetween(0.25, 0.9),
+                    life: randomBetween(0.18, 0.42),
+                    maxLife: 0.42,
+                    size: randomBetween(2, 6),
+                    color: index % 3 === 0 ? COLORS.white : baseColor
+                });
+            }
+        }
+
+        function spawnCrashParticles(cause) {
+            if (!app.run) return;
+            const color = cause === "water" ? COLORS.cyan : COLORS.magenta;
+            for (let index = 0; index < 34; index += 1) {
+                app.particles.push({
+                    x: app.run.player.x + randomBetween(-0.25, 0.25),
+                    row: app.run.player.row + randomBetween(-0.18, 0.18),
+                    z: randomBetween(0.2, 0.8),
+                    vx: randomBetween(-2.1, 2.1),
+                    vr: randomBetween(-1.3, 1.3),
+                    vz: randomBetween(0.8, 2.6),
+                    life: randomBetween(0.45, 1.0),
+                    maxLife: 1.0,
+                    size: randomBetween(3, 10),
+                    color: index % 4 === 0 ? COLORS.white : color
+                });
+            }
+        }
+
+        function updateParticles(dt) {
+            for (const particle of app.particles) {
+                particle.x += particle.vx * dt;
+                particle.row += particle.vr * dt;
+                particle.z += particle.vz * dt;
+                particle.vz -= 2.7 * dt;
+                particle.life -= dt;
+            }
+            app.particles = app.particles.filter((particle) => particle.life > 0);
+        }
+
+        function updateCamera(dt, immediate = false) {
+            if (!app.run) return;
+            const focus = project(0, app.run.player.row, 0);
+            const anchor = getCameraAnchor();
+            const targetX = focus.x + app.view.width * 0.5 - anchor.x;
+            const targetY = focus.y + app.view.height * 0.5 - anchor.y;
+
+            if (immediate) {
+                app.camera.x = targetX;
+                app.camera.y = targetY;
+                return;
+            }
+
+            const blend = 1 - Math.exp(-9.5 * dt);
+            app.camera.x += (targetX - app.camera.x) * blend;
+            app.camera.y += (targetY - app.camera.y) * blend;
+        }
+
+        function polygon(points, fill, stroke, lineWidth = 1) {
+            if (!points.length) return;
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let index = 1; index < points.length; index += 1) {
+                ctx.lineTo(points[index].x, points[index].y);
+            }
+            ctx.closePath();
+            if (fill) {
+                ctx.fillStyle = fill;
+                ctx.fill();
+            }
+            if (stroke) {
+                ctx.strokeStyle = stroke;
+                ctx.lineWidth = lineWidth;
+                ctx.stroke();
+            }
+        }
+
+        function lineBetween(start, end, color, width = 1, dash = []) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.lineTo(end.x, end.y);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            ctx.setLineDash(dash);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function lanePolygon(row) {
+            return [
+                toScreen(-PATH_HALF, row - 0.5),
+                toScreen(PATH_HALF, row - 0.5),
+                toScreen(PATH_HALF, row + 0.5),
+                toScreen(-PATH_HALF, row + 0.5)
+            ];
+        }
+
+        function cellPolygon(centerX, row, z = 0) {
+            return [
+                toScreen(centerX - 0.5, row - 0.5, z),
+                toScreen(centerX + 0.5, row - 0.5, z),
+                toScreen(centerX + 0.5, row + 0.5, z),
+                toScreen(centerX - 0.5, row + 0.5, z)
+            ];
+        }
+
+        function drawBackdrop(time) {
+            ctx.fillStyle = COLORS.paper;
+            ctx.fillRect(0, 0, app.view.width, app.view.height);
+
+            ctx.save();
+            ctx.globalAlpha = 0.16;
+            ctx.strokeStyle = COLORS.ink;
+            ctx.lineWidth = 1;
+            const spacing = 76;
+            const offset = (time * 0.008) % spacing;
+            for (let x = -app.view.height; x < app.view.width + app.view.height; x += spacing) {
+                ctx.beginPath();
+                ctx.moveTo(x + offset, 0);
+                ctx.lineTo(x - app.view.height * 0.45 + offset, app.view.height);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            ctx.save();
+            ctx.globalAlpha = 0.22;
+            ctx.fillStyle = COLORS.ink;
+            for (let index = 0; index < 18; index += 1) {
+                const x = hash01(index + 18.2) * app.view.width;
+                const y = hash01(index + 91.7) * app.view.height;
+                const width = 8 + hash01(index + 42.5) * 54;
+                ctx.fillRect(x, y, width, index % 4 === 0 ? 2 : 1);
+                if (index % 5 === 0) ctx.fillRect(x, y - 4, 2, 10);
+            }
+            ctx.restore();
+        }
+
+        function drawLaneSurface(lane) {
+            let fill = lane.row % 2 === 0 ? "#e8e7e2" : "#f5f4ef";
+            if (lane.type === "road") fill = COLORS.dark;
+            if (lane.type === "river") fill = COLORS.river;
+            polygon(lanePolygon(lane.row), fill, "rgba(9,10,14,0.42)", 1);
+        }
+
+        function drawLaneGrid(lane) {
+            let stroke = "rgba(9,10,14,.25)";
+            if (lane.type === "road") stroke = "rgba(252,252,248,.16)";
+            if (lane.type === "river") stroke = "rgba(24,220,255,.2)";
+
+            ctx.save();
+            for (let column = 0; column < COLS; column += 1) {
+                polygon(cellPolygon(columnToX(column), lane.row, 0.004), null, stroke, 0.75);
+            }
+            ctx.restore();
+        }
+
+        function drawLanePattern(lane, time) {
+            const row = lane.row;
+
+            if (lane.type === "safe") {
+                ctx.save();
+                ctx.globalAlpha = 0.52;
+                for (let boundary = 0; boundary <= COLS; boundary += 1) {
+                    const x = -PATH_HALF + boundary;
+                    lineBetween(
+                        toScreen(x, row - 0.5),
+                        toScreen(x, row + 0.5),
+                        boundary % 2 === 0 ? "rgba(9,10,14,.34)" : "rgba(9,10,14,.18)",
+                        0.8
+                    );
+                }
+
+                for (let column = 0; column < COLS; column += 1) {
+                    const x = columnToX(column);
+                    const noise = hash01(lane.seed + column * 3.17);
+                    if (noise > 0.32) {
+                        const color = noise > 0.82 ? COLORS.magenta : COLORS.ink;
+                        const start = toScreen(x - 0.34, row + 0.17);
+                        const mid = toScreen(x + 0.06, row + 0.17);
+                        const end = toScreen(x + 0.06, row - 0.2);
+                        ctx.beginPath();
+                        ctx.moveTo(start.x, start.y);
+                        ctx.lineTo(mid.x, mid.y);
+                        ctx.lineTo(end.x, end.y);
+                        ctx.strokeStyle = color;
+                        ctx.lineWidth = noise > 0.82 ? 1.5 : 0.8;
+                        ctx.stroke();
+                        ctx.fillStyle = noise > 0.74 ? COLORS.cyan : COLORS.ink;
+                        ctx.fillRect(end.x - 1.5, end.y - 1.5, 3, 3);
+                    }
+                }
+                ctx.restore();
+                return;
+            }
+
+            if (lane.type === "road") {
+                ctx.save();
+                const left = toScreen(-PATH_HALF + 0.22, row);
+                const right = toScreen(PATH_HALF - 0.22, row);
+                ctx.lineDashOffset = -(time * 0.035 * lane.direction);
+                lineBetween(left, right, "rgba(252,252,248,.82)", 2, [18, 13]);
+                lineBetween(
+                    { x: left.x, y: left.y - 3 },
+                    { x: right.x, y: right.y - 3 },
+                    "rgba(24,220,255,.75)",
+                    1,
+                    [3, 24]
+                );
+                lineBetween(
+                    { x: left.x, y: left.y + 3 },
+                    { x: right.x, y: right.y + 3 },
+                    "rgba(255,45,136,.65)",
+                    1,
+                    [2, 31]
+                );
+
+                for (let column = 0; column < COLS; column += 2) {
+                    const x = columnToX(column);
+                    const center = toScreen(x, row - 0.27);
+                    const size = 4;
+                    ctx.strokeStyle = column % 4 === 0 ? COLORS.cyan : "rgba(255,255,255,.6)";
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(center.x - size * lane.direction, center.y - size);
+                    ctx.lineTo(center.x + size * lane.direction, center.y);
+                    ctx.lineTo(center.x - size * lane.direction, center.y + size);
+                    ctx.stroke();
+                }
+                ctx.restore();
+                return;
+            }
+
+            ctx.save();
+            ctx.globalAlpha = 0.82;
+            for (let wave = -1; wave <= 1; wave += 1) {
+                ctx.beginPath();
+                for (let step = 0; step <= 40; step += 1) {
+                    const x = -PATH_HALF + (step / 40) * COLS;
+                    const ripple = Math.sin(x * 2.1 + lane.seed + time * 0.0018 * lane.direction) * 0.055;
+                    const point = toScreen(x, row + wave * 0.2 + ripple);
+                    if (step === 0) ctx.moveTo(point.x, point.y);
+                    else ctx.lineTo(point.x, point.y);
+                }
+                ctx.strokeStyle = wave === 0 ? COLORS.cyan : "rgba(252,252,248,.38)";
+                ctx.lineWidth = wave === 0 ? 1.4 : 0.8;
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+
+        function drawPathBorders(range, time) {
+            const farRow = range.max + 4;
+            const nearRow = range.min - 4;
+
+            for (const side of [-1, 1]) {
+                const x = side * PATH_HALF;
+                const start = toScreen(x, farRow);
+                const end = toScreen(x, nearRow);
+
+                ctx.save();
+                ctx.lineDashOffset = side * time * 0.018;
+                lineBetween(start, end, COLORS.white, 3, [7, 9]);
+                lineBetween(
+                    { x: start.x - 3, y: start.y },
+                    { x: end.x - 3, y: end.y },
+                    COLORS.cyan,
+                    1.5,
+                    [2, 18]
+                );
+                lineBetween(
+                    { x: start.x + 3, y: start.y },
+                    { x: end.x + 3, y: end.y },
+                    COLORS.magenta,
+                    1.5,
+                    [3, 25]
+                );
+                ctx.restore();
+
+                for (let row = Math.floor(nearRow); row <= Math.ceil(farRow); row += 4) {
+                    const point = toScreen(x, row);
+                    const size = row % 8 === 0 ? 5 : 3;
+                    polygon([
+                        { x: point.x, y: point.y - size },
+                        { x: point.x + size, y: point.y },
+                        { x: point.x, y: point.y + size },
+                        { x: point.x - size, y: point.y }
+                    ], row % 8 === 0 ? COLORS.cyan : COLORS.ink, COLORS.white, 1);
+                }
+            }
+        }
+
+        function prismPoints(x, row, length, depth, baseZ, height) {
+            const left = x - length * 0.5;
+            const right = x + length * 0.5;
+            const near = row - depth * 0.5;
+            const far = row + depth * 0.5;
+            return {
+                base: [
+                    toScreen(left, near, baseZ),
+                    toScreen(right, near, baseZ),
+                    toScreen(right, far, baseZ),
+                    toScreen(left, far, baseZ)
+                ],
+                top: [
+                    toScreen(left, near, baseZ + height),
+                    toScreen(right, near, baseZ + height),
+                    toScreen(right, far, baseZ + height),
+                    toScreen(left, far, baseZ + height)
+                ]
+            };
+        }
+
+        function drawPrism(x, row, length, depth, baseZ, height, style) {
+            const points = prismPoints(x, row, length, depth, baseZ, height);
+            polygon([points.base[0], points.base[1], points.top[1], points.top[0]], style.near, style.stroke, 1.4);
+            polygon([points.base[1], points.base[2], points.top[2], points.top[1]], style.right, style.stroke, 1.4);
+            polygon([points.base[3], points.base[0], points.top[0], points.top[3]], style.left, style.stroke, 1.4);
+            polygon(points.top, style.top, style.stroke, 1.6);
+            return points;
+        }
+
+        function drawVehicle(entity, lane, time) {
+            const flicker = (Math.floor(time / 90) + entity.id) % 19 === 0;
+            if (flicker) {
+                ctx.save();
+                ctx.globalAlpha = 0.42;
+                ctx.translate(entity.id % 2 === 0 ? -5 : 5, 0);
+                drawPrism(entity.x, lane.row, entity.length, entity.depth, 0.02, entity.height, {
+                    top: "rgba(24,220,255,.4)",
+                    near: "rgba(255,45,136,.42)",
+                    right: "rgba(24,220,255,.22)",
+                    left: "rgba(255,45,136,.2)",
+                    stroke: entity.accent
+                });
+                ctx.restore();
+            }
+
+            drawPrism(entity.x, lane.row, entity.length, entity.depth, 0.02, entity.height, {
+                top: COLORS.white,
+                near: "#b9bbc1",
+                right: "#757982",
+                left: "#d9d9d5",
+                stroke: COLORS.ink
+            });
+
+            const cabinLength = entity.length * 0.52;
+            const cabinX = entity.x - Math.sign(entity.velocity) * entity.length * 0.06;
+            drawPrism(cabinX, lane.row, cabinLength, entity.depth * 0.62, entity.height + 0.02, 0.27, {
+                top: COLORS.ink,
+                near: entity.accent,
+                right: "#2b3038",
+                left: "#f3f2ed",
+                stroke: COLORS.ink
+            });
+
+            const stripeStart = toScreen(entity.x - entity.length * 0.38, lane.row - 0.31, entity.height * 0.6);
+            const stripeEnd = toScreen(entity.x + entity.length * 0.38, lane.row - 0.31, entity.height * 0.6);
+            lineBetween(stripeStart, stripeEnd, entity.accent, 2, [5, 3]);
+
+            const frontX = entity.x + Math.sign(entity.velocity) * entity.length * 0.5;
+            const emitter = toScreen(frontX, lane.row, entity.height * 0.52);
+            ctx.fillStyle = entity.id % 2 === 0 ? COLORS.magenta : COLORS.cyan;
+            ctx.fillRect(emitter.x - 3, emitter.y - 3, 6, 6);
+        }
+
+        function drawLog(entity, lane) {
+            drawPrism(entity.x, lane.row, entity.length, entity.depth, 0.02, entity.height, {
+                top: COLORS.white,
+                near: "#aeb1b7",
+                right: "#666b74",
+                left: "#d9d9d6",
+                stroke: COLORS.ink
+            });
+
+            const segmentCount = Math.max(3, Math.floor(entity.length));
+            for (let index = 1; index < segmentCount; index += 1) {
+                const x = entity.x - entity.length * 0.5 + (index / segmentCount) * entity.length;
+                lineBetween(
+                    toScreen(x, lane.row - entity.depth * 0.36, entity.height + 0.025),
+                    toScreen(x, lane.row + entity.depth * 0.36, entity.height + 0.025),
+                    index % 2 === 0 ? COLORS.cyan : COLORS.ink,
+                    index % 2 === 0 ? 1.6 : 1
+                );
+            }
+
+            lineBetween(
+                toScreen(entity.x - entity.length * 0.42, lane.row, entity.height + 0.035),
+                toScreen(entity.x + entity.length * 0.42, lane.row, entity.height + 0.035),
+                COLORS.magenta,
+                1,
+                [3, 8]
+            );
+        }
+
+        function drawBarrier(entity, lane, time) {
+            drawPrism(entity.x, lane.row, entity.length, entity.depth, 0.01, entity.height, {
+                top: COLORS.ink,
+                near: COLORS.white,
+                right: "#7b7e86",
+                left: "#d8d8d3",
+                stroke: COLORS.ink
+            });
+
+            const top = toScreen(entity.x, lane.row, entity.height + 0.03);
+            const pulse = 2 + Math.sin(time * 0.006 + entity.id) * 1.5;
+            ctx.fillStyle = entity.accent;
+            ctx.fillRect(top.x - pulse, top.y - pulse, pulse * 2, pulse * 2);
+            lineBetween(
+                toScreen(entity.x, lane.row, entity.height * 0.2),
+                toScreen(entity.x, lane.row, entity.height * 0.78),
+                entity.accent,
+                2,
+                [3, 4]
+            );
+        }
+
+        function drawPlayer(time) {
+            if (!app.run) return;
+            const player = app.run.player;
+            const ground = toScreen(player.x, player.row, 0.02);
+            const center = toScreen(player.x, player.row, 0.58);
+            const radius = app.metrics.tileWidth * 0.245;
+            const isGlitching = time < player.glitchUntil;
+            const isBlocked = time < player.blockedUntil;
+            const jitter = isBlocked ? Math.sin(time * 0.2) * 5 : 0;
+
+            ctx.save();
+            ctx.globalAlpha = 0.24;
+            ctx.fillStyle = COLORS.ink;
+            ctx.beginPath();
+            ctx.ellipse(ground.x, ground.y, radius * 0.86, radius * 0.31, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            if (isGlitching) {
+                const ghostColors = [COLORS.cyan, COLORS.magenta];
+                ghostColors.forEach((color, index) => {
+                    ctx.save();
+                    ctx.globalAlpha = 0.45;
+                    ctx.beginPath();
+                    const sliceY = center.y - radius + ((time * 0.25 + index * 19) % (radius * 1.7));
+                    ctx.rect(center.x - radius * 1.5, sliceY, radius * 3, radius * 0.36);
+                    ctx.clip();
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(center.x + jitter + (index === 0 ? -7 : 7), center.y, radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+            }
+
+            const gradient = ctx.createRadialGradient(
+                center.x - radius * 0.34 + jitter,
+                center.y - radius * 0.38,
+                radius * 0.08,
+                center.x + jitter,
+                center.y,
+                radius
+            );
+            gradient.addColorStop(0, COLORS.white);
+            gradient.addColorStop(0.34, "#dde1e5");
+            gradient.addColorStop(0.72, COLORS.cyan);
+            gradient.addColorStop(1, COLORS.ink);
+
+            ctx.save();
+            ctx.fillStyle = gradient;
+            ctx.strokeStyle = COLORS.ink;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(center.x + jitter, center.y, radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.strokeStyle = "rgba(9,10,14,.66)";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.ellipse(center.x + jitter, center.y, radius * 0.76, radius * 0.26, -0.15, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.ellipse(center.x + jitter, center.y, radius * 0.32, radius * 0.9, 0.3, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+
+            for (let index = 0; index < 3; index += 1) {
+                const angle = time * 0.0024 + index * (Math.PI * 2 / 3);
+                const orbit = radius * 1.27;
+                const size = index === 0 ? 4 : 3;
+                ctx.fillStyle = [COLORS.magenta, COLORS.ink, COLORS.acid][index];
+                ctx.fillRect(
+                    center.x + jitter + Math.cos(angle) * orbit - size * 0.5,
+                    center.y + Math.sin(angle) * orbit * 0.38 - size * 0.5,
+                    size,
+                    size
+                );
+            }
+        }
+
+        function drawParticles() {
+            for (const particle of app.particles) {
+                const point = toScreen(particle.x, particle.row, Math.max(0, particle.z));
+                const alpha = clamp(particle.life / particle.maxLife, 0, 1);
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                ctx.fillStyle = particle.color;
+                ctx.translate(point.x, point.y);
+                ctx.rotate((particle.x + particle.row) * 0.7);
+                ctx.fillRect(-particle.size * 0.5, -particle.size * 0.5, particle.size, particle.size * 0.45);
+                ctx.restore();
+            }
+        }
+
+        function render(time) {
+            ctx.setTransform(app.view.dpr, 0, 0, app.view.dpr, 0, 0);
+            ctx.imageSmoothingEnabled = true;
+            drawBackdrop(time);
+            if (!app.run) return;
+
+            const range = getVisibleRows(app.run, 2);
+            const visibleLanes = [];
+            for (let row = range.max; row >= range.min; row -= 1) {
+                const lane = app.run.world.lanes.get(row);
+                if (lane) visibleLanes.push(lane);
+            }
+
+            // Ground planes are always rendered before vehicles, logs, and the player.
+            for (const lane of visibleLanes) drawLaneSurface(lane);
+            for (const lane of visibleLanes) drawLaneGrid(lane);
+            for (const lane of visibleLanes) drawLanePattern(lane, time);
+            drawPathBorders(range, time);
+
+            const drawCommands = [];
+            for (const lane of visibleLanes) {
+                for (const entity of lane.entities) {
+                    if (entity.x + entity.length * 0.5 < WRAP_MIN - 1 || entity.x - entity.length * 0.5 > WRAP_MAX + 1) continue;
+                    const base = toScreen(entity.x, lane.row, 0);
+                    drawCommands.push({
+                        depth: base.y,
+                        draw: () => {
+                            if (entity.kind === "vehicle") drawVehicle(entity, lane, time);
+                            if (entity.kind === "log") drawLog(entity, lane);
+                            if (entity.kind === "barrier") drawBarrier(entity, lane, time);
+                        }
+                    });
+                }
+            }
+
+            if (!app.run.preview || app.mode === MODES.GAME_OVER) {
+                const playerBase = toScreen(app.run.player.x, app.run.player.row, 0);
+                let playerDepth = playerBase.y + 0.01;
+                const playerLane = app.run.world.lanes.get(app.run.player.row);
+                const support = playerLane && app.run.player.supportId !== null
+                    ? playerLane.entities.find((entity) => entity.id === app.run.player.supportId)
+                    : null;
+
+                // The passenger always renders after the supporting log,
+                // regardless of which end of the platform they occupy.
+                if (support) {
+                    const supportBase = toScreen(support.x, playerLane.row, 0);
+                    playerDepth = Math.max(playerDepth, supportBase.y + 0.02);
+                }
+
+                drawCommands.push({ depth: playerDepth, draw: () => drawPlayer(time) });
+            }
+
+            drawCommands.sort((a, b) => a.depth - b.depth);
+            for (const command of drawCommands) command.draw();
+            drawParticles();
+        }
+
+        function frame(timestamp) {
+            const rawDt = (timestamp - app.lastTime) / 1000;
+            const dt = clamp(Number.isFinite(rawDt) ? rawDt : 0, 0, 0.05);
+            app.lastTime = timestamp;
+            app.ambientTime += dt;
+            app.accumulator += dt;
+
+            while (app.accumulator >= FIXED_STEP) {
+                updateSimulation(FIXED_STEP);
+                app.accumulator -= FIXED_STEP;
+                if (app.mode === MODES.GAME_OVER) break;
+            }
+
+            if (app.mode === MODES.GAME_OVER) updateParticles(dt);
+            updateCamera(dt);
+            render(timestamp);
+            requestAnimationFrame(frame);
+        }
+
+        function runSelfCheck() {
+            const columnsValid = columnToX(0) === -4.5 && columnToX(9) === 4.5;
+            const origin = project(0, 0, 0);
+            const xAxis = project(1, 0, 0);
+            const rowAxis = project(0, 1, 0);
+            const zAxis = project(0, 0, 1);
+            const approximatelyEqual = (left, right) => Math.abs(left - right) < 0.000001;
+            const projectionValid = approximatelyEqual(app.metrics.tileWidth, app.metrics.tileHeight * 2) &&
+                xAxis.x > origin.x && xAxis.y > origin.y &&
+                rowAxis.x > origin.x && rowAxis.y < origin.y &&
+                approximatelyEqual(xAxis.x - origin.x, rowAxis.x - origin.x) &&
+                approximatelyEqual(xAxis.y - origin.y, origin.y - rowAxis.y) &&
+                approximatelyEqual(zAxis.x, origin.x) && zAxis.y < origin.y;
+            const difficultiesValid = Object.keys(DIFFICULTIES).length === 3 &&
+                Object.values(DIFFICULTIES).every((difficulty) =>
+                    difficulty.carSpeed[0] > 0 && difficulty.logSpeed[0] > 0
+                );
+            const tutorialValid = app.run &&
+                app.run.world.lanes.get(4)?.type === "road" &&
+                app.run.world.lanes.get(6)?.type === "river";
+            const horizon = app.run ? getVisibleRows(app.run, 0).max : 0;
+            const horizonValid = app.run && app.run.world.maxGenerated >= horizon;
+            const routesValid = app.run && [...app.run.world.lanes.values()].every((lane) => {
+                if (lane.routeColumn < 0 || lane.routeColumn >= COLS) return false;
+                if (lane.type !== "safe") return lane.entities.length > 0;
+                return !isBarrierBlocking(lane, columnToX(lane.routeColumn));
+            });
+            const strictLog = { id: -1, kind: "log", x: 0, length: 2 };
+            const supportValid = findSupportingLog({ entities: [strictLog] }, 0)?.id === -1 &&
+                findSupportingLog({ entities: [strictLog] }, 0.9) === null;
+            const collisionValid = vehicleTouchesPlayer({
+                x: 0,
+                prevX: -2,
+                length: 1,
+                wrapped: false
+            }, 0, true);
+            const milestonesValid = [25, 50, 100].every((value) => MILESTONES.has(value));
+
+            return Boolean(columnsValid && projectionValid && difficultiesValid && tutorialValid && horizonValid &&
+                routesValid && supportValid && collisionValid && milestonesValid);
+        }
+
+        document.querySelectorAll("[data-difficulty]").forEach((button) => {
+            button.addEventListener("click", () => startRun(button.dataset.difficulty));
+        });
+
+        restartButton.addEventListener("click", () => startRun(app.difficultyId));
+        menuButton.addEventListener("click", openMenu);
+
+        document.addEventListener("keydown", (event) => {
+            const actionByKey = {
+                ArrowUp: "up",
+                ArrowDown: "down",
+                ArrowLeft: "left",
+                ArrowRight: "right"
+            };
+
+            if (actionByKey[event.key]) {
+                event.preventDefault();
+                if (!event.repeat) attemptMove(actionByKey[event.key]);
+                return;
+            }
+
+            if (app.mode === MODES.MENU && ["1", "2", "3"].includes(event.key)) {
+                const difficultyId = { "1": "easy", "2": "normal", "3": "hard" }[event.key];
+                startRun(difficultyId);
+                return;
+            }
+
+            if (app.mode === MODES.GAME_OVER && (event.code === "Space" || event.key === "Enter")) {
+                event.preventDefault();
+                startRun(app.difficultyId);
+                return;
+            }
+
+            if ((app.mode === MODES.PLAYING || app.mode === MODES.GAME_OVER) && event.key === "Escape") {
+                event.preventDefault();
+                openMenu();
+            }
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            app.lastTime = performance.now();
+            app.accumulator = 0;
+        });
+
+        window.addEventListener("resize", resizeCanvas);
+
+        resizeCanvas();
+        refreshRecordUI();
+        openMenu();
+        document.body.dataset.gameReady = "true";
+        document.body.dataset.selfCheck = runSelfCheck() ? "ok" : "failed";
+        requestAnimationFrame(frame);
+    </script>
+</body>
+</html>
