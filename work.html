@@ -54,12 +54,55 @@
     }
 
     .gallery {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-page {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: var(--gap);
-      align-items: start;
       align-items: stretch;
+      transition: transform 420ms cubic-bezier(.22,.61,.36,1), opacity 420ms ease;
     }
+
+    .gallery-page[hidden] { display: none; }
+
+    .gallery-page.is-entering-next { animation: project-enter-next 420ms cubic-bezier(.22,.61,.36,1); }
+    .gallery-page.is-entering-prev { animation: project-enter-prev 420ms cubic-bezier(.22,.61,.36,1); }
+
+    @keyframes project-enter-next {
+      from { opacity: 0; transform: translateX(42px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes project-enter-prev {
+      from { opacity: 0; transform: translateX(-42px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .gallery-navigation {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 0 10px;
+    }
+
+    .gallery-navigation button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #6b7072;
+      cursor: pointer;
+      font: 500 21px/1 'Space Grotesk', Arial, sans-serif;
+      padding: 0 3px;
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    .gallery-navigation button:hover:not(:disabled) { color: #008000; transform: translateX(2px); }
+    .gallery-navigation button:first-child:hover:not(:disabled) { transform: translateX(-2px); }
+    .gallery-navigation button:disabled { color: #d1d1d1; cursor: default; }
+    .gallery-status { min-width: 62px; text-align: center; font-size: 11px; color: #8f8f8f; }
 
     figure.work-item { margin: 0; display: flex; flex-direction: column; gap: 6px; }
 
@@ -87,6 +130,27 @@
       display: block;
     }
 
+    .thumb.thumb-stack {
+      display: grid;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: var(--gap);
+      background: transparent;
+    }
+
+    .thumb.thumb-stack img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .thumb.thumb-stack-flush { gap: 0; }
+
+    .thumb.thumb-contain { background: #fff; }
+    .thumb.thumb-contain img { object-fit: contain; }
+    .thumb.thumb-centered img { object-position: center center; }
+    .thumb.thumb-shift-right img { object-position: 58% center; }
+
     figcaption {
       font-size: 12px;
       color: #6b7072;
@@ -99,12 +163,12 @@
       color: #333;
     }
 
-  @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 1200px) { .gallery-page { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   /* iPad and similar: prefer 3 columns instead of 4 for better proportions */
-  @media (max-width: 1024px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 1024px) { .gallery-page { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 900px)  { .gallery-page { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 640px)  { 
-      .gallery { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+      .gallery-page { grid-template-columns: repeat(1, minmax(0, 1fr)); }
     }
 
     .list-text {
@@ -280,6 +344,7 @@
   <main>
     <div class="gallery-wrap" role="region" aria-label="Work gallery">
       <div class="gallery" role="list" aria-label="Work items">
+        <section class="gallery-page is-active" data-page="1" aria-label="Projects 1 to 6">
         <!-- Item 1 -->
         <figure class="work-item" role="listitem" aria-labelledby="cap-010">
           <a href="list-project/01.html" style="text-decoration: none; color: inherit;">
@@ -339,7 +404,28 @@
             <figcaption id="cap-060">[060] Re-existence and digital virtual re-habitation</figcaption>
           </a>
         </figure>
+        </section>
+
+        <section class="gallery-page" data-page="2" aria-label="Projects 7 to 12" hidden>
+          <figure class="work-item" role="listitem"><a href="list-project/07.html" style="text-decoration: none; color: inherit;"><div class="thumb thumb-stack thumb-stack-flush"><img src="Images/p7/07-01.webp" alt="[070] Roof / UV, image 1"><img src="Images/p7/07-03.webp" alt="[070] Roof / UV, image 3"></div><figcaption>[070] Roof / UV</figcaption></a></figure>
+          <figure class="work-item" role="listitem"><a href="list-project/08.html" style="text-decoration: none; color: inherit;"><div class="thumb thumb-contain"><img src="Images/p8/08-01.webp" alt="[080] Tfstairs"></div><figcaption>[080] Tfstairs</figcaption></a></figure>
+          <figure class="work-item" role="listitem"><a href="list-project/09.html" style="text-decoration: none; color: inherit;"><div class="thumb thumb-contain"><img src="Images/p9/09-02.webp" alt="[090] Surface Restaurant"></div><figcaption>[090] Surface Restaurant</figcaption></a></figure>
+          <figure class="work-item" role="listitem"><a href="list-project/10.html" style="text-decoration: none; color: inherit;"><div class="thumb"><img src="Images/p10/10-01.webp" alt="[100] TT House"></div><figcaption>[100] TT House</figcaption></a></figure>
+          <figure class="work-item" role="listitem"><a href="list-project/11.html" style="text-decoration: none; color: inherit;"><div class="thumb thumb-centered thumb-shift-right"><img src="Images/p11/11-02.webp" alt="[110] Parametric ramp"></div><figcaption>[110] Parametric ramp</figcaption></a></figure>
+          <figure class="work-item" role="listitem"><a href="list-project/12.html" style="text-decoration: none; color: inherit;"><div class="thumb thumb-stack thumb-stack-flush"><img src="Images/p12/12-01.webp" alt="[120] D House, image 1"><img src="Images/p12/12-02.webp" alt="[120] D House, image 2"></div><figcaption>[120] D House</figcaption></a></figure>
+        </section>
+
+        <section class="gallery-page" data-page="3" aria-label="Projects 13 to 15" hidden>
+          <figure class="work-item" role="listitem"><a href="list-project/13.html" style="text-decoration: none; color: inherit;"><div class="thumb"><img src="Images/p13/13-01.webp" alt="[130] Tree of Liberty"></div><figcaption>[130] Tree of Liberty</figcaption></a></figure>
+          <figure class="work-item" role="listitem"><a href="list-project/14.html" style="text-decoration: none; color: inherit;"><div class="thumb"><img src="Images/p14/14-01.webp" alt="[140] Desk"></div><figcaption>[140] Desk</figcaption></a></figure>
+          <figure class="work-item" role="listitem"><a href="list-project/15.html" style="text-decoration: none; color: inherit;"><div class="thumb"><img src="Images/p15/p15-01.webp" alt="[150] Ensamble"></div><figcaption>[150] Ensamble</figcaption></a></figure>
+        </section>
       </div>
+      <nav class="gallery-navigation" aria-label="Browse projects">
+        <button type="button" id="gallery-prev" aria-label="Previous projects" disabled>←</button>
+        <span class="gallery-status" id="gallery-status" aria-live="polite">01–06 / 15</span>
+        <button type="button" id="gallery-next" aria-label="More projects">→</button>
+      </nav>
     </div>
   </main>
 
@@ -354,5 +440,32 @@
   <!-- * 8. NAVIGATION MENU SCRIPT -->
   <!-- * ========================================================================== -->
   <script src="assets/menu-sync.js"></script>
+  <script>
+    (() => {
+      const pages = [...document.querySelectorAll('.gallery-page')];
+      const previous = document.getElementById('gallery-prev');
+      const next = document.getElementById('gallery-next');
+      const status = document.getElementById('gallery-status');
+      const labels = ['01–06 / 15', '07–12 / 15', '13–15 / 15'];
+      let current = 0;
+
+      function showPage(index, direction) {
+        if (index < 0 || index >= pages.length || index === current) return;
+        pages[current].hidden = true;
+        pages[current].classList.remove('is-active');
+        current = index;
+        const page = pages[current];
+        page.hidden = false;
+        page.classList.add('is-active', direction === 'next' ? 'is-entering-next' : 'is-entering-prev');
+        window.setTimeout(() => page.classList.remove('is-entering-next', 'is-entering-prev'), 430);
+        previous.disabled = current === 0;
+        next.disabled = current === pages.length - 1;
+        status.textContent = labels[current];
+      }
+
+      previous.addEventListener('click', () => showPage(current - 1, 'previous'));
+      next.addEventListener('click', () => showPage(current + 1, 'next'));
+    })();
+  </script>
 </body>
 </html>
